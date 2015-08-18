@@ -1,0 +1,23 @@
+From lists.pgocaml at dbp.mm.st  Sat Apr 23 17:09:21 2011
+From: lists.pgocaml at dbp.mm.st (Daniel Patterson)
+Date: Sat, 23 Apr 2011 11:09:21 -0400
+Subject: [Pgocaml-dev] Record label "contents" not allowed with PGOCaml?
+Message-ID: <6E696C7D-06EB-43F2-8148-0560CBD13FAB@dbp.mm.st>
+
+I just ran across a funny thing - I had a type like
+
+type t = {id : int32; ... contents : string; ... }
+
+And then any PGOCaml string, like:
+PGSQL(dbh) "SELECT id, contents, ..."
+
+Would throw a type error:
+Error: This expression has type int ref
+       but an expression was expected of type t
+
+Wit the character specification being the string of the query (ie, starting at SELECT in the above example).
+
+By renaming the field to something else (which now doesnt line up with what is in the database...), the code works fine.
+
+Is this expected behavior, and if so, is it documented? I looked back through Dario Teixeira's brief introduction and couldn't find any reference to this problem or indeed to any reserved words in general. Or is it a more subtle thing going that I'm just not understanding?
+

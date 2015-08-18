@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] New stuff in trunk
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2011-February/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20New%20stuff%20in%20trunk&In-Reply-To=%3CE51C5B015DBD1348A1D85763337FB6D9490DD0F8%40Remus.metastack.local%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000112.html">
+   <LINK REL="Next"  HREF="000114.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] New stuff in trunk</H1>
+    <B>David Allsopp</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20New%20stuff%20in%20trunk&In-Reply-To=%3CE51C5B015DBD1348A1D85763337FB6D9490DD0F8%40Remus.metastack.local%3E"
+       TITLE="[Pgocaml-dev] New stuff in trunk">dra-news at metastack.com
+       </A><BR>
+    <I>Mon Feb 14 17:10:05 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000112.html">[Pgocaml-dev] New stuff in trunk
+</A></li>
+        <LI>Next message: <A HREF="000114.html">[Pgocaml-dev] New stuff in trunk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#113">[ date ]</a>
+              <a href="thread.html#113">[ thread ]</a>
+              <a href="subject.html#113">[ subject ]</a>
+              <a href="author.html#113">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Dario Teixeira wrote:
+&gt;<i> Michael Ekstrand's patch to make PG'Ocaml work with batteries, together
+</I>&gt;<i> with my own patch adding support for Hstore are now in trunk.  Please test
+</I>&gt;<i> -- if everything is alright I'll release 1.5 in a few days.
+</I>
+Has anyone had a chance to look at bugs #17908 (<A HREF="http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=17908&amp;group_id=9159">http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=17908&amp;group_id=9159</A>) and #16274 <A HREF="http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=16274&amp;group_id=9159">http://developer.berlios.de/bugs/?func=detailbug&amp;bug_id=16274&amp;group_id=9159</A> - I know I'm biased as I reported them both but it would seem to me strange not to incorporate the second as I provided a patch.
+
+Bug #17908 certainly affects PGO'Caml trunk with Postgres 8.4.3 and 8.3.14 servers. I included a simple test case in the bug report - would someone be able to verify that it affects 9.0.x servers as well? The production server I compile for is an 8.3.x series so I don't really want to install 9.0.3 locally as it's irritating to use a new feature by accident while developing only to have to strip it out when compiling for production.
+
+Assuming it does affect 9.0.x too, it would seem odd IMO to make a first official release for just over a year containing a known broken type system...
+
+
+David
+
+PS Just in case this email gives the wrong impression - I *adore* PGO'Caml and the development it /usually/ saves
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000112.html">[Pgocaml-dev] New stuff in trunk
+</A></li>
+	<LI>Next message: <A HREF="000114.html">[Pgocaml-dev] New stuff in trunk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#113">[ date ]</a>
+              <a href="thread.html#113">[ thread ]</a>
+              <a href="subject.html#113">[ subject ]</a>
+              <a href="author.html#113">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>

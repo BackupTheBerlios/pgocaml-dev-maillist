@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] Problem compiling pgocaml 1.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Problem%20compiling%20pgocaml%201.1&In-Reply-To=%3C20081005093737.GA7306%40atreides.dyndns.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000015.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] Problem compiling pgocaml 1.1</H1>
+    <B>Paolo Donadeo</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Problem%20compiling%20pgocaml%201.1&In-Reply-To=%3C20081005093737.GA7306%40atreides.dyndns.org%3E"
+       TITLE="[Pgocaml-dev] Problem compiling pgocaml 1.1">p.donadeo at gmail.com
+       </A><BR>
+    <I>Sun Oct  5 11:37:37 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000015.html">[Pgocaml-dev] Problem compiling pgocaml 1.1
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18">[ date ]</a>
+              <a href="thread.html#18">[ thread ]</a>
+              <a href="subject.html#18">[ subject ]</a>
+              <a href="author.html#18">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Richard Jones wrote:
+
+&gt;<i> Paolo: If you add 'open CalendarLib' somewhere at the top of the
+</I>&gt;<i> test_pgocaml_lowlevel.ml file, does it link?
+</I>
+Adding &quot;open CalendarLib&quot; on top of pGOCaml.ml *and* pGOCaml.mli, and
+replacing line 41 of PGOcaml Makefile (from 1.1 source tarball):
+-I +calendar $(shell ocamlfind query calendar)/calendar.cma \
+with:
+-I +calendar $(shell ocamlfind query calendar)/calendarLib.cmo \
+
+everything compiles and links.
+
+In any case, this is the first time a see an OCaml library distributed
+as cmo/cmx and not as a cma/cmxa package. Unfortunately a standard for
+package distribution (blessed by INRIA) is far from coming, but Calendar
+distribution package is certainly weird a lot :-)
+
+
+-- 
+                                            Paolo
+~
+~
+:<i>wq
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000015.html">[Pgocaml-dev] Problem compiling pgocaml 1.1
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18">[ date ]</a>
+              <a href="thread.html#18">[ thread ]</a>
+              <a href="subject.html#18">[ subject ]</a>
+              <a href="author.html#18">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>

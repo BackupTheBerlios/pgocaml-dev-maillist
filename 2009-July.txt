@@ -1,0 +1,105 @@
+From monnier.florent at gmail.com  Thu Jul 30 21:16:39 2009
+From: monnier.florent at gmail.com (Florent Monnier)
+Date: Thu, 30 Jul 2009 21:16:39 +0200
+Subject: [Pgocaml-dev] problem compiling PG'OCaml
+Message-ID: <200907302116.39606.monnier.florent@gmail.com>
+
+Hi,
+I have some problem to compile PG'OCaml 1.3:
+
+ocamlfind ocamlopt  -package unix,extlib,pcre,calendar,csv -linkpkg -o 
+pgocaml_prof pgocaml_prof.cmx
+/usr/lib/ocaml/calendar/calendarLib.o: In function 
+`camlCalendarLib__Calendar_builder__aux_375':
+(.text+0x44d0): multiple definition of 
+`camlCalendarLib__Calendar_builder__code_begin'
+/usr/lib/ocaml/calendar/calendarLib.a(calendarLib.o):(.text+0x44d0): first 
+defined here
+/usr/lib/ocaml/calendar/calendarLib.o: In function 
+`camlCalendarLib__Calendar__code_end':
+(.text+0x9f95): multiple definition of `camlCalendarLib__Calendar__code_end'
+/usr/lib/ocaml/calendar/calendarLib.a(calendarLib.o):(.text+0x9f95): first 
+defined here
+/usr/lib/ocaml/calendar/calendarLib.o: In function 
+`camlCalendarLib__Printer__parse_format_181':
+(.text+0xb0d0): multiple definition of 
+`camlCalendarLib__Printer__parse_format_181'
+/usr/lib/ocaml/calendar/calendarLib.a(calendarLib.o):(.text+0xb0d0): first 
+defined here
+....
+and it continues like this over 1559 lines
+
+
+If I add the -verbose tag to the command line, I get these additionnal 
+indications:
+
+Effective set of compiler predicates: 
+pkg_unix,pkg_extlib,pkg_pcre,pkg_str,pkg_calendar,pkg_csv,autolink,native
++ ocamlopt.opt -verbose -o 
+pgocaml_prof -I /usr/lib/ocaml/extlib -ccopt -I/usr/lib/ocaml/extlib -I 
+/usr/lib/ocaml/pcre -ccopt -I/usr/lib/ocaml/pcre -I /usr/lib/ocaml/calendar 
+-ccopt -I/usr/lib/ocaml/calendar -I /usr/lib/ocaml/csv -ccopt -I/usr/lib/ocaml/csv 
+-ccopt -L/usr/lib/ocaml/extlib -ccopt -L/usr/lib/ocaml/pcre -ccopt 
+-L/usr/lib/ocaml/calendar -ccopt -L/usr/lib/ocaml/csv /usr/lib/ocaml/unix.cmxa 
+/usr/lib/ocaml/extlib/extLib.cmxa /usr/lib/ocaml/pcre/pcre.cmxa 
+/usr/lib/ocaml/str.cmxa /usr/lib/ocaml/calendar/calendarLib.cmx 
+/usr/lib/ocaml/calendar/calendarLib.cmxa /usr/lib/ocaml/csv/csv.cmxa 
+pgocaml_prof.cmx
++ as -o '/home/blue_prawn/tmp/camlstartupb0a0ca.o' 
+'/home/blue_prawn/tmp/camlstartupc1b0b5.s'
++ gcc -o 'pgocaml_prof'  '-L/usr/lib/ocaml/extlib' '-L/usr/lib/ocaml/pcre' 
+'-L/usr/lib/ocaml/calendar' '-L/usr/lib/ocaml/csv' '-L/usr/lib/ocaml' 
+'/home/blue_prawn/tmp/camlstartupb0a0ca.o' '/usr/lib/ocaml/std_exit.o' 
+'pgocaml_prof.o' '/usr/lib/ocaml/csv/csv.a' '/usr/lib/ocaml/calendar/calendarLib.a' 
+'/usr/lib/ocaml/calendar/calendarLib.o' '/usr/lib/ocaml/str.a' 
+'/usr/lib/ocaml/pcre/pcre.a' '/usr/lib/ocaml/extlib/extLib.a' '/usr/lib/ocaml/unix.a' 
+'/usr/lib/ocaml/stdlib.a' '-lstr' '-L/usr/lib' '-lpcre' '-lpcre_stubs' '-lunix' 
+'/usr/lib/ocaml/libasmrun.a' -lm  -ldl -I/usr/lib/ocaml/extlib -I/usr/lib/ocaml/pcre 
+-I/usr/lib/ocaml/calendar -I/usr/lib/ocaml/csv -L/usr/lib/ocaml/extlib 
+-L/usr/lib/ocaml/pcre -L/usr/lib/ocaml/calendar -L/usr/lib/ocaml/csv 
+-I/usr/lib/ocaml/extlib 
+
+
+Do you have an idea of what goes wrong?
+We see that there is both calendarLib.a and calendarLib.o, is it what causes 
+the problem? if so how to correct this from the original command line ?
+
+-- 
+thanks in advance
+Florent
+
+
+From darioteixeira at yahoo.com  Thu Jul 30 22:22:28 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Thu, 30 Jul 2009 13:22:28 -0700 (PDT)
+Subject: [Pgocaml-dev] problem compiling PG'OCaml
+In-Reply-To: <200907302116.39606.monnier.florent@gmail.com>
+Message-ID: <608371.61925.qm@web111504.mail.gq1.yahoo.com>
+
+Hi,
+
+> Do you have an idea of what goes wrong?
+> We see that there is both calendarLib.a and calendarLib.o,
+> is it what causes the problem? if so how to correct this
+> from the original command line ?
+
+Yeah, there have been some problems stemming from a faulty Calendar
+installation (check the archives).  Make sure you are running the
+latest Calendar version, and that its META file is in order.  These
+are the contents of Calendar's META on my system (where PG'OCaml
+compiles fine).
+
+description = "calendar library"
+version = "2.01.1"
+archive(byte) = "calendarLib.cma"
+archive(native) = "calendarLib.cmxa"
+requires = "unix str"
+
+Hope that helps,
+Dario Teixeira
+
+
+
+      
+
+

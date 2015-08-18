@@ -1,0 +1,274 @@
+From bluestorm.dylc at gmail.com  Wed Sep  2 10:36:55 2009
+From: bluestorm.dylc at gmail.com (blue storm)
+Date: Wed, 2 Sep 2009 10:36:55 +0200
+Subject: [Pgocaml-dev] [Patch] explicit module for the "Simple thread"
+	structure of pGOCaml.ml
+Message-ID: <527cf6bc0909020136p2c95f30foaf6f485cff52ea50@mail.gmail.com>
+
+During the development of Macaque (
+http://macaque.forge.ocamlcore.org/ ), wich builds upon PG'OCaml, I
+have felt the need for a PGOCaml_Generic.THREAD interface extended
+with richer exception handling features (Lwt "catch"). This can be
+done easily with an "include" on the THREAD signature, but I had to
+copy/paste the code of the simple "identity THREAD module" of
+pGOCaml.ml, as it is not bound and visible through the pGOCaml.mli
+interface.
+
+Below (and attached) is a patch that bind that anonymous module to an
+explicit "Simple_thread" module (feel free to choose another name) :
+
+Index: pGOCaml.ml
+===================================================================
+--- pGOCaml.ml	(revision 88)
++++ pGOCaml.ml	(working copy)
+@@ -19,7 +19,7 @@
+  * Boston, MA 02111-1307, USA.
+  *)
+
+-module M = PGOCaml_generic.Make (struct
++module Simple_thread = struct
+   type 'a t = 'a
+   let return x = x
+   let (>>=) v f =  f v
+@@ -36,6 +36,8 @@
+   let input_binary_int = input_binary_int
+   let really_input = really_input
+   let close_in = close_in
+-end)
++end
+
++module M = PGOCaml_generic.Make (Simple_thread)
++
+ include M
+Index: pGOCaml.mli
+===================================================================
+--- pGOCaml.mli	(revision 88)
++++ pGOCaml.mli	(working copy)
+@@ -19,5 +19,8 @@
+  * Boston, MA 02111-1307, USA.
+  *)
+
++module Simple_thread : PGOCaml_generic.THREAD
++  with type 'a t = 'a
++
+ include PGOCaml_generic.PGOCAML_GENERIC
+   with type 'a monad = 'a
+-------------- next part --------------
+Index: pGOCaml.ml
+===================================================================
+--- pGOCaml.ml	(revision 88)
++++ pGOCaml.ml	(working copy)
+@@ -19,7 +19,7 @@
+  * Boston, MA 02111-1307, USA.
+  *)
+ 
+-module M = PGOCaml_generic.Make (struct
++module Simple_thread = struct
+   type 'a t = 'a
+   let return x = x
+   let (>>=) v f =  f v
+@@ -36,6 +36,8 @@
+   let input_binary_int = input_binary_int
+   let really_input = really_input
+   let close_in = close_in
+-end)
++end
+ 
++module M = PGOCaml_generic.Make (Simple_thread)
++
+ include M
+Index: pGOCaml.mli
+===================================================================
+--- pGOCaml.mli	(revision 88)
++++ pGOCaml.mli	(working copy)
+@@ -19,5 +19,8 @@
+  * Boston, MA 02111-1307, USA.
+  *)
+ 
++module Simple_thread : PGOCaml_generic.THREAD
++  with type 'a t = 'a
++
+ include PGOCaml_generic.PGOCAML_GENERIC
+   with type 'a monad = 'a
+
+From darioteixeira at yahoo.com  Wed Sep  2 18:47:20 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Wed, 2 Sep 2009 09:47:20 -0700 (PDT)
+Subject: [Pgocaml-dev] [Patch] explicit module for the "Simple thread"
+	structure of pGOCaml.ml
+In-Reply-To: <527cf6bc0909020136p2c95f30foaf6f485cff52ea50@mail.gmail.com>
+Message-ID: <327919.17219.qm@web111502.mail.gq1.yahoo.com>
+
+Hi,
+
+> During the development of Macaque (http://macaque.forge.ocamlcore.org/),
+> wich builds upon PG'OCaml, I have felt the need for a OCaml_Generic.THREAD
+> interface (..)
+
+Seems innocuous, and I've applied your patch in trunk.  But do tell us
+more about Macaque; from the blurb at the Ocsiforge page it seems similar
+in concept to the ocaml-orm-sqlite project, but targeting Postgresql
+rather than Sqlite -- right?  Very interesting anyway!
+
+Best regards,
+Dario Teixeira
+
+
+
+      
+
+
+From rich at annexia.org  Wed Sep  2 14:33:14 2009
+From: rich at annexia.org (Richard Jones)
+Date: Wed, 2 Sep 2009 13:33:14 +0100
+Subject: [Pgocaml-dev] [Patch] explicit module for the "Simple thread"
+	structure of pGOCaml.ml
+In-Reply-To: <527cf6bc0909020136p2c95f30foaf6f485cff52ea50@mail.gmail.com>
+References: <527cf6bc0909020136p2c95f30foaf6f485cff52ea50@mail.gmail.com>
+Message-ID: <20090902123314.GB19925@annexia.org>
+
+On Wed, Sep 02, 2009 at 10:36:55AM +0200, blue storm wrote:
+> During the development of Macaque (
+> http://macaque.forge.ocamlcore.org/ ), wich builds upon PG'OCaml, I
+> have felt the need for a PGOCaml_Generic.THREAD interface extended
+> with richer exception handling features (Lwt "catch"). This can be
+> done easily with an "include" on the THREAD signature, but I had to
+> copy/paste the code of the simple "identity THREAD module" of
+> pGOCaml.ml, as it is not bound and visible through the pGOCaml.mli
+> interface.
+> 
+> Below (and attached) is a patch that bind that anonymous module to an
+> explicit "Simple_thread" module (feel free to choose another name) :
+
+Seems OK to me ...  Anyone else comment?
+
+Rich.
+
+-- 
+Richard Jones
+Red Hat
+
+
+From rich at annexia.org  Sat Sep 19 18:42:06 2009
+From: rich at annexia.org (Richard Jones)
+Date: Sat, 19 Sep 2009 17:42:06 +0100
+Subject: [Pgocaml-dev] Fwd: PGOCaml patch
+Message-ID: <20090919164206.GA10130@annexia.org>
+
+Forwarding to the mailing list ...
+
+----- Forwarded message from David Allsopp <david.allsopp at metastack.com> -----
+
+Subject: PGOCaml patch
+From: David Allsopp <david.allsopp at metastack.com>
+To: 'Richard Jones' <rich at annexia.org>
+Organization: MetaStack Solutions Ltd.
+X-Scanned-By: MIMEDefang 2.65 on 81.102.132.77
+X-Cloudmark-Analysis: v=1.0 c=1 a=z_NMsDQUxulsCiESi9gA:9 a=8UZqLVrRvmjYAJIhQN5lRtXNfeoA:4 a=FJWyKOzY1xUA:10 a=_txdi8hKb07uAype2doA:9 a=9ng28mlTcb21yuhFORYA:7 a=VfTO70DmaYETdbs2lsMYLxi9ORgA:4
+
+Hi Rich,
+
+	I submitted a bug report with a patch for PGOCaml a couple of days
+ago but the bug tracker on berlios.de doesn't seem to be the best way to
+submit patches. The attached patch for 1.3 adds support for the INET data
+type (it converts the result to a Unix.inet_addr * int pair). It should also
+work for the CIDR data type without further alteration, but I haven't tested
+that so I didn't add the case to name_of_type.
+
+Best,
+
+
+David
+
+
+
+----- End forwarded message -----
+
+-- 
+Richard Jones
+Red Hat
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: pgocaml-1.3-inet.patch
+Type: text/x-diff
+Size: 3677 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20090919/3bde13ab/attachment.patch>
+
+From darioteixeira at yahoo.com  Mon Sep 21 14:38:38 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Mon, 21 Sep 2009 05:38:38 -0700 (PDT)
+Subject: [Pgocaml-dev] Fwd: PGOCaml patch
+In-Reply-To: <20090919164206.GA10130@annexia.org>
+Message-ID: <128649.73443.qm@web111516.mail.gq1.yahoo.com>
+
+Hi,
+
+> I submitted a bug report with a patch for PGOCaml a couple of days
+> ago but the bug tracker on berlios.de doesn't seem to be the best way to
+> submit patches. The attached patch for 1.3 adds support for the INET data
+> type (it converts the result to a Unix.inet_addr * int pair). It should
+> also work for the CIDR data type without further alteration, but I haven't
+> tested that so I didn't add the case to name_of_type.
+
+Thank you, David.  I've applied the patch to my local copy, and after some
+testing I'll commit it to trunk...
+
+Best regards,
+Dario Teixeira
+
+
+
+      
+
+
+
+From darioteixeira at yahoo.com  Mon Sep 21 15:15:50 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Mon, 21 Sep 2009 06:15:50 -0700 (PDT)
+Subject: [Pgocaml-dev] Fwd: PGOCaml patch
+In-Reply-To: <006f01ca3abc$10d94ea0$328bebe0$@metastack.com>
+Message-ID: <953460.45180.qm@web111511.mail.gq1.yahoo.com>
+
+Hi again,
+
+> No problem. I tested it with a few IPv4 and IPv6 address (both with and
+> without masks) - the backend seems to behave as its docs suggest (so the
+> mask is never transmitted if it's /32 or /128). Curiously on my (Windows 7
+> x64) machine, Unix.inet_addr_of_string crashes with IPv6 addresses but
+> that's an OCaml bug to investigate another day!
+
+Actually, there's one thing I don't understand about your implementation
+of string_of_inet.  Here's your code:
+
+let string_of_inet (addr, mask) =
+  let addr = Unix.string_of_inet_addr addr
+    if mask = 32
+    then addr
+    else if mask >= 0 && mask < 32
+         then addr ^ "/" ^ string_of_int mask
+         else failwith "string_of_inet"
+
+This is fine for IPv4, but will fail for IPv6 addresses if the netmask is
+larger than 32.  Why not simply remove the conditional?  If the netmask
+is invalid you'll still get a runtime error (reported by Postgresql).
+This is what I suggest instead:
+
+let string_of_inet (addr, mask) =
+  let addr = Unix.string_of_inet_addr addr
+  in addr ^ "/" ^ string_of_int mask
+
+Which works fine with both IPv4 and IPv6.  The only downside is that one
+always transmits the netmask, even if superfluous.  But I see no problem
+with that...
+
+Your thoughts?
+
+Best regards,
+Dario Teixeira
+
+
+
+      
+
+

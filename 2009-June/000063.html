@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] Geometric types
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Geometric%20types&In-Reply-To=%3C554623.47788.qm%40web111507.mail.gq1.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000062.html">
+   <LINK REL="Next"  HREF="000064.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] Geometric types</H1>
+    <B>Dario Teixeira</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Geometric%20types&In-Reply-To=%3C554623.47788.qm%40web111507.mail.gq1.yahoo.com%3E"
+       TITLE="[Pgocaml-dev] Geometric types">darioteixeira at yahoo.com
+       </A><BR>
+    <I>Wed Jun  3 13:33:26 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000062.html">[Pgocaml-dev] Patch for large data sets
+</A></li>
+        <LI>Next message: <A HREF="000064.html">[Pgocaml-dev] Latest svn release break examples
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#63">[ date ]</a>
+              <a href="thread.html#63">[ thread ]</a>
+              <a href="subject.html#63">[ subject ]</a>
+              <a href="author.html#63">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Hi,
+
+&gt;<i> Here it is (obtained with svn diff, I hope it's OK).
+</I>
+Thanks for the patch.  I have a couple of notes about it though.  One
+is easily fixed, but the other is still open:
+
+1) In function string_of_point, you use functions fst and snd to get
+   the two components of the tuple.  I changed it to use pattern-matching
+   instead, as follows:
+
+   let string_of_point (x, y) =
+       &quot;(&quot; ^ (string_of_float x) ^ &quot;,&quot; ^ (string_of_float y) ^ &quot;)&quot;
+
+2) In function point_of_string, you define the following regexp for
+   the Str module:
+
+   Str.regexp &quot;([ \t]*\\([0-9]*\\)[ \t]*,[ \t]*\\([0-9]*\\)[ \t]*)&quot;
+
+   This regexp will fail for non-integer and/or non-positive floats.
+   Moreover, PG'OCaml already links in the PCRE library anyway, so
+   you might as well use it instead of linking in yet another lib.
+
+I'm CCing this to the list because I wonder if someone has a better
+(lighter) solution than regexps for point_of_string.
+
+Cheers,
+Dario
+
+P.S.  Trunk for both 'pgocaml' and 'pgocaml-classic' now includes
+      Mykola Stryebkov's patch.  It seems to be working fine: I just
+      successfully tested a half-million result set that caused a
+      stack overflow in older versions.
+
+
+
+      
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000062.html">[Pgocaml-dev] Patch for large data sets
+</A></li>
+	<LI>Next message: <A HREF="000064.html">[Pgocaml-dev] Latest svn release break examples
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#63">[ date ]</a>
+              <a href="thread.html#63">[ thread ]</a>
+              <a href="subject.html#63">[ subject ]</a>
+              <a href="author.html#63">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>

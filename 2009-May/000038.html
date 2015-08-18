@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] Updates: web page and lwt branch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Updates%3A%20web%20page%20and%20lwt%20branch&In-Reply-To=%3C197518.5354.qm%40web111516.mail.gq1.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000039.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] Updates: web page and lwt branch</H1>
+    <B>Dario Teixeira</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Updates%3A%20web%20page%20and%20lwt%20branch&In-Reply-To=%3C197518.5354.qm%40web111516.mail.gq1.yahoo.com%3E"
+       TITLE="[Pgocaml-dev] Updates: web page and lwt branch">darioteixeira at yahoo.com
+       </A><BR>
+    <I>Tue May  5 17:34:43 CEST 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000039.html">[Pgocaml-dev] Updates: web page and lwt branch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#38">[ date ]</a>
+              <a href="thread.html#38">[ thread ]</a>
+              <a href="subject.html#38">[ subject ]</a>
+              <a href="author.html#38">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Hi,
+
+This message is just an update on the webpage front and the mainstreaming
+of the Lwt branch.  (@St&#233;phane: I'm CCing you because Vincent Balat said
+you might be creating the Debian package for the project).  The points:
+
+ - The new webpage draft is at trunk/www.  I mostly adapted the content
+   from the existing webpage, but added some new stuff as well.  Note that
+   there's also a tentative logo for the project.  Its meaning should be
+   clear, but do tell me if you find a bit too cutesy.
+
+ - The new webpage makes no mention of older (pre 3.10) versions.  Is there
+   someone still using those?
+
+ - I cleanup the build system for the two branches.  Also, Makefile.config
+   now tries to auto-determine the location for Postgresql's command socket.
+   (If someone knows a distro-agnostic way of doing this, please let me know).
+
+ - The Lwt branch is now called 'pgocaml-monadic'.  Though Lwt is of course
+   the monad that everyone is thinking about, I reckon it is fairer to J&#233;r&#244;me
+   Vouillon's patches to call it 'monadic', since it's not tied to Lwt.
+
+ - It's now possible to install both branches side by side.  The findlib
+   packages are named 'pgocaml' and 'pgocaml-monadic', respectively.
+   @St&#233;phane/@Richard: would it be possible to have the Debian/Fedora
+   packages follow the same convention?  Some users may wish to have
+   both branches installed.
+
+ - The 'statements' sub-package is now called 'syntax', in accordance to
+   the OSR.
+
+If everything is okay, we can release version 1.2 and put the trunk/www
+webpage online.
+
+Cheers,
+Dario
+
+
+
+      
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000039.html">[Pgocaml-dev] Updates: web page and lwt branch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#38">[ date ]</a>
+              <a href="thread.html#38">[ thread ]</a>
+              <a href="subject.html#38">[ subject ]</a>
+              <a href="author.html#38">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>

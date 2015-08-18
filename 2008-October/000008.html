@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] Problem compiling pgocaml 1.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Problem%20compiling%20pgocaml%201.1&In-Reply-To=%3C4b5157c30810040548n296f955esf3fcfb9fab820abf%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000009.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] Problem compiling pgocaml 1.1</H1>
+    <B>Paolo Donadeo</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Problem%20compiling%20pgocaml%201.1&In-Reply-To=%3C4b5157c30810040548n296f955esf3fcfb9fab820abf%40mail.gmail.com%3E"
+       TITLE="[Pgocaml-dev] Problem compiling pgocaml 1.1">p.donadeo at gmail.com
+       </A><BR>
+    <I>Sat Oct  4 14:48:13 CEST 2008</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000009.html">[Pgocaml-dev] Problem compiling pgocaml 1.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8">[ date ]</a>
+              <a href="thread.html#8">[ thread ]</a>
+              <a href="subject.html#8">[ subject ]</a>
+              <a href="author.html#8">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Yesterday I tried to compile pgocaml, but I couldn't link the test suite:
+
+================================ 8&lt; CUT HERE &gt;8 ================================
+$ make
+ocamlfind ocamlc -g  -package unix,extlib,pcre,calendar,csv -c pGOCaml_config.ml
+ocamlfind ocamlc -g  -package unix,extlib,pcre,calendar,csv -c pGOCaml.mli
+ocamlfind ocamlc -g  -package unix,extlib,pcre,calendar,csv -c pGOCaml.ml
+ocamlfind ocamlc -g -package unix,extlib,pcre,calendar,csv -a -o
+pgocaml.cma pGOCaml_config.cmo pGOCaml.cmo
+ocamlfind ocamlopt   -package unix,extlib,pcre,calendar,csv -c pGOCaml_config.ml
+ocamlfind ocamlopt   -package unix,extlib,pcre,calendar,csv -c pGOCaml.ml
+ocamlfind ocamlopt  -package unix,extlib,pcre,calendar,csv -a -o
+pgocaml.cmxa pGOCaml_config.cmx pGOCaml.cmx
+ocamlfind ocamlc -g -package unix,extlib,pcre,calendar,csv \
+	  -pp &quot;camlp4o pa_extend.cmo q_MLast.cmo -loc loc -impl&quot; \
+	  -I +camlp4 -c -impl pa_pgsql.ml4
+ocamlfind ocamlc -g  -package unix,extlib,pcre,calendar,csv -c
+test_pgocaml_lowlevel.ml
+ocamlfind ocamlc -g -package unix,extlib,pcre,calendar,csv -linkpkg \
+	  pgocaml.cma -o test_pgocaml_lowlevel test_pgocaml_lowlevel.cmo
+Error while linking pgocaml.cma(PGOCaml):
+Reference to undefined global `Calendar'
+make: *** [test_pgocaml_lowlevel] Error 2
+================================ 8&lt; END HERE &gt;8 ================================
+
+As you can see the package &quot;calendar&quot; is present and actually the
+library successfully compiles, both native and bytecode.
+
+My system is a Debian (unstable), OCaml 3.10.2, extlib 1.5.1, calendar
+2.0.2 and csv 1.1.6. I think I'm probably missing something *very*
+obvious that I should see at a glance. Can anyone of you help me?
+
+Thanks a lot,
+
+
+-- 
+Paolo
+~
+~
+:<i>wq
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000009.html">[Pgocaml-dev] Problem compiling pgocaml 1.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8">[ date ]</a>
+              <a href="thread.html#8">[ thread ]</a>
+              <a href="subject.html#8">[ subject ]</a>
+              <a href="author.html#8">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>

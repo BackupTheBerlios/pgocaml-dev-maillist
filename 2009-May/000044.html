@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] Updates: web page and lwt branch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Updates%3A%20web%20page%20and%20lwt%20branch&In-Reply-To=%3C265665.4379.qm%40web111510.mail.gq1.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000045.html">
+   <LINK REL="Next"  HREF="000046.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] Updates: web page and lwt branch</H1>
+    <B>Dario Teixeira</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Updates%3A%20web%20page%20and%20lwt%20branch&In-Reply-To=%3C265665.4379.qm%40web111510.mail.gq1.yahoo.com%3E"
+       TITLE="[Pgocaml-dev] Updates: web page and lwt branch">darioteixeira at yahoo.com
+       </A><BR>
+    <I>Wed May  6 17:56:50 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000045.html">[Pgocaml-dev] Updates: web page and lwt branch
+</A></li>
+        <LI>Next message: <A HREF="000046.html">[Pgocaml-dev] Updates: web page and lwt branch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#44">[ date ]</a>
+              <a href="thread.html#44">[ thread ]</a>
+              <a href="subject.html#44">[ subject ]</a>
+              <a href="author.html#44">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+&gt;<i> I've got quite a large body of code which depends on the
+</I>&gt;<i> current API.
+</I>&gt;<i> 
+</I>&gt;<i> Any chance of a quick summary of the changes I will have to
+</I>&gt;<i> make to use the new API?
+</I>
+If you use the 'pgocaml' branch, then none, of course.  But I assume
+you are asking about 'pgocaml-monadic'.  In that case, the API is
+essentially the same, except that all functions of the PG'OCaml API
+are part of a monad.  Attached is an example using the Lwt monad.  Note
+that the actual monad used is specified via a functor; if you don't
+want to use Lwt you can pass the identity monad to the functor.
+
+As you can see from the example, you don't have to learn a new API,
+but you do have to program in a monadic fashion, which may or not
+be to your liking  (myself I learned about monads with Lwt; after
+some initial bangs on a wall I eventually got used to it).
+
+Cheers,
+Dario
+
+
+
+      
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: test.ml
+Type: application/octet-stream
+Size: 1315 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20090506/f45a11ba/attachment.obj">https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20090506/f45a11ba/attachment.obj</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000045.html">[Pgocaml-dev] Updates: web page and lwt branch
+</A></li>
+	<LI>Next message: <A HREF="000046.html">[Pgocaml-dev] Updates: web page and lwt branch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#44">[ date ]</a>
+              <a href="thread.html#44">[ thread ]</a>
+              <a href="subject.html#44">[ subject ]</a>
+              <a href="author.html#44">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>

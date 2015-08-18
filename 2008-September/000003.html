@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] password authentication
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20password%20authentication&In-Reply-To=%3C471501.31364.qm%40web54601.mail.re2.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000007.html">
+   <LINK REL="Next"  HREF="000004.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] password authentication</H1>
+    <B>Dario Teixeira</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20password%20authentication&In-Reply-To=%3C471501.31364.qm%40web54601.mail.re2.yahoo.com%3E"
+       TITLE="[Pgocaml-dev] password authentication">darioteixeira at yahoo.com
+       </A><BR>
+    <I>Thu Sep 11 14:45:33 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000007.html">[Pgocaml-dev] password authentication
+</A></li>
+        <LI>Next message: <A HREF="000004.html">[Pgocaml-dev] password authentication
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3">[ date ]</a>
+              <a href="thread.html#3">[ thread ]</a>
+              <a href="subject.html#3">[ subject ]</a>
+              <a href="author.html#3">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+&gt;<i> I read in Dario's manual that we need an environment
+</I>&gt;<i> variable PGPASSWORD
+</I>&gt;<i> but I can't even find that string in the sources ...
+</I>
+You're right, and sorry about that, Vincent.   I've never
+used password authentication myself, so that part of the
+guide was written about the expected behaviour, not the
+one actually observed.
+
+Anyway, I am attaching a small diff that adds support for
+the PGPASSORD env variable.  Please let us know if it works
+as expected.  However, note that PGOCaml's authentication
+support is very basic: it only allows for clear text passwords.
+For this reason, relying on PGPASSWORD for security is not a
+good idea (which I reckon is the reason that Richard didn't
+implement it in the first place).
+
+Cheers,
+Dario
+
+
+--- pGOCaml.ml.old      2008-09-11 13:24:38.000000000 +0100
++++ pGOCaml.ml  2008-09-11 13:27:15.000000000 +0100
+@@ -550,7 +550,7 @@
+
+ (*----- Connection. -----*)
+
+-let connect ?host ?port ?user ?(password = &quot;&quot;) ?database
++let connect ?host ?port ?user ?password ?database
+     ?(unix_domain_socket_dir = PGOCaml_config.default_unix_domain_socket_dir)
+     () =
+   (* Get the username. *)
+@@ -566,6 +566,14 @@
+          with
+            Not_found -&gt; &quot;postgres&quot; in
+
++  (* Get the password. *)
++  let password =
++    match password with
++    | Some password -&gt; password
++    | None -&gt;
++       try Sys.getenv &quot;PGPASSWORD&quot;
++       with Not_found -&gt; &quot;&quot; in
++
+   (* Get the database name. *)
+   let database =
+     match database with
+
+
+
+
+
+      
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000007.html">[Pgocaml-dev] password authentication
+</A></li>
+	<LI>Next message: <A HREF="000004.html">[Pgocaml-dev] password authentication
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3">[ date ]</a>
+              <a href="thread.html#3">[ thread ]</a>
+              <a href="subject.html#3">[ subject ]</a>
+              <a href="author.html#3">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>

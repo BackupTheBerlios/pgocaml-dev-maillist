@@ -1,0 +1,435 @@
+From darioteixeira at yahoo.com  Tue May  5 17:34:43 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Tue, 5 May 2009 08:34:43 -0700 (PDT)
+Subject: [Pgocaml-dev] Updates: web page and lwt branch
+Message-ID: <197518.5354.qm@web111516.mail.gq1.yahoo.com>
+
+
+Hi,
+
+This message is just an update on the webpage front and the mainstreaming
+of the Lwt branch.  (@St?phane: I'm CCing you because Vincent Balat said
+you might be creating the Debian package for the project).  The points:
+
+ - The new webpage draft is at trunk/www.  I mostly adapted the content
+   from the existing webpage, but added some new stuff as well.  Note that
+   there's also a tentative logo for the project.  Its meaning should be
+   clear, but do tell me if you find a bit too cutesy.
+
+ - The new webpage makes no mention of older (pre 3.10) versions.  Is there
+   someone still using those?
+
+ - I cleanup the build system for the two branches.  Also, Makefile.config
+   now tries to auto-determine the location for Postgresql's command socket.
+   (If someone knows a distro-agnostic way of doing this, please let me know).
+
+ - The Lwt branch is now called 'pgocaml-monadic'.  Though Lwt is of course
+   the monad that everyone is thinking about, I reckon it is fairer to J?r?me
+   Vouillon's patches to call it 'monadic', since it's not tied to Lwt.
+
+ - It's now possible to install both branches side by side.  The findlib
+   packages are named 'pgocaml' and 'pgocaml-monadic', respectively.
+   @St?phane/@Richard: would it be possible to have the Debian/Fedora
+   packages follow the same convention?  Some users may wish to have
+   both branches installed.
+
+ - The 'statements' sub-package is now called 'syntax', in accordance to
+   the OSR.
+
+If everything is okay, we can release version 1.2 and put the trunk/www
+webpage online.
+
+Cheers,
+Dario
+
+
+
+      
+
+
+From rich at annexia.org  Wed May  6 14:53:22 2009
+From: rich at annexia.org (Richard Jones)
+Date: Wed, 6 May 2009 13:53:22 +0100
+Subject: [Pgocaml-dev] Updates: web page and lwt branch
+In-Reply-To: <197518.5354.qm@web111516.mail.gq1.yahoo.com>
+References: <197518.5354.qm@web111516.mail.gq1.yahoo.com>
+Message-ID: <20090506125322.GC14923@annexia.org>
+
+On Tue, May 05, 2009 at 08:34:43AM -0700, Dario Teixeira wrote:
+>  - The new webpage makes no mention of older (pre 3.10) versions.  Is there
+>    someone still using those?
+
+Not me, but in any case people who care about the older version of
+OCaml can still use (and maintain) the old PG'OCaml.  I wouldn't worry
+about it for the main project.
+
+>  - I cleanup the build system for the two branches.  Also, Makefile.config
+>    now tries to auto-determine the location for Postgresql's command socket.
+>    (If someone knows a distro-agnostic way of doing this, please let me know).
+
+It would be nice to use autotools and ocaml-autoconf at some point.
+
+>  - It's now possible to install both branches side by side.  The findlib
+>    packages are named 'pgocaml' and 'pgocaml-monadic', respectively.
+>    @St?phane/@Richard: would it be possible to have the Debian/Fedora
+>    packages follow the same convention?  Some users may wish to have
+>    both branches installed.
+
+Yes, this is possible.  Of course for Fedora it'd have to be called
+ocaml-pgocaml-monadic, and libpgocaml-monadic-ocaml-dev for Debian (I
+think).
+
+Thanks for looking after this.
+
+Rich.
+
+-- 
+Richard Jones
+Red Hat
+
+
+From steph at glondu.net  Wed May  6 16:24:13 2009
+From: steph at glondu.net (=?ISO-8859-1?Q?St=E9phane_Glondu?=)
+Date: Wed, 06 May 2009 16:24:13 +0200
+Subject: [Pgocaml-dev] Updates: web page and lwt branch
+In-Reply-To: <20090506125322.GC14923@annexia.org>
+References: <197518.5354.qm@web111516.mail.gq1.yahoo.com>
+	<20090506125322.GC14923@annexia.org>
+Message-ID: <4A019D8D.2090408@glondu.net>
+
+Richard Jones a ?crit :
+>>  - It's now possible to install both branches side by side.  The findlib
+>>    packages are named 'pgocaml' and 'pgocaml-monadic', respectively.
+>>    @St?phane/@Richard: would it be possible to have the Debian/Fedora
+>>    packages follow the same convention?  Some users may wish to have
+>>    both branches installed.
+> 
+> Yes, this is possible.  Of course for Fedora it'd have to be called
+> ocaml-pgocaml-monadic, and libpgocaml-monadic-ocaml-dev for Debian (I
+> think).
+
+Is there any interest to have just pgocaml? Isn't pgocaml-monadic a
+superset of pgocaml? If so, I guess I will just package pgocaml-monadic.
+
+
+Cheers,
+
+-- 
+St?phane
+
+
+From darioteixeira at yahoo.com  Wed May  6 17:25:27 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Wed, 6 May 2009 08:25:27 -0700 (PDT)
+Subject: [Pgocaml-dev] Updates: web page and lwt branch
+Message-ID: <691482.10355.qm@web111504.mail.gq1.yahoo.com>
+
+
+Hi,
+
+> Is there any interest to have just pgocaml? Isn't pgocaml-monadic a
+> superset of pgocaml? If so, I guess I will just package pgocaml-monadic.
+
+Myself, I've also switched and I'm now only using pgocaml-monadic.
+However, for API compatibility purposes with some code out there,
+it is reasonable to keep maintaining both branches for now.
+
+As for the Debian package, I agree it does make some sense to package
+only pgocaml-monadic, since it reduces confusion and you don't have the
+backwards compatibility problem.
+
+Cheers,
+Dario
+
+
+
+      
+
+
+From rich at annexia.org  Wed May  6 17:37:45 2009
+From: rich at annexia.org (Richard Jones)
+Date: Wed, 6 May 2009 16:37:45 +0100
+Subject: [Pgocaml-dev] Updates: web page and lwt branch
+In-Reply-To: <691482.10355.qm@web111504.mail.gq1.yahoo.com>
+References: <691482.10355.qm@web111504.mail.gq1.yahoo.com>
+Message-ID: <20090506153745.GA16581@annexia.org>
+
+On Wed, May 06, 2009 at 08:25:27AM -0700, Dario Teixeira wrote:
+> 
+> Hi,
+> 
+> > Is there any interest to have just pgocaml? Isn't pgocaml-monadic a
+> > superset of pgocaml? If so, I guess I will just package pgocaml-monadic.
+> 
+> Myself, I've also switched and I'm now only using pgocaml-monadic.
+> However, for API compatibility purposes with some code out there,
+> it is reasonable to keep maintaining both branches for now.
+> 
+> As for the Debian package, I agree it does make some sense to package
+> only pgocaml-monadic, since it reduces confusion and you don't have the
+> backwards compatibility problem.
+
+I've got quite a large body of code which depends on the current API.
+
+Any chance of a quick summary of the changes I will have to make to
+use the new API?
+
+Rich.
+
+-- 
+Richard Jones
+Red Hat
+
+
+From darioteixeira at yahoo.com  Wed May  6 17:40:25 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Wed, 6 May 2009 08:40:25 -0700 (PDT)
+Subject: [Pgocaml-dev] Updates: web page and lwt branch
+Message-ID: <461435.9211.qm@web111515.mail.gq1.yahoo.com>
+
+
+Hi,
+
+> Not me, but in any case people who care about the older version of
+> OCaml can still use (and maintain) the old PG'OCaml.?
+> I wouldn't worry about it for the main project.
+
+Okay.  I'll add the download link to the old tar.gz on the webpage.
+
+> It would be nice to use autotools and ocaml-autoconf at some point.
+
+Indeed.  I added a hackish auto-detection for DEFAULT_UNIX_DOMAIN_SOCKET_DIR,
+and that works fine on my Debian system (and I guess works also on Fedora).
+However, I expect any time now we'll get complaints from users of other
+distros or BSD/MacOSX/Windows.
+
+Anyway, apart from the above, is everyone happy with the new trunk and
+the web page?  If so, I'll put it online.
+
+Cheers,
+Dario
+
+
+
+      
+
+
+From darioteixeira at yahoo.com  Wed May  6 17:56:50 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Wed, 6 May 2009 08:56:50 -0700 (PDT)
+Subject: [Pgocaml-dev] Updates: web page and lwt branch
+Message-ID: <265665.4379.qm@web111510.mail.gq1.yahoo.com>
+
+Hi,
+
+> I've got quite a large body of code which depends on the
+> current API.
+> 
+> Any chance of a quick summary of the changes I will have to
+> make to use the new API?
+
+If you use the 'pgocaml' branch, then none, of course.  But I assume
+you are asking about 'pgocaml-monadic'.  In that case, the API is
+essentially the same, except that all functions of the PG'OCaml API
+are part of a monad.  Attached is an example using the Lwt monad.  Note
+that the actual monad used is specified via a functor; if you don't
+want to use Lwt you can pass the identity monad to the functor.
+
+As you can see from the example, you don't have to learn a new API,
+but you do have to program in a monadic fashion, which may or not
+be to your liking  (myself I learned about monads with Lwt; after
+some initial bangs on a wall I eventually got used to it).
+
+Cheers,
+Dario
+
+
+
+      
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: test.ml
+Type: application/octet-stream
+Size: 1315 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20090506/f45a11ba/attachment.obj>
+
+From rich at annexia.org  Wed May  6 18:47:29 2009
+From: rich at annexia.org (Richard Jones)
+Date: Wed, 6 May 2009 17:47:29 +0100
+Subject: [Pgocaml-dev] Updates: web page and lwt branch
+In-Reply-To: <461435.9211.qm@web111515.mail.gq1.yahoo.com>
+References: <461435.9211.qm@web111515.mail.gq1.yahoo.com>
+Message-ID: <20090506164729.GB16581@annexia.org>
+
+On Wed, May 06, 2009 at 08:40:25AM -0700, Dario Teixeira wrote:
+> Anyway, apart from the above, is everyone happy with the new trunk and
+> the web page?  If so, I'll put it online.
+
+Please do, whenever you think it's ready.
+
+Rich.
+
+-- 
+Richard Jones
+Red Hat
+
+
+From rich at annexia.org  Wed May  6 18:48:58 2009
+From: rich at annexia.org (Richard Jones)
+Date: Wed, 6 May 2009 17:48:58 +0100
+Subject: [Pgocaml-dev] Updates: web page and lwt branch
+In-Reply-To: <265665.4379.qm@web111510.mail.gq1.yahoo.com>
+References: <265665.4379.qm@web111510.mail.gq1.yahoo.com>
+Message-ID: <20090506164858.GC16581@annexia.org>
+
+OK, I think it's better to keep both branches, for me at least.
+
+Rich.
+
+
+-- 
+Richard Jones
+Red Hat
+
+
+From vincent.balat at pps.jussieu.fr  Wed May  6 18:58:44 2009
+From: vincent.balat at pps.jussieu.fr (Vincent Balat)
+Date: Wed, 6 May 2009 18:58:44 +0200
+Subject: [Pgocaml-dev] Updates: web page and lwt branch
+In-Reply-To: <265665.4379.qm@web111510.mail.gq1.yahoo.com>
+References: <265665.4379.qm@web111510.mail.gq1.yahoo.com>
+Message-ID: <200905061858.45090.vincent.balat@pps.jussieu.fr>
+
+On Wednesday 06 May 2009 17:56:50 Dario Teixeira wrote:
+> > I've got quite a large body of code which depends on the
+> > current API.
+> >
+> > Any chance of a quick summary of the changes I will have to
+> > make to use the new API?
+>
+> If you use the 'pgocaml' branch, then none, of course.  But I assume
+> you are asking about 'pgocaml-monadic'.  In that case, the API is
+> essentially the same, except that all functions of the PG'OCaml API
+> are part of a monad.  Attached is an example using the Lwt monad.  Note
+> that the actual monad used is specified via a functor; if you don't
+> want to use Lwt you can pass the identity monad to the functor.
+>
+> As you can see from the example, you don't have to learn a new API,
+> but you do have to program in a monadic fashion, which may or not
+> be to your liking  (myself I learned about monads with Lwt; after
+> some initial bangs on a wall I eventually got used to it).
+
+Actually that's only if you want to make your code cooperative.
+Otherwise, you don't need to change anything if pgocaml-monadic is installed 
+on your system instead of pgocaml, as pgocaml.mli is exactly the same as 
+before (actually there are just two extra functions: bind and return).
+
+$ cat pGOCaml.mli
+
+include PGOCaml_generic.PGOCAML_GENERIC
+  with type 'a monad = 'a
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20090506/365544f2/attachment.html>
+
+From darioteixeira at yahoo.com  Wed May  6 19:38:12 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Wed, 6 May 2009 10:38:12 -0700 (PDT)
+Subject: [Pgocaml-dev] Updates: web page and lwt branch
+Message-ID: <107367.71749.qm@web111515.mail.gq1.yahoo.com>
+
+
+Hi,
+
+> Otherwise, you don't need to change anything if
+> pgocaml-monadic is installed on your system instead of
+> pgocaml, as pgocaml.mli is exactly the same as before
+> (actually there are just two extra functions: bind and
+> return).
+> 
+> $ cat pGOCaml.mli
+> 
+> include PGOCaml_generic.PGOCAML_GENERIC with type 'a monad = 'a
+
+Neat trick!
+
+Sorry, but I hadn't realised this before.  This means indeed that
+going forward it makes sense to make the monadic branch the sole branch.
+
+I'll update the web page with this info...
+
+Cheers,
+Dario
+
+
+
+      
+
+
+From darioteixeira at yahoo.com  Wed May  6 20:25:26 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Wed, 6 May 2009 11:25:26 -0700 (PDT)
+Subject: [Pgocaml-dev] Updates: web page and lwt branch
+Message-ID: <277150.58223.qm@web111514.mail.gq1.yahoo.com>
+
+
+Hi,
+
+Please check the updated version of the webpage at trunk/www.
+The section about the branches depicts my (revised) opinion on how
+to proceed.  Note that I still think that at least for this coming
+release the two branches should be available.  Even if the API
+compatibility issue turned out to be moot (thank you Vincent for
+clearing that out!), there's still the issue of existing patches
+to the old code base.
+
+Also, to make the transition easier, I suggest the branches get renamed:
+
+pgocaml          -> pgocaml-old
+pgocaml-monadic  -> pgocaml
+
+This way forward-compatibility is ensured, and there's no confusion
+concerning the naming of the Debian package, for example.
+
+Cheers,
+Dario
+
+
+
+      
+
+
+From rich at annexia.org  Mon May 11 03:45:17 2009
+From: rich at annexia.org (Richard Jones)
+Date: Mon, 11 May 2009 01:45:17 -0000
+Subject: [Pgocaml-dev] New in SVN
+In-Reply-To: <622077.30710.qm@web111510.mail.gq1.yahoo.com>
+References: <622077.30710.qm@web111510.mail.gq1.yahoo.com>
+Message-ID: <20090422211702.GB9471@annexia.org>
+
+On Wed, Apr 22, 2009 at 07:38:20AM -0700, Dario Teixeira wrote:
+> I made some rearrangements to SVN.  Most significantly, the 'lwt' branch
+> has been moved into trunk, and is now called 'pgocaml-lwt'.  We should try
+> to keep it synchronised with the "main" project proper, which now sits in
+> directory trunk/pgocaml.
+> 
+> You will also note a new trunk tree called 'pgoctut'.  I've uploaded there
+> the LaTeX sources for my tutorial.
+> 
+> There are also two (for now) empty directories: 'www' and 'godi'.  The
+> former will contain the source files for the project's new homepage (which
+> I'll work on soon).  The latter is for whatever is needed for a GODI port
+> (I have no experience creating GODI packages myself, but I reckon it should
+> not be too difficult).
+
+Great, thanks for sorting this out.
+
+Rich.
+
+-- 
+Richard Jones
+Red Hat
+
+

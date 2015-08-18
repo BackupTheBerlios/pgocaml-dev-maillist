@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] New stuff in trunk
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2011-February/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20New%20stuff%20in%20trunk&In-Reply-To=%3CE51C5B015DBD1348A1D85763337FB6D9490ED4A3%40Remus.metastack.local%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000114.html">
+   <LINK REL="Next"  HREF="000116.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] New stuff in trunk</H1>
+    <B>David Allsopp</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20New%20stuff%20in%20trunk&In-Reply-To=%3CE51C5B015DBD1348A1D85763337FB6D9490ED4A3%40Remus.metastack.local%3E"
+       TITLE="[Pgocaml-dev] New stuff in trunk">dra-news at metastack.com
+       </A><BR>
+    <I>Fri Feb 18 10:40:33 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000114.html">[Pgocaml-dev] New stuff in trunk
+</A></li>
+        <LI>Next message: <A HREF="000116.html">[Pgocaml-dev] New stuff in trunk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#115">[ date ]</a>
+              <a href="thread.html#115">[ thread ]</a>
+              <a href="subject.html#115">[ subject ]</a>
+              <a href="author.html#115">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Dario Teixeira wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> &gt; - I know I'm biased as I reported them both but it would seem to me
+</I>&gt;<i> &gt; strange not to incorporate the second as I provided a patch.
+</I>&gt;<i> 
+</I>&gt;<i> Developments happening off-list tend to be forgotten.  In fact, it might
+</I>&gt;<i> be best to disable the bug tracker at BerliOS to force people to send
+</I>&gt;<i> their patches and bug reports to this list.
+</I>
+:<i>o) Will remember that!
+</I>
+&gt;<i> Anyway, could you send the patch for #16274 against current trunk?
+</I>&gt;<i> Please test it thoroughly, since I have no Windows machine to do it
+</I>&gt;<i> myself.
+</I>
+pgocaml-windows-connect.patch is a slightly different patch which I have tested against trunk (incidentally, I noticed that Makefile.config hasn't yet been updated to have version 1.5 specified). It's slightly different from the one listed in the bug report because while caching Unix.getpid() and Unix.getppid() is valid under Windows (they can't change) that doesn't take Unix.fork into account on other OSes.
+
+&gt;<i> &gt; Assuming it does affect 9.0.x too, it would seem odd IMO to make a
+</I>&gt;<i> &gt; first official release for just over a year containing a known broken
+</I>&gt;<i> &gt; type system...
+</I>&gt;<i> 
+</I>&gt;<i> As for bug #17908, have you checked entry (1) in BUGS.txt?
+</I>
+Gah - I remember reading that years ago and had completely forgotten. Attached is a tiny tweak to pa_pgsql.ml4 in pgocaml-nullable-results.patch which I hope you'll accept - it converts the Option.No_value exception (in a way compatible with the batteries stuff) into a Failure exception which includes a much more accurate description of what's gone wrong (including a remedy). Could possibly use Invalid_argument instead as that's never supposed to be caught.
+
+Can I also suggest a better solution to be included in BUGS.txt because nullable-results is not the greatest way of solving the problem as it nulls *everything* in the query. You can alternatively wrap the offending columns (ones which pa_pgsql thinks cannot be null) in your SQL statement with COALESCE(foo, NULL) - pa_pgsql won't be able to infer not NULL and it won't change the results. If the Postgres query optimiser really has its head screwed on then it should notice that that's an identity function and eliminate it (not tested that).
+
+&gt;<i> &gt; PS Just in case this email gives the wrong impression - I *adore*
+</I>&gt;<i> &gt; PGO'Caml and the development it /usually/ saves
+</I>&gt;<i> 
+</I>&gt;<i> Yeah, sometimes the feedback is not as fast as we would like, but we're
+</I>&gt;<i> all volunteers here...  (I hope that moving to the Ocaml Forge will lower
+</I>&gt;<i> the barrier for other people to contribute).
+</I>
+I'll remember to post to the list first in future. Certainly, if it's not in use then switching off the bug tracker would be a good plan.
+
+
+David
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: pgocaml-nullable-results.patch
+Type: application/octet-stream
+Size: 521 bytes
+Desc: pgocaml-nullable-results.patch
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20110218/bf895271/attachment.obj">https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20110218/bf895271/attachment.obj</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: pgocaml-windows-connect.patch
+Type: application/octet-stream
+Size: 771 bytes
+Desc: pgocaml-windows-connect.patch
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20110218/bf895271/attachment-0001.obj">https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20110218/bf895271/attachment-0001.obj</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000114.html">[Pgocaml-dev] New stuff in trunk
+</A></li>
+	<LI>Next message: <A HREF="000116.html">[Pgocaml-dev] New stuff in trunk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#115">[ date ]</a>
+              <a href="thread.html#115">[ thread ]</a>
+              <a href="subject.html#115">[ subject ]</a>
+              <a href="author.html#115">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>

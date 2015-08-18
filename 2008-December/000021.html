@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] linking pgocaml
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20linking%20pgocaml&In-Reply-To=%3C20081124210302.GA16129%40annexia.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000022.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] linking pgocaml</H1>
+    <B>Richard Jones</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20linking%20pgocaml&In-Reply-To=%3C20081124210302.GA16129%40annexia.org%3E"
+       TITLE="[Pgocaml-dev] linking pgocaml">rich at annexia.org
+       </A><BR>
+    <I>Tue Dec 16 12:37:56 CET 2008</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000022.html">[Pgocaml-dev] Problem compiling pgocaml 1.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21">[ date ]</a>
+              <a href="thread.html#21">[ thread ]</a>
+              <a href="subject.html#21">[ subject ]</a>
+              <a href="author.html#21">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Nov 24, 2008 at 02:59:08PM -0600, Alexy Khrabrov wrote:
+&gt;<i> Hi Rich -- I noticed in my postgres logs that each compilation throws one
+</I>&gt;<i> 
+</I>&gt;<i> LOG:  unexpected EOF on client connection
+</I>&gt;<i> 
+</I>&gt;<i> -- is there a way to fix that so that logs are not cluttered by results of my hectic make runs? :)
+</I>
+Yes, IIRC we're not sending the right quit command to the Postgres
+server, just closing the connection instead.  I guess if you want to
+fix it, take a close look at the PostgreSQL protocol documentation and
+the source to PG'OCaml ...
+
+Rich.
+
+-- 
+Richard Jones
+Red Hat
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000022.html">[Pgocaml-dev] Problem compiling pgocaml 1.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21">[ date ]</a>
+              <a href="thread.html#21">[ thread ]</a>
+              <a href="subject.html#21">[ subject ]</a>
+              <a href="author.html#21">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>

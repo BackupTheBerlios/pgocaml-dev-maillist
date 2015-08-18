@@ -1,0 +1,49 @@
+From darioteixeira at yahoo.com  Mon Dec 21 16:59:09 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Mon, 21 Dec 2009 07:59:09 -0800 (PST)
+Subject: [Pgocaml-dev] Version 1.4
+Message-ID: <791762.46465.qm@web111515.mail.gq1.yahoo.com>
+
+Hi,
+
+While we're all probably tracking SVN trunk and are thus oblivious to
+"official" releases, shall we package 1.4 for the benefit of outsiders?
+
+Let me know if someone has a pending patch they would like to include.
+Otherwise, I'll tag and release 1.4 as a Christmas present to our users...
+
+Meri Kurisumasu!
+Dario Teixeira
+
+P.S. The project lacked a CHANGELOG, so I've added one to trunk.
+     I've filled it with information gathered from SVN logs; let
+     me know if something is amiss.
+
+
+
+      
+
+
+From darioteixeira at yahoo.com  Tue Dec 22 16:29:37 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Tue, 22 Dec 2009 07:29:37 -0800 (PST)
+Subject: [Pgocaml-dev] Version 1.4
+In-Reply-To: <791762.46465.qm@web111515.mail.gq1.yahoo.com>
+Message-ID: <346503.40688.qm@web111512.mail.gq1.yahoo.com>
+
+Hi,
+
+> While we're all probably tracking SVN trunk and are thus oblivious to
+> "official" releases, shall we package 1.4 for the benefit of outsiders?
+
+I've tagged and released 1.4, and updated the WWW page accordingly.
+Note that 1.4 is only available for the "pgocaml" (monadic) variant.
+
+Cheers,
+Dario Teixeira
+
+
+
+      
+
+

@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] password authentication
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20password%20authentication&In-Reply-To=%3C20080910205714.GA23453%40annexia.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000002.html">
+   <LINK REL="Next"  HREF="000003.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] password authentication</H1>
+    <B>Richard Jones</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20password%20authentication&In-Reply-To=%3C20080910205714.GA23453%40annexia.org%3E"
+       TITLE="[Pgocaml-dev] password authentication">rich at annexia.org
+       </A><BR>
+    <I>Wed Sep 10 22:57:14 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000002.html">[Pgocaml-dev] password authentication
+</A></li>
+        <LI>Next message: <A HREF="000003.html">[Pgocaml-dev] password authentication
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7">[ date ]</a>
+              <a href="thread.html#7">[ thread ]</a>
+              <a href="subject.html#7">[ subject ]</a>
+              <a href="author.html#7">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Sep 10, 2008 at 09:35:55PM +0200, Vincent Balat wrote:
+&gt;<i> I'm trying to use password authentication with pgocaml. How does it work?
+</I>&gt;<i> I can't manage to make it work at compile time ... (after that it works).
+</I>&gt;<i> 
+</I>&gt;<i> I read in Dario's manual that we need an environment variable PGPASSWORD
+</I>&gt;<i> but I can't even find that string in the sources ...
+</I>
+Yes, looks like in fact we don't get the password from any environment
+variable.
+
+I don't use password authentication with postgres - either ident or
+trust (host-based).
+
+You can set it per-statement using:
+
+  PGSQL(dbh) &quot;password=foo&quot; &quot;select ...&quot;
+
+although that might not scale very well for you ...  Alternatively
+you'll need to patch pGOCaml.ml.
+
+Rich.
+
+-- 
+Richard Jones
+Red Hat
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000002.html">[Pgocaml-dev] password authentication
+</A></li>
+	<LI>Next message: <A HREF="000003.html">[Pgocaml-dev] password authentication
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7">[ date ]</a>
+              <a href="thread.html#7">[ thread ]</a>
+              <a href="subject.html#7">[ subject ]</a>
+              <a href="author.html#7">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>

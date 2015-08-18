@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] Parse error: currified constructor
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Parse%20error%3A%20currified%20constructor&In-Reply-To=%3C498C1871.7060303%40citycable.ch%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000025.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] Parse error: currified constructor</H1>
+    <B>Guillaume Yziquel</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Parse%20error%3A%20currified%20constructor&In-Reply-To=%3C498C1871.7060303%40citycable.ch%3E"
+       TITLE="[Pgocaml-dev] Parse error: currified constructor">guillaume.yziquel at citycable.ch
+       </A><BR>
+    <I>Fri Feb  6 12:01:05 CET 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000025.html">[Pgocaml-dev] PGOcaml tarball for Debian.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#24">[ date ]</a>
+              <a href="thread.html#24">[ thread ]</a>
+              <a href="subject.html#24">[ subject ]</a>
+              <a href="author.html#24">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+I managed to compile PG'OCaml on my Debian system. (I will perhaps 
+provide a tarball or a package it for Debian when I have some time 
+available).
+
+However, I encounter a &quot;Parse error: currified constructor&quot;. As I'm not 
+really familiar with camlp4, maybe i'm doing something obviously wrong...
+
+Guillaume Yziquel
+
+&gt;<i>         Objective Caml version 3.10.2
+</I>&gt;<i> 
+</I>&gt;<i> # #use &quot;topfind&quot;;;
+</I>&gt;<i> - : unit = ()
+</I>&gt;<i> Findlib has been successfully loaded. Additional directives:
+</I>&gt;<i>   #require &quot;package&quot;;;      to load a package
+</I>&gt;<i>   #list;;                   to list the available packages
+</I>&gt;<i>   #camlp4o;;                to load camlp4 (standard syntax)
+</I>&gt;<i>   #camlp4r;;                to load camlp4 (revised syntax)
+</I>&gt;<i>   #predicates &quot;p,q,...&quot;;;   to set these predicates
+</I>&gt;<i>   Topfind.reset();;         to force that packages will be reloaded
+</I>&gt;<i>   #thread;;                 to enable threads
+</I>&gt;<i> 
+</I>&gt;<i> - : unit = ()
+</I>&gt;<i> # #camlp4o;;
+</I>&gt;<i> /usr/lib/ocaml/3.10.2/camlp4: added to search path
+</I>&gt;<i> /usr/lib/ocaml/3.10.2/camlp4/camlp4o.cma: loaded
+</I>&gt;<i> 	Camlp4 Parsing version 3.10.2
+</I>&gt;<i> 
+</I>&gt;<i> # #require &quot;extlib, pcre, calendar, csv&quot;;;
+</I>&gt;<i> /usr/lib/ocaml/3.10.2/extlib: added to search path
+</I>&gt;<i> /usr/lib/ocaml/3.10.2/extlib/extLib.cma: loaded
+</I>&gt;<i> /usr/lib/ocaml/3.10.2/pcre: added to search path
+</I>&gt;<i> /usr/lib/ocaml/3.10.2/pcre/pcre.cma: loaded
+</I>&gt;<i> /usr/lib/ocaml/3.10.2/unix.cma: loaded
+</I>&gt;<i> /usr/lib/ocaml/3.10.2/str.cma: loaded
+</I>&gt;<i> /usr/lib/ocaml/3.10.2/calendar: added to search path
+</I>&gt;<i> /usr/lib/ocaml/3.10.2/calendar/calendarLib.cmo: loaded
+</I>&gt;<i> /usr/lib/ocaml/3.10.2/csv: added to search path
+</I>&gt;<i> /usr/lib/ocaml/3.10.2/csv/csv.cma: loaded
+</I>&gt;<i> # #load &quot;pgocaml.cma&quot;;;
+</I>&gt;<i> # let dbh = PGOCaml.connect ();;
+</I>&gt;<i> val dbh : '_a PGOCaml.t = &lt;abstr&gt;
+</I>&gt;<i> #  PGSQL(dbh) &quot;execute&quot; &quot;create temporary table employees (
+</I>&gt;<i>        id serial not null primary key,
+</I>&gt;<i>        name text not null,
+</I>&gt;<i>        salary int4 not null,
+</I>&gt;<i>        email text
+</I>&gt;<i>     )&quot;;;      ;;
+</I>&gt;<i> Parse error: currified constructor
+</I>&gt;<i> # 
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000025.html">[Pgocaml-dev] PGOcaml tarball for Debian.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#24">[ date ]</a>
+              <a href="thread.html#24">[ thread ]</a>
+              <a href="subject.html#24">[ subject ]</a>
+              <a href="author.html#24">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>

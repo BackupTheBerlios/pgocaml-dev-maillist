@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] &quot;More than 5M&quot; problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20%22More%20than%205M%22%20problem&In-Reply-To=%3CBA5FA530-2782-498E-B537-5D515E924480%40mykola.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000031.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] &quot;More than 5M&quot; problem</H1>
+    <B>Mykola Stryebkov</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20%22More%20than%205M%22%20problem&In-Reply-To=%3CBA5FA530-2782-498E-B537-5D515E924480%40mykola.org%3E"
+       TITLE="[Pgocaml-dev] &quot;More than 5M&quot; problem">nick at mykola.org
+       </A><BR>
+    <I>Wed Apr  1 18:17:05 CEST 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000031.html">[Pgocaml-dev] New in SVN
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#30">[ date ]</a>
+              <a href="thread.html#30">[ thread ]</a>
+              <a href="subject.html#30">[ subject ]</a>
+              <a href="author.html#30">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I've encountered a problem with more than 5M rows data sets. For my  
+data sets there are not enough stack to map list of raw string results  
+to list of typed tuples.
+
+Exact problem is in using List.map that is not tail-end recursive and,  
+therefore, uses too much stack for  huge datasets. To resolve this  
+issue i propose the attached  patch.
+
+Patch do the following:
+
+1. Exclude function do_execute from PGOCaml.execute
+2. Extend its parameters with boolean flag indicating if resulting raw  
+rows list should be reversed.
+3. Modify PGOCaml.execute accordingly
+4. Introduce new functions PGOCaml.execute_rev that does not reverse  
+rows list.
+5. Use this function together with List.rev_map in pa_pgsql.ml4 to  
+avoid stack overflow.
+
+It works for me and I'd be glad to hear any replies.
+
+-- 
+Mykola Stryebkov
+Blog: <A HREF="http://mykola.org/blog/">http://mykola.org/blog/</A>
+Public key: <A HREF="http://humgat.org/~nick/pubkey.txt">http://humgat.org/~nick/pubkey.txt</A>
+fpr: 552C 88D6 895B 6E64 F277 D367 8A70 8132 47F5 C1B6
+
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: pgocaml.patch
+Type: application/octet-stream
+Size: 6921 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20090401/b835185b/attachment.obj">https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20090401/b835185b/attachment.obj</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000031.html">[Pgocaml-dev] New in SVN
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#30">[ date ]</a>
+              <a href="thread.html#30">[ thread ]</a>
+              <a href="subject.html#30">[ subject ]</a>
+              <a href="author.html#30">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>

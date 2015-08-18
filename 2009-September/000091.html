@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] Fwd: PGOCaml patch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Fwd%3A%20PGOCaml%20patch&In-Reply-To=%3C20090919164206.GA10130%40annexia.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000089.html">
+   <LINK REL="Next"  HREF="000092.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] Fwd: PGOCaml patch</H1>
+    <B>Richard Jones</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Fwd%3A%20PGOCaml%20patch&In-Reply-To=%3C20090919164206.GA10130%40annexia.org%3E"
+       TITLE="[Pgocaml-dev] Fwd: PGOCaml patch">rich at annexia.org
+       </A><BR>
+    <I>Sat Sep 19 18:42:06 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000089.html">[Pgocaml-dev] [Patch] explicit module for the &quot;Simple thread&quot;	structure of pGOCaml.ml
+</A></li>
+        <LI>Next message: <A HREF="000092.html">[Pgocaml-dev] Fwd: PGOCaml patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#91">[ date ]</a>
+              <a href="thread.html#91">[ thread ]</a>
+              <a href="subject.html#91">[ subject ]</a>
+              <a href="author.html#91">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Forwarding to the mailing list ...
+
+----- Forwarded message from David Allsopp &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">david.allsopp at metastack.com</A>&gt; -----
+
+Subject: PGOCaml patch
+From: David Allsopp &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">david.allsopp at metastack.com</A>&gt;
+To: 'Richard Jones' &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">rich at annexia.org</A>&gt;
+Organization: MetaStack Solutions Ltd.
+X-Scanned-By: MIMEDefang 2.65 on 81.102.132.77
+X-Cloudmark-Analysis: v=1.0 c=1 a=z_NMsDQUxulsCiESi9gA:9 a=8UZqLVrRvmjYAJIhQN5lRtXNfeoA:4 a=FJWyKOzY1xUA:10 a=_txdi8hKb07uAype2doA:9 a=9ng28mlTcb21yuhFORYA:7 a=VfTO70DmaYETdbs2lsMYLxi9ORgA:4
+
+Hi Rich,
+
+	I submitted a bug report with a patch for PGOCaml a couple of days
+ago but the bug tracker on berlios.de doesn't seem to be the best way to
+submit patches. The attached patch for 1.3 adds support for the INET data
+type (it converts the result to a Unix.inet_addr * int pair). It should also
+work for the CIDR data type without further alteration, but I haven't tested
+that so I didn't add the case to name_of_type.
+
+Best,
+
+
+David
+
+
+
+----- End forwarded message -----
+
+-- 
+Richard Jones
+Red Hat
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: pgocaml-1.3-inet.patch
+Type: text/x-diff
+Size: 3677 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20090919/3bde13ab/attachment.patch">https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20090919/3bde13ab/attachment.patch</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000089.html">[Pgocaml-dev] [Patch] explicit module for the &quot;Simple thread&quot;	structure of pGOCaml.ml
+</A></li>
+	<LI>Next message: <A HREF="000092.html">[Pgocaml-dev] Fwd: PGOCaml patch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#91">[ date ]</a>
+              <a href="thread.html#91">[ thread ]</a>
+              <a href="subject.html#91">[ subject ]</a>
+              <a href="author.html#91">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>

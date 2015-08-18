@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] New branch adding support for hstore
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2010-November/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20New%20branch%20adding%20support%20for%20hstore&In-Reply-To=%3C887952.22089.qm%40web111502.mail.gq1.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000099.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] New branch adding support for hstore</H1>
+    <B>Dario Teixeira</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20New%20branch%20adding%20support%20for%20hstore&In-Reply-To=%3C887952.22089.qm%40web111502.mail.gq1.yahoo.com%3E"
+       TITLE="[Pgocaml-dev] New branch adding support for hstore">darioteixeira at yahoo.com
+       </A><BR>
+    <I>Mon Nov 29 17:00:43 CET 2010</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000099.html">[Pgocaml-dev] New branch adding support for hstore
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#98">[ date ]</a>
+              <a href="thread.html#98">[ thread ]</a>
+              <a href="subject.html#98">[ subject ]</a>
+              <a href="author.html#98">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+Under branches/hstore you will find a new branch (forked from the latest
+trunk) that adds support for hstore types.  As you may know, the hstore
+type is essentially a dictionary that maps text keys into text values
+(possibly NULL).
+
+Hstore is still part of Postgresql's contrib modules, and though it was
+also provided in previous versions, in 9.0 it has seen many improvements.
+
+On the Ocaml side, I've chosen to represent a hstore as an association
+list of key/value pairs, with the key being a string, and the value a
+string option.  In other words:
+
+type hstore = (string * string option) list
+
+While it would be trivial to use a Hashtbl or Map instead, I reckon that
+if you are relying on hstores to store huge dictionaries you may be altogether
+better off rethinking your choice of Postgresql as a backend...
+
+The patch is fairly straightforward, with the exception that it does
+require adding a wrapper around name_of_type to query the database
+concerning the type name when the OID is unknown (Hstores do not have
+a fixed OID).  In fact, I think that in a future refactoring/cleanup
+of PG'OCaml, it would make sense to rely more on this mechanism than
+on 'magic' OIDs.
+
+Anyway, let me know what you think.  If others find this useful I can
+merge the branch back into trunk...
+
+Best regards,
+Dario Teixeira
+
+P.S. Under demos/hstore you will find a simple example that illustrates
+     the use of hstores.
+
+
+
+      
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000099.html">[Pgocaml-dev] New branch adding support for hstore
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#98">[ date ]</a>
+              <a href="thread.html#98">[ thread ]</a>
+              <a href="subject.html#98">[ subject ]</a>
+              <a href="author.html#98">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>

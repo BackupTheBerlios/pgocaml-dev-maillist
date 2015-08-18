@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] Record label &quot;contents&quot; not allowed with PGOCaml?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2011-April/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Record%20label%20%22contents%22%20not%20allowed%20with%20PGOCaml%3F&In-Reply-To=%3C6E696C7D-06EB-43F2-8148-0560CBD13FAB%40dbp.mm.st%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] Record label &quot;contents&quot; not allowed with PGOCaml?</H1>
+    <B>Daniel Patterson</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Record%20label%20%22contents%22%20not%20allowed%20with%20PGOCaml%3F&In-Reply-To=%3C6E696C7D-06EB-43F2-8148-0560CBD13FAB%40dbp.mm.st%3E"
+       TITLE="[Pgocaml-dev] Record label &quot;contents&quot; not allowed with PGOCaml?">lists.pgocaml at dbp.mm.st
+       </A><BR>
+    <I>Sat Apr 23 17:09:21 CEST 2011</I>
+    <P><UL>
+        
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#119">[ date ]</a>
+              <a href="thread.html#119">[ thread ]</a>
+              <a href="subject.html#119">[ subject ]</a>
+              <a href="author.html#119">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I just ran across a funny thing - I had a type like
+
+type t = {id : int32; ... contents : string; ... }
+
+And then any PGOCaml string, like:
+PGSQL(dbh) &quot;SELECT id, contents, ...&quot;
+
+Would throw a type error:
+Error: This expression has type int ref
+       but an expression was expected of type t
+
+Wit the character specification being the string of the query (ie, starting at SELECT in the above example).
+
+By renaming the field to something else (which now doesnt line up with what is in the database...), the code works fine.
+
+Is this expected behavior, and if so, is it documented? I looked back through Dario Teixeira's brief introduction and couldn't find any reference to this problem or indeed to any reserved words in general. Or is it a more subtle thing going that I'm just not understanding?
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#119">[ date ]</a>
+              <a href="thread.html#119">[ thread ]</a>
+              <a href="subject.html#119">[ subject ]</a>
+              <a href="author.html#119">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>

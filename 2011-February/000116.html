@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] New stuff in trunk
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2011-February/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20New%20stuff%20in%20trunk&In-Reply-To=%3C713655.44313.qm%40web111508.mail.gq1.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000115.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] New stuff in trunk</H1>
+    <B>Dario Teixeira</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20New%20stuff%20in%20trunk&In-Reply-To=%3C713655.44313.qm%40web111508.mail.gq1.yahoo.com%3E"
+       TITLE="[Pgocaml-dev] New stuff in trunk">darioteixeira at yahoo.com
+       </A><BR>
+    <I>Fri Feb 18 16:21:23 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000115.html">[Pgocaml-dev] New stuff in trunk
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#116">[ date ]</a>
+              <a href="thread.html#116">[ thread ]</a>
+              <a href="subject.html#116">[ subject ]</a>
+              <a href="author.html#116">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi David,
+
+&gt;<i> Can I also suggest a better solution to be included in
+</I>&gt;<i> BUGS.txt because nullable-results is not the greatest way of
+</I>&gt;<i> solving the problem as it nulls *everything* in the query.
+</I>&gt;<i> You can alternatively wrap the offending columns (ones which
+</I>&gt;<i> pa_pgsql thinks cannot be null) in your SQL statement with
+</I>&gt;<i> COALESCE(foo, NULL) - pa_pgsql won't be able to infer not
+</I>&gt;<i> NULL and it won't change the results. If the Postgres query
+</I>&gt;<i> optimiser really has its head screwed on then it should
+</I>&gt;<i> notice that that's an identity function and eliminate it
+</I>&gt;<i> (not tested that).
+</I>
+Thanks for the patches.  I'll get back to you concerning them and the
+other issues you mentioned in the email, but for now let me just point
+you to branches/commented and branches/nullres.  These contain some
+experiments I've done in the past concerning the nullability issues.
+
+The 'commented' branch relies on the SQL feature that allows one to
+add arbitrary comments to a column -- the comment can be used to pass
+meta information to PG'OCaml.  The 'nullres' branch allows the Ocaml
+programme to provide more fine-grained information about which fields
+are actually NULL.  None of these solutions are entirely satisfactory, 
+which is why I've never pursued them further.
+
+Cheers,
+Dario
+
+
+
+      
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000115.html">[Pgocaml-dev] New stuff in trunk
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#116">[ date ]</a>
+              <a href="thread.html#116">[ thread ]</a>
+              <a href="subject.html#116">[ subject ]</a>
+              <a href="author.html#116">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,210 @@
+From guillaume.yziquel at citycable.ch  Fri Feb  6 12:01:05 2009
+From: guillaume.yziquel at citycable.ch (Guillaume Yziquel)
+Date: Fri, 06 Feb 2009 12:01:05 +0100
+Subject: [Pgocaml-dev] Parse error: currified constructor
+Message-ID: <498C1871.7060303@citycable.ch>
+
+Hello,
+
+I managed to compile PG'OCaml on my Debian system. (I will perhaps 
+provide a tarball or a package it for Debian when I have some time 
+available).
+
+However, I encounter a "Parse error: currified constructor". As I'm not 
+really familiar with camlp4, maybe i'm doing something obviously wrong...
+
+Guillaume Yziquel
+
+>         Objective Caml version 3.10.2
+> 
+> # #use "topfind";;
+> - : unit = ()
+> Findlib has been successfully loaded. Additional directives:
+>   #require "package";;      to load a package
+>   #list;;                   to list the available packages
+>   #camlp4o;;                to load camlp4 (standard syntax)
+>   #camlp4r;;                to load camlp4 (revised syntax)
+>   #predicates "p,q,...";;   to set these predicates
+>   Topfind.reset();;         to force that packages will be reloaded
+>   #thread;;                 to enable threads
+> 
+> - : unit = ()
+> # #camlp4o;;
+> /usr/lib/ocaml/3.10.2/camlp4: added to search path
+> /usr/lib/ocaml/3.10.2/camlp4/camlp4o.cma: loaded
+> 	Camlp4 Parsing version 3.10.2
+> 
+> # #require "extlib, pcre, calendar, csv";;
+> /usr/lib/ocaml/3.10.2/extlib: added to search path
+> /usr/lib/ocaml/3.10.2/extlib/extLib.cma: loaded
+> /usr/lib/ocaml/3.10.2/pcre: added to search path
+> /usr/lib/ocaml/3.10.2/pcre/pcre.cma: loaded
+> /usr/lib/ocaml/3.10.2/unix.cma: loaded
+> /usr/lib/ocaml/3.10.2/str.cma: loaded
+> /usr/lib/ocaml/3.10.2/calendar: added to search path
+> /usr/lib/ocaml/3.10.2/calendar/calendarLib.cmo: loaded
+> /usr/lib/ocaml/3.10.2/csv: added to search path
+> /usr/lib/ocaml/3.10.2/csv/csv.cma: loaded
+> # #load "pgocaml.cma";;
+> # let dbh = PGOCaml.connect ();;
+> val dbh : '_a PGOCaml.t = <abstr>
+> #  PGSQL(dbh) "execute" "create temporary table employees (
+>        id serial not null primary key,
+>        name text not null,
+>        salary int4 not null,
+>        email text
+>     )";;      ;;
+> Parse error: currified constructor
+> # 
+
+
+From guillaume.yziquel at citycable.ch  Fri Feb  6 17:48:16 2009
+From: guillaume.yziquel at citycable.ch (Guillaume Yziquel)
+Date: Fri, 06 Feb 2009 17:48:16 +0100
+Subject: [Pgocaml-dev] PGOcaml tarball for Debian.
+In-Reply-To: <498C1871.7060303@citycable.ch>
+References: <498C1871.7060303@citycable.ch>
+Message-ID: <498C69D0.2070107@citycable.ch>
+
+Hello.
+
+Here is a PG'OCaml tarball for Debian systems:
+
+http://yziquel.homelinux.org/ocaml/libpgocaml-ocaml-1.1.tar.gz
+
+I have made a few modifications so that "make" and "make 
+findlib_install" should be sufficient to have PG'OCaml available on 
+Debian systems.
+
+All the best,
+
+Guillaume Yziquel.
+
+
+From rich at annexia.org  Sat Feb  7 14:46:43 2009
+From: rich at annexia.org (Richard Jones)
+Date: Sat, 7 Feb 2009 13:46:43 +0000
+Subject: [Pgocaml-dev] Parse error: currified constructor
+In-Reply-To: <498C1871.7060303@citycable.ch>
+References: <498C1871.7060303@citycable.ch>
+Message-ID: <20090207134643.GA26550@annexia.org>
+
+On Fri, Feb 06, 2009 at 12:01:05PM +0100, Guillaume Yziquel wrote:
+> I managed to compile PG'OCaml on my Debian system. (I will perhaps 
+> provide a tarball or a package it for Debian when I have some time 
+> available).
+> 
+> However, I encounter a "Parse error: currified constructor". As I'm not 
+> really familiar with camlp4, maybe i'm doing something obviously wrong...
+
+Did you solve this one?  As I mentioned yesterday on IRC, it looks
+like this happens because the camlp4 extension isn't actually being
+loaded, thus the compiler things "PGSQL" is a data type constructor,
+not a special keyword.
+
+Rich.
+
+-- 
+Richard Jones
+Red Hat
+
+
+From guillaume.yziquel at citycable.ch  Sat Feb  7 15:33:12 2009
+From: guillaume.yziquel at citycable.ch (Guillaume Yziquel)
+Date: Sat, 07 Feb 2009 15:33:12 +0100
+Subject: [Pgocaml-dev] Parse error: currified constructor
+In-Reply-To: <20090207134643.GA26550@annexia.org>
+References: <498C1871.7060303@citycable.ch>
+	<20090207134643.GA26550@annexia.org>
+Message-ID: <498D9BA8.3080007@citycable.ch>
+
+Richard Jones a ?crit :
+> On Fri, Feb 06, 2009 at 12:01:05PM +0100, Guillaume Yziquel wrote:
+>> However, I encounter a "Parse error: currified constructor". As I'm not 
+>> really familiar with camlp4, maybe i'm doing something obviously wrong...
+> 
+> Did you solve this one?  As I mentioned yesterday on IRC, it looks
+> like this happens because the camlp4 extension isn't actually being
+> loaded, thus the compiler things "PGSQL" is a data type constructor,
+> not a special keyword.
+> 
+> Rich.
+
+Yes. I did. I was just not familiar with the way syntax extensions are 
+to be loaded. It works fine now.
+
+-- 
+      Guillaume Yziquel
+http://yziquel.homelinux.org/
+
+
+From guillaume.yziquel at citycable.ch  Sat Feb  7 15:39:54 2009
+From: guillaume.yziquel at citycable.ch (Guillaume Yziquel)
+Date: Sat, 07 Feb 2009 15:39:54 +0100
+Subject: [Pgocaml-dev] PGOcaml tarball for Debian.
+In-Reply-To: <20090206194305.GA30041@annexia.org>
+References: <498C1871.7060303@citycable.ch> <498C69D0.2070107@citycable.ch>
+	<20090206194305.GA30041@annexia.org>
+Message-ID: <498D9D3A.8090708@citycable.ch>
+
+Richard Jones a ?crit :
+> On Fri, Feb 06, 2009 at 05:48:16PM +0100, Guillaume Yziquel wrote:
+>> Hello.
+>>
+>> Here is a PG'OCaml tarball for Debian systems:
+>>
+>> http://yziquel.homelinux.org/ocaml/libpgocaml-ocaml-1.1.tar.gz
+>>
+>> I have made a few modifications so that "make" and "make 
+>> findlib_install" should be sufficient to have PG'OCaml available on 
+>> Debian systems.
+> 
+> Thanks - time for a new upstream release I think.
+> 
+> Rich.
+
+I just wish to point out that the tarball i made is simply a quick fix: 
+It should throw out errors when compiling, and these errors should be 
+discarded by the user.
+
+Here's a quick description, in french, of how one can make pgocaml work 
+from this tarball:
+
+	http://yziquel.homelinux.org/topos/debian-pgocaml.html
+
+I'll hopefully generate a debian package out of that, but it'll probably 
+take some time as i'm not familiar yet with building debian packages.
+
+-- 
+      Guillaume Yziquel
+http://yziquel.homelinux.org/
+
+
+From rich at annexia.org  Fri Feb  6 20:43:06 2009
+From: rich at annexia.org (Richard Jones)
+Date: Fri, 6 Feb 2009 19:43:06 +0000
+Subject: [Pgocaml-dev] PGOcaml tarball for Debian.
+In-Reply-To: <498C69D0.2070107@citycable.ch>
+References: <498C1871.7060303@citycable.ch> <498C69D0.2070107@citycable.ch>
+Message-ID: <20090206194305.GA30041@annexia.org>
+
+On Fri, Feb 06, 2009 at 05:48:16PM +0100, Guillaume Yziquel wrote:
+> Hello.
+> 
+> Here is a PG'OCaml tarball for Debian systems:
+> 
+> http://yziquel.homelinux.org/ocaml/libpgocaml-ocaml-1.1.tar.gz
+> 
+> I have made a few modifications so that "make" and "make 
+> findlib_install" should be sufficient to have PG'OCaml available on 
+> Debian systems.
+
+Thanks - time for a new upstream release I think.
+
+Rich.
+
+-- 
+Richard Jones
+Red Hat
+
+

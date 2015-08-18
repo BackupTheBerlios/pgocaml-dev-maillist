@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] [Patch] explicit module for the &quot;Simple thread&quot;	structure of pGOCaml.ml
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20%5BPatch%5D%20explicit%20module%20for%20the%20%22Simple%20thread%22%0A%09structure%20of%20pGOCaml.ml&In-Reply-To=%3C527cf6bc0909020136p2c95f30foaf6f485cff52ea50%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000090.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] [Patch] explicit module for the &quot;Simple thread&quot;	structure of pGOCaml.ml</H1>
+    <B>blue storm</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20%5BPatch%5D%20explicit%20module%20for%20the%20%22Simple%20thread%22%0A%09structure%20of%20pGOCaml.ml&In-Reply-To=%3C527cf6bc0909020136p2c95f30foaf6f485cff52ea50%40mail.gmail.com%3E"
+       TITLE="[Pgocaml-dev] [Patch] explicit module for the &quot;Simple thread&quot;	structure of pGOCaml.ml">bluestorm.dylc at gmail.com
+       </A><BR>
+    <I>Wed Sep  2 10:36:55 CEST 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000090.html">[Pgocaml-dev] [Patch] explicit module for the &quot;Simple thread&quot;	structure of pGOCaml.ml
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#88">[ date ]</a>
+              <a href="thread.html#88">[ thread ]</a>
+              <a href="subject.html#88">[ subject ]</a>
+              <a href="author.html#88">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>During the development of Macaque (
+<A HREF="http://macaque.forge.ocamlcore.org/">http://macaque.forge.ocamlcore.org/</A> ), wich builds upon PG'OCaml, I
+have felt the need for a PGOCaml_Generic.THREAD interface extended
+with richer exception handling features (Lwt &quot;catch&quot;). This can be
+done easily with an &quot;include&quot; on the THREAD signature, but I had to
+copy/paste the code of the simple &quot;identity THREAD module&quot; of
+pGOCaml.ml, as it is not bound and visible through the pGOCaml.mli
+interface.
+
+Below (and attached) is a patch that bind that anonymous module to an
+explicit &quot;Simple_thread&quot; module (feel free to choose another name) :
+
+Index: pGOCaml.ml
+===================================================================
+--- pGOCaml.ml	(revision 88)
++++ pGOCaml.ml	(working copy)
+@@ -19,7 +19,7 @@
+  * Boston, MA 02111-1307, USA.
+  *)
+
+-module M = PGOCaml_generic.Make (struct
++module Simple_thread = struct
+   type 'a t = 'a
+   let return x = x
+   let (&gt;&gt;=) v f =  f v
+@@ -36,6 +36,8 @@
+   let input_binary_int = input_binary_int
+   let really_input = really_input
+   let close_in = close_in
+-end)
++end
+
++module M = PGOCaml_generic.Make (Simple_thread)
++
+ include M
+Index: pGOCaml.mli
+===================================================================
+--- pGOCaml.mli	(revision 88)
++++ pGOCaml.mli	(working copy)
+@@ -19,5 +19,8 @@
+  * Boston, MA 02111-1307, USA.
+  *)
+
++module Simple_thread : PGOCaml_generic.THREAD
++  with type 'a t = 'a
++
+ include PGOCaml_generic.PGOCAML_GENERIC
+   with type 'a monad = 'a
+-------------- next part --------------
+Index: pGOCaml.ml
+===================================================================
+--- pGOCaml.ml	(revision 88)
++++ pGOCaml.ml	(working copy)
+@@ -19,7 +19,7 @@
+  * Boston, MA 02111-1307, USA.
+  *)
+ 
+-module M = PGOCaml_generic.Make (struct
++module Simple_thread = struct
+   type 'a t = 'a
+   let return x = x
+   let (&gt;&gt;=) v f =  f v
+@@ -36,6 +36,8 @@
+   let input_binary_int = input_binary_int
+   let really_input = really_input
+   let close_in = close_in
+-end)
++end
+ 
++module M = PGOCaml_generic.Make (Simple_thread)
++
+ include M
+Index: pGOCaml.mli
+===================================================================
+--- pGOCaml.mli	(revision 88)
++++ pGOCaml.mli	(working copy)
+@@ -19,5 +19,8 @@
+  * Boston, MA 02111-1307, USA.
+  *)
+ 
++module Simple_thread : PGOCaml_generic.THREAD
++  with type 'a t = 'a
++
+ include PGOCaml_generic.PGOCAML_GENERIC
+   with type 'a monad = 'a
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000090.html">[Pgocaml-dev] [Patch] explicit module for the &quot;Simple thread&quot;	structure of pGOCaml.ml
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#88">[ date ]</a>
+              <a href="thread.html#88">[ thread ]</a>
+              <a href="subject.html#88">[ subject ]</a>
+              <a href="author.html#88">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>

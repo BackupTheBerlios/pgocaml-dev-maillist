@@ -1,0 +1,265 @@
+From nick at mykola.org  Wed Apr  1 18:17:05 2009
+From: nick at mykola.org (Mykola Stryebkov)
+Date: Wed, 1 Apr 2009 19:17:05 +0300
+Subject: [Pgocaml-dev] "More than 5M" problem
+Message-ID: <BA5FA530-2782-498E-B537-5D515E924480@mykola.org>
+
+Hi,
+
+I've encountered a problem with more than 5M rows data sets. For my  
+data sets there are not enough stack to map list of raw string results  
+to list of typed tuples.
+
+Exact problem is in using List.map that is not tail-end recursive and,  
+therefore, uses too much stack for  huge datasets. To resolve this  
+issue i propose the attached  patch.
+
+Patch do the following:
+
+1. Exclude function do_execute from PGOCaml.execute
+2. Extend its parameters with boolean flag indicating if resulting raw  
+rows list should be reversed.
+3. Modify PGOCaml.execute accordingly
+4. Introduce new functions PGOCaml.execute_rev that does not reverse  
+rows list.
+5. Use this function together with List.rev_map in pa_pgsql.ml4 to  
+avoid stack overflow.
+
+It works for me and I'd be glad to hear any replies.
+
+-- 
+Mykola Stryebkov
+Blog: http://mykola.org/blog/
+Public key: http://humgat.org/~nick/pubkey.txt
+fpr: 552C 88D6 895B 6E64 F277 D367 8A70 8132 47F5 C1B6
+
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: pgocaml.patch
+Type: application/octet-stream
+Size: 6921 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20090401/b835185b/attachment.obj>
+
+From darioteixeira at yahoo.com  Wed Apr 22 16:38:20 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Wed, 22 Apr 2009 07:38:20 -0700 (PDT)
+Subject: [Pgocaml-dev] New in SVN
+Message-ID: <622077.30710.qm@web111510.mail.gq1.yahoo.com>
+
+
+Hi,
+
+I made some rearrangements to SVN.  Most significantly, the 'lwt' branch
+has been moved into trunk, and is now called 'pgocaml-lwt'.  We should try
+to keep it synchronised with the "main" project proper, which now sits in
+directory trunk/pgocaml.
+
+You will also note a new trunk tree called 'pgoctut'.  I've uploaded there
+the LaTeX sources for my tutorial.
+
+There are also two (for now) empty directories: 'www' and 'godi'.  The
+former will contain the source files for the project's new homepage (which
+I'll work on soon).  The latter is for whatever is needed for a GODI port
+(I have no experience creating GODI packages myself, but I reckon it should
+not be too difficult).
+
+Cheers,
+Dario
+
+
+
+      
+
+
+From vincent.balat at pps.jussieu.fr  Wed Apr 22 17:04:24 2009
+From: vincent.balat at pps.jussieu.fr (Vincent Balat)
+Date: Wed, 22 Apr 2009 17:04:24 +0200
+Subject: [Pgocaml-dev] New in SVN
+In-Reply-To: <622077.30710.qm@web111510.mail.gq1.yahoo.com>
+References: <622077.30710.qm@web111510.mail.gq1.yahoo.com>
+Message-ID: <200904221704.24715.vincent.balat@pps.jussieu.fr>
+
+Hi,
+
+Why not keeping only the lwt branch? As the it is compatible with the other 
+one, it would really be easier to maintain, isn't it? ... May be you've 
+already discussed that before?
+Debian will probably include the lwt branch. 
+
+Cheers,
+Vincent [who is not a developer of pgocaml-lwt]
+
+
+Le Wednesday 22 April 2009 16:38:20 Dario Teixeira, vous avez ?crit :
+> Hi,
+>
+> I made some rearrangements to SVN.  Most significantly, the 'lwt' branch
+> has been moved into trunk, and is now called 'pgocaml-lwt'.  We should try
+> to keep it synchronised with the "main" project proper, which now sits in
+> directory trunk/pgocaml.
+>
+> You will also note a new trunk tree called 'pgoctut'.  I've uploaded there
+> the LaTeX sources for my tutorial.
+>
+> There are also two (for now) empty directories: 'www' and 'godi'.  The
+> former will contain the source files for the project's new homepage (which
+> I'll work on soon).  The latter is for whatever is needed for a GODI port
+> (I have no experience creating GODI packages myself, but I reckon it should
+> not be too difficult).
+>
+> Cheers,
+> Dario
+>
+>
+>
+>
+> _______________________________________________
+> Pgocaml-dev mailing list
+> Pgocaml-dev at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/pgocaml-dev
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20090422/d2993b4e/attachment.html>
+
+From darioteixeira at yahoo.com  Wed Apr 22 19:12:51 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Wed, 22 Apr 2009 10:12:51 -0700 (PDT)
+Subject: [Pgocaml-dev] New in SVN
+Message-ID: <429884.36057.qm@web111510.mail.gq1.yahoo.com>
+
+
+Hi Vincent,
+
+> Why not keeping only the lwt branch? As the it is
+> compatible with the other one, it would really be easier to
+> maintain, isn't it? ... May be you've already
+> discussed that before?
+
+In the long term, you're probably right.  For me the reason why it's
+sensible to keep both branches for now is because some people may be
+using conventional PGOCaml in production and they may feel queasy
+about switching, even if the patches are not that intrusive and the
+API is compatible.
+
+> Debian will probably include the lwt branch.
+
+Btw, who will be maintaining the Debian package?  I would really like
+to make PGOCaml's build system a bit more distro-friendly, so we can
+have at least packages for "the big three" (Fedora, Debian, GODI).
+
+Cheers,
+Dario
+
+
+
+      
+
+
+From vincent.balat at pps.jussieu.fr  Thu Apr 23 13:06:26 2009
+From: vincent.balat at pps.jussieu.fr (Vincent Balat)
+Date: Thu, 23 Apr 2009 13:06:26 +0200
+Subject: [Pgocaml-dev] New in SVN
+In-Reply-To: <429884.36057.qm@web111510.mail.gq1.yahoo.com>
+References: <429884.36057.qm@web111510.mail.gq1.yahoo.com>
+Message-ID: <200904231306.27043.vincent.balat@pps.jussieu.fr>
+
+> > Debian will probably include the lwt branch.
+>
+> Btw, who will be maintaining the Debian package?  I would really like
+> to make PGOCaml's build system a bit more distro-friendly, so we can
+> have at least packages for "the big three" (Fedora, Debian, GODI).
+
+St?phane Glondu will probably do it when some other package needs it(?)
+(May be for Ocsimore).
+
+Vincent
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20090423/76b5e090/attachment.html>
+
+From darioteixeira at yahoo.com  Thu Apr 23 15:37:29 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Thu, 23 Apr 2009 06:37:29 -0700 (PDT)
+Subject: [Pgocaml-dev] Some suggested updates
+Message-ID: <86542.59817.qm@web111509.mail.gq1.yahoo.com>
+
+
+Hi,
+
+Two things:
+
+a) I think PGOCaml's build system can be cleanup quite a bit by assuming
+   that findlib is always installed.  I know this is true for Debian and
+   GODI, and I am guessing right in assuming that's also true for recent
+   Fedoras?  If so, I vote for the findlibisation of the Makefile.
+
+b) I think you are aware of the CalendarLib pack changes for Calendar > 2.0.
+   Therefore, I vote for making PGOCaml depend on Calendar > 2.0, and not
+   worry about older version compatibility.
+
+Cheers,
+Dario
+
+
+
+      
+
+
+From darioteixeira at yahoo.com  Thu Apr 23 16:54:42 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Thu, 23 Apr 2009 07:54:42 -0700 (PDT)
+Subject: [Pgocaml-dev] Some suggested updates
+Message-ID: <873039.41640.qm@web111515.mail.gq1.yahoo.com>
+
+
+Hi,
+
+> a) I think PGOCaml's build system can be cleanup quite a bit by assuming
+> ???that findlib is always installed.? I know this is true for Debian and
+> ???GODI, and I am guessing right in assuming that's also true for recent
+> ???Fedoras?? If so, I vote for the findlibisation of the Makefile.
+
+Just to clarify: the bits of the Makefile that need to be findlib-aware
+are those relating to Camlp4.  For example the invocation "$(shell ocamlfind
+query pcre)/pcre.cma" hardwires the name of the lib to be pcre.cma instead
+of discovering it via findlib.
+
+Cheers,
+Dario
+
+
+
+      
+
+
+From rich at annexia.org  Thu Apr 23 23:43:33 2009
+From: rich at annexia.org (Richard Jones)
+Date: Thu, 23 Apr 2009 22:43:33 +0100
+Subject: [Pgocaml-dev] Some suggested updates
+In-Reply-To: <86542.59817.qm@web111509.mail.gq1.yahoo.com>
+References: <86542.59817.qm@web111509.mail.gq1.yahoo.com>
+Message-ID: <20090423214333.GA23239@annexia.org>
+
+On Thu, Apr 23, 2009 at 06:37:29AM -0700, Dario Teixeira wrote:
+> a) I think PGOCaml's build system can be cleanup quite a bit by assuming
+>    that findlib is always installed.  I know this is true for Debian and
+>    GODI, and I am guessing right in assuming that's also true for recent
+>    Fedoras?  If so, I vote for the findlibisation of the Makefile.
+> 
+> b) I think you are aware of the CalendarLib pack changes for Calendar > 2.0.
+>    Therefore, I vote for making PGOCaml depend on Calendar > 2.0, and not
+>    worry about older version compatibility.
+
+Yes and yes.
+
+Rich.
+
+-- 
+Richard Jones
+Red Hat
+
+

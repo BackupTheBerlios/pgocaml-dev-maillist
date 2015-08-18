@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] Problem compiling pgocaml 1.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Problem%20compiling%20pgocaml%201.1&In-Reply-To=%3C495BE5BE.2070007%40citycable.ch%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000021.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] Problem compiling pgocaml 1.1</H1>
+    <B>Guillaume Yziquel</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Problem%20compiling%20pgocaml%201.1&In-Reply-To=%3C495BE5BE.2070007%40citycable.ch%3E"
+       TITLE="[Pgocaml-dev] Problem compiling pgocaml 1.1">guillaume.yziquel at citycable.ch
+       </A><BR>
+    <I>Wed Dec 31 22:35:58 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000021.html">[Pgocaml-dev] linking pgocaml
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22">[ date ]</a>
+              <a href="thread.html#22">[ thread ]</a>
+              <a href="subject.html#22">[ subject ]</a>
+              <a href="author.html#22">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Paolo Donadeo a &#233;crit :
+&gt;<i> Richard Jones wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Paolo: If you add 'open CalendarLib' somewhere at the top of the
+</I>&gt;&gt;<i> test_pgocaml_lowlevel.ml file, does it link?
+</I>&gt;<i> 
+</I>&gt;<i> Adding &quot;open CalendarLib&quot; on top of pGOCaml.ml *and* pGOCaml.mli, and
+</I>&gt;<i> replacing line 41 of PGOcaml Makefile (from 1.1 source tarball):
+</I>&gt;<i> -I +calendar $(shell ocamlfind query calendar)/calendar.cma \
+</I>&gt;<i> with:
+</I>&gt;<i> -I +calendar $(shell ocamlfind query calendar)/calendarLib.cmo \
+</I>&gt;<i> 
+</I>&gt;<i> everything compiles and links.
+</I>&gt;<i> 
+</I>&gt;<i> In any case, this is the first time a see an OCaml library distributed
+</I>&gt;<i> as cmo/cmx and not as a cma/cmxa package. Unfortunately a standard for
+</I>&gt;<i> package distribution (blessed by INRIA) is far from coming, but Calendar
+</I>&gt;<i> distribution package is certainly weird a lot :-)
+</I>
+Hi. I ran in the same problem as Paolo did.
+
+What should be the way forward? Asking for a change in calendar's debian 
+packaging? Changing pgocaml's code? Putting some notice in README? 
+Packaging pgocaml for debian?
+
+Moreover, making the changes suggested by Paolo didn't exactly work out:
+
+&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">yziquel at seldon</A>:~/src/pgocaml/trunk/dist$ make
+</I>&gt;<i> ocamlfind ocamlc -g  -package unix,extlib,pcre,calendar,csv -c pGOCaml_config.ml
+</I>&gt;<i> ocamlfind ocamlc -g  -package unix,extlib,pcre,calendar,csv -c pGOCaml.mli
+</I>&gt;<i> ocamlfind ocamlc -g  -package unix,extlib,pcre,calendar,csv -c pGOCaml.ml
+</I>&gt;<i> ocamlfind ocamlc -g -package unix,extlib,pcre,calendar,csv -a -o pgocaml.cma pGOCaml_config.cmo pGOCaml.cmo
+</I>&gt;<i> ocamlfind ocamlopt   -package unix,extlib,pcre,calendar,csv -c pGOCaml_config.ml
+</I>&gt;<i> ocamlfind ocamlopt   -package unix,extlib,pcre,calendar,csv -c pGOCaml.ml
+</I>&gt;<i> ocamlfind ocamlopt  -package unix,extlib,pcre,calendar,csv -a -o pgocaml.cmxa pGOCaml_config.cmx pGOCaml.cmx
+</I>&gt;<i> ocamlfind ocamlc -g -package unix,extlib,pcre,calendar,csv \
+</I>&gt;<i> 	  -pp &quot;camlp4o pa_extend.cmo q_MLast.cmo -loc loc -impl&quot; \
+</I>&gt;<i> 	  -I +camlp4 -c -impl pa_pgsql.ml4
+</I>&gt;<i> ocamlfind ocamlc -g  -package unix,extlib,pcre,calendar,csv -c test_pgocaml_lowlevel.ml
+</I>&gt;<i> ocamlfind ocamlc -g -package unix,extlib,pcre,calendar,csv -linkpkg \
+</I>&gt;<i> 	  pgocaml.cma -o test_pgocaml_lowlevel test_pgocaml_lowlevel.cmo
+</I>&gt;<i> ocamlfind ocamlc -g -package unix,extlib,pcre,calendar,csv -linkpkg \
+</I>&gt;<i> 	  -pp &quot;camlp4o /usr/lib/ocaml/3.10.2/unix.cma /usr/lib/ocaml/3.10.2/str.cma -I +pcre /usr/lib/ocaml/3.10.2/pcre/pcre.cma -I +extlib /usr/lib/ocaml/3.10.2/extlib/extLib.cma -I +calendar /usr/lib/ocaml/3.10.2/calendar/calendarLib.cmo -I +csv /usr/lib/ocaml/3.10.2/csv/csv.cma ./pgocaml.cma ./pa_pgsql.cmo&quot; -c test_pgocaml.ml
+</I>&gt;<i> File &quot;test_pgocaml.ml&quot;, line 28, characters 23-168 (end at line 33, character 4):
+</I>&gt;<i> Camlp4: Uncaught exception: Unix.Unix_error (20 | CstTag21, &quot;connect&quot;, &quot;&quot;)
+</I>&gt;<i> 
+</I>&gt;<i> Preprocessor error
+</I>&gt;<i> make: *** [test_pgocaml.cmo] Erreur 2
+</I>
+But maybe it's something else...
+
+Wishing you all the best for the coming new year.
+
+Guillaume Yziquel.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000021.html">[Pgocaml-dev] linking pgocaml
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22">[ date ]</a>
+              <a href="thread.html#22">[ thread ]</a>
+              <a href="subject.html#22">[ subject ]</a>
+              <a href="author.html#22">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,992 @@
+From vb at vb.fdn.fr  Mon Jun  1 10:58:57 2009
+From: vb at vb.fdn.fr (Vincent Bernardoff)
+Date: Mon, 1 Jun 2009 10:58:57 +0200
+Subject: [Pgocaml-dev] pgocaml don't compile
+Message-ID: <200906011058.57593.vb@vb.fdn.fr>
+
+Here is the log :
+
+vb~haramis (~/pgocaml/pgocaml)% make
+sed  -e 's/@PACKAGE@/pgocaml/' \
+                -e 's/@VERSION@/1.2/' \
+                < META.in > META
+ocamlfind ocamlc -g  -package unix,extlib,pcre,calendar,csv -c pGOCaml_config.ml
+ocamlfind ocamlc -g  -package unix,extlib,pcre,calendar,csv -c 
+pGOCaml_generic.ml
+File "pGOCaml_generic.ml", line 1, characters 0-1:
+Error: Could not find the .cmi file for interface pGOCaml_generic.mli.
+make: *** [pGOCaml_generic.cmo] Erreur 2
+
+
+It seems like the Makefile don't compile the .mli files before compiling the 
+.ml...
+
+Is this normal ? Does this happen just to me, or it is a more general problem 
+?
+
+Thanks in advance,
+
+-- 
+Vincent Bernardoff
+
+
+From vb at vb.fdn.fr  Mon Jun  1 11:13:06 2009
+From: vb at vb.fdn.fr (Vincent Bernardoff)
+Date: Mon, 1 Jun 2009 11:13:06 +0200
+Subject: [Pgocaml-dev] Problems with calendar
+Message-ID: <200906011113.06767.vb@vb.fdn.fr>
+
+Hello,
+
+I have another problem, this time with the Calendar package.
+
+I'm using GODI, and I have installed all dependecies of pgocaml using GODI 
+(godi-calendar, godi-extlib, godi-csv).
+
+When compiling pgocaml, after the Makefile problem, I have another problem with 
+Calendar,
+
+/home/vb/godi311/lib/ocaml/pkg-lib/calendar/calendarLib.a(calendarLib.o):
+(.data+0x4a08): first defined here
+/home/vb/godi311/lib/ocaml/pkg-lib/calendar/calendarLib.o: In function 
+`camlCalendarLib__Printer__hour_388':
+(.text+0x10aa0): multiple definition of `camlCalendarLib__Printer__hour_388'
+
+I have many lines of this kind. Did you encounter this problem before ?
+
+Thanks in advance,
+
+-- 
+Vincent Bernardoff
+
+
+From vb at vb.fdn.fr  Mon Jun  1 11:34:46 2009
+From: vb at vb.fdn.fr (Vincent Bernardoff)
+Date: Mon, 1 Jun 2009 11:34:46 +0200
+Subject: [Pgocaml-dev] Calendar problem.
+Message-ID: <200906011134.46796.vb@vb.fdn.fr>
+
+It was a GODI problem, explained here :
+
+https://godirepo.camlcity.org/pipermail/godi-list/2009-April/002762.html
+
+-- 
+Vincent Bernardoff
+
+
+From darioteixeira at yahoo.com  Mon Jun  1 12:21:14 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Mon, 1 Jun 2009 03:21:14 -0700 (PDT)
+Subject: [Pgocaml-dev] pgocaml don't compile
+Message-ID: <635971.21262.qm@web111504.mail.gq1.yahoo.com>
+
+
+Hi,
+
+> It seems like the Makefile don't compile the .mli files
+> before compiling the 
+> .ml...
+> 
+> Is this normal ? Does this happen just to me, or it is a
+> more general problem 
+> ?
+
+Did you issue a "make depend" before compiling?
+
+In any case, version 1.2 is ready for release, and will be out within
+the next few hours.  Please give it a try and tell us if you run into
+any trouble.
+
+Cheers,
+Dario Teixeira
+
+
+
+      
+
+
+From nick at mykola.org  Mon Jun  1 12:49:53 2009
+From: nick at mykola.org (Mykola Stryebkov)
+Date: Mon, 1 Jun 2009 13:49:53 +0300
+Subject: [Pgocaml-dev] pgocaml don't compile
+In-Reply-To: <635971.21262.qm@web111504.mail.gq1.yahoo.com>
+References: <635971.21262.qm@web111504.mail.gq1.yahoo.com>
+Message-ID: <D94472D9-F60E-40B7-AE36-F96F57F88B69@mykola.org>
+
+Hi, Dario.
+
+On 1 ??? 2009, at 13:21, Dario Teixeira wrote:
+> In any case, version 1.2 is ready for release, and will be out within
+> the next few hours.  Please give it a try and tell us if you run into
+> any trouble.
+
+Have you taken into account the patch I proposed in april?
+(https://lists.berlios.de/pipermail/pgocaml-dev/2009-April/000030.html)
+I'd like to check new version, but it's quite critical for me to have  
+an ability to work with big data sets.
+
+-- 
+Mykola Stryebkov
+Blog: http://mykola.org/blog/
+Public key: http://mykola.org/pubkey.txt
+fpr: 552C 88D6 895B 6E64 F277 D367 8A70 8132 47F5 C1B6
+
+
+
+
+
+
+From darioteixeira at yahoo.com  Mon Jun  1 15:01:34 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Mon, 1 Jun 2009 06:01:34 -0700 (PDT)
+Subject: [Pgocaml-dev] pgocaml don't compile
+Message-ID: <321156.45317.qm@web111507.mail.gq1.yahoo.com>
+
+
+Hi,
+
+> Have you taken into account the patch I proposed in april?
+> (https://lists.berlios.de/pipermail/pgocaml-dev/2009-April/000030.html)
+> I'd like to check new version, but it's quite critical for
+> me to have?an ability to work with big data sets.
+
+Myself, not yet.  But not for lack of interest: I just need to find some
+time to get myself better acquainted with PG'OCaml's source.  @Richard:
+have you looked into this patch already?
+
+In any case, your patch should apply cleanly to the "pgocaml-classic"
+branch.  Check out the new homepage for the project for more info:
+http://pgocaml.berlios.de/
+
+Cheers,
+Dario Teixeira
+
+
+
+      
+
+
+From darioteixeira at yahoo.com  Mon Jun  1 15:07:53 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Mon, 1 Jun 2009 06:07:53 -0700 (PDT)
+Subject: [Pgocaml-dev] Problem with examples
+Message-ID: <950142.79552.qm@web111516.mail.gq1.yahoo.com>
+
+
+Hi,
+
+> vb~haramis (~/pgocaml/pgoctut/examples/two)% make
+> ocamlfind ocamlc -package pgocaml,pgocaml.statements
+> -syntax camlp4o -c two.ml
+> ocamlfind: Package `pgocaml.statements' not found
+> make: *** [two.cmo] Erreur 2
+> 
+> It seems like the package pgocaml.statements does not exist
+> anymore.
+
+As per an OSR (Ocaml standards recommendation), the package is now called
+pgocaml.syntax.  I'll update the tutorial soon to reflect that and other
+changes related to the new PG'OCaml branches.
+
+Cheers,
+Dario
+ 
+
+
+      
+
+
+From darioteixeira at yahoo.com  Mon Jun  1 15:23:28 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Mon, 1 Jun 2009 06:23:28 -0700 (PDT)
+Subject: [Pgocaml-dev] New homepage and release
+Message-ID: <217492.61752.qm@web111506.mail.gq1.yahoo.com>
+
+
+Hi,
+
+Since there is a general agreement to make the 'monadic' branch the new
+main branch of PG'OCaml, you will notice the following changes in SVN:
+
+ - the 'pgocaml-monadic' directory is now called 'pgocaml'
+ - the old 'pgocaml' directory is now called 'pgocaml-classic'
+ - Version 1.2 of both branches has been tagged and released.
+
+I've also uploaded the new project's page, explaining the reason for the
+two branches: http://pgocaml.berlios.de/   (Please update your links)
+
+There are probably still some inconsistencies in the documentation;
+please let us know of the most egregious ones...
+
+Cheers,
+Dario
+
+
+
+      
+
+
+From rich at annexia.org  Mon Jun  1 17:12:41 2009
+From: rich at annexia.org (Richard Jones)
+Date: Mon, 1 Jun 2009 16:12:41 +0100
+Subject: [Pgocaml-dev] pgocaml don't compile
+In-Reply-To: <321156.45317.qm@web111507.mail.gq1.yahoo.com>
+References: <321156.45317.qm@web111507.mail.gq1.yahoo.com>
+Message-ID: <20090601151241.GA821@annexia.org>
+
+On Mon, Jun 01, 2009 at 06:01:34AM -0700, Dario Teixeira wrote:
+> 
+> Hi,
+> 
+> > Have you taken into account the patch I proposed in april?
+> > (https://lists.berlios.de/pipermail/pgocaml-dev/2009-April/000030.html)
+> > I'd like to check new version, but it's quite critical for
+> > me to have?an ability to work with big data sets.
+>
+> Myself, not yet.  But not for lack of interest: I just need to find some
+> time to get myself better acquainted with PG'OCaml's source.  @Richard:
+> have you looked into this patch already?
+
+I've checked it now & it looks good.
+
+Rich.
+
+-- 
+Richard Jones
+Red Hat
+
+
+From vb at vb.fdn.fr  Tue Jun  2 18:55:59 2009
+From: vb at vb.fdn.fr (Vincent Bernardoff)
+Date: Tue, 2 Jun 2009 18:55:59 +0200
+Subject: [Pgocaml-dev] Geometric types
+Message-ID: <200906021855.59319.vb@vb.fdn.fr>
+
+Hello,
+
+I have just tested pgocaml and I encountered a problem with the geometric 
+types of postgresql.
+
+File "adduser.ml", line 50, characters 4-27:
+Camlp4: Uncaught exception: PGOCaml_generic.Make(Thread).Error ("PGOCaml: 
+unknown type for OID 600")
+
+Geometric types[1] are useful with embedded functions for distance, ... 
+provided by postgresql. Does pgocaml intends to handle them in a near future ?
+
+
+[1] http://www.postgresql.org/docs/8.3/interactive/datatype-geometric.html
+-- 
+Vincent Bernardoff
+
+
+From darioteixeira at yahoo.com  Tue Jun  2 19:37:00 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Tue, 2 Jun 2009 10:37:00 -0700 (PDT)
+Subject: [Pgocaml-dev] Geometric types
+Message-ID: <938266.26739.qm@web111507.mail.gq1.yahoo.com>
+
+
+Hi,
+
+> Geometric types[1] are useful with embedded functions for
+> distance, ... 
+> provided by postgresql. Does pgocaml intends to handle them
+> in a near future ?
+
+Historically, types have been added as needed.  It is actually quite
+simple to add new ones: look in pGOCaml.ml for the string_of_whatever
+and whatever_of_string functions.  It's really only a matter of
+defining good Ocaml analogues.
+
+If you want to provide your patches for this, please give us a diff
+against the new 1.2 trunk...
+
+Cheers,
+Dario
+
+
+
+      
+
+
+From darioteixeira at yahoo.com  Tue Jun  2 19:46:12 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Tue, 2 Jun 2009 10:46:12 -0700 (PDT)
+Subject: [Pgocaml-dev] Patch for large data sets
+Message-ID: <529770.63923.qm@web111505.mail.gq1.yahoo.com>
+
+
+Hi,
+
+A version of the "classic" tree featuring Mykola Stryebkov's patches is in
+branches/largesets-classic.  I'll adapt them to the "main" tree and then
+I reckon it is time for 1.3.
+
+Also, please provide future patches against the new main tree only
+(formerly known as the "monadic" tree).  There's a chance 1.3 will
+be the final release of the classic tree.
+
+Cheers,
+Dario
+
+
+
+      
+
+
+From darioteixeira at yahoo.com  Wed Jun  3 13:33:26 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Wed, 3 Jun 2009 04:33:26 -0700 (PDT)
+Subject: [Pgocaml-dev] Geometric types
+Message-ID: <554623.47788.qm@web111507.mail.gq1.yahoo.com>
+
+
+Hi,
+
+> Here it is (obtained with svn diff, I hope it's OK).
+
+Thanks for the patch.  I have a couple of notes about it though.  One
+is easily fixed, but the other is still open:
+
+1) In function string_of_point, you use functions fst and snd to get
+   the two components of the tuple.  I changed it to use pattern-matching
+   instead, as follows:
+
+   let string_of_point (x, y) =
+       "(" ^ (string_of_float x) ^ "," ^ (string_of_float y) ^ ")"
+
+2) In function point_of_string, you define the following regexp for
+   the Str module:
+
+   Str.regexp "([ \t]*\\([0-9]*\\)[ \t]*,[ \t]*\\([0-9]*\\)[ \t]*)"
+
+   This regexp will fail for non-integer and/or non-positive floats.
+   Moreover, PG'OCaml already links in the PCRE library anyway, so
+   you might as well use it instead of linking in yet another lib.
+
+I'm CCing this to the list because I wonder if someone has a better
+(lighter) solution than regexps for point_of_string.
+
+Cheers,
+Dario
+
+P.S.  Trunk for both 'pgocaml' and 'pgocaml-classic' now includes
+      Mykola Stryebkov's patch.  It seems to be working fine: I just
+      successfully tested a half-million result set that caused a
+      stack overflow in older versions.
+
+
+
+      
+
+
+From vb at vb.fdn.fr  Thu Jun  4 13:45:40 2009
+From: vb at vb.fdn.fr (Vincent Bernardoff)
+Date: Thu, 4 Jun 2009 13:45:40 +0200
+Subject: [Pgocaml-dev] Latest svn release break examples
+Message-ID: <200906041345.41059.vb@vb.fdn.fr>
+
+I got this error when trying to compile one.ml
+
+vb~haramis (~/pgocaml2/pgoctut/examples/one)% make
+ocamlfind ocamlc -package pgocaml,pgocaml.syntax -syntax camlp4o -c one.ml
+File "one.ml", line 2, characters 27-184 (end at line 7, character 8):
+Camlp4: Uncaught exception: Unix.Unix_error (20 | CstTag21, "connect", "")
+
+File "one.ml", line 1, characters 0-1:
+Error: Preprocessor error
+make: *** [one.cmo] Erreur 2
+
+
+-- 
+Vincent Bernardoff
+
+
+From darioteixeira at yahoo.com  Thu Jun  4 14:55:51 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Thu, 4 Jun 2009 05:55:51 -0700 (PDT)
+Subject: [Pgocaml-dev] Latest svn release break examples
+Message-ID: <516951.57035.qm@web111505.mail.gq1.yahoo.com>
+
+
+Hi,
+
+> vb~haramis (~/pgocaml2/pgoctut/examples/one)% make
+> ocamlfind ocamlc -package pgocaml,pgocaml.syntax -syntax
+> camlp4o -c one.ml
+> File "one.ml", line 2, characters 27-184 (end at line 7,
+> character 8):
+> Camlp4: Uncaught exception: Unix.Unix_error (20 | CstTag21,
+> "connect", "")
+
+All is fine on my end.  Are you sure you got a) Postgresql running;
+b) correct socket; c) correct database?
+
+Cheers,
+Dario
+
+
+
+      
+
+
+From darioteixeira at yahoo.com  Thu Jun  4 19:22:19 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Thu, 4 Jun 2009 10:22:19 -0700 (PDT)
+Subject: [Pgocaml-dev] Ready for 1.3
+Message-ID: <993750.12125.qm@web111501.mail.gq1.yahoo.com>
+
+
+Hi,
+
+SVN trunk now includes both Mykola Stryebkov's and Vincent Bernardoff's
+patches. Everything looks good on my end, but please do test it with
+your own programs.  If there are no complaints, I'll release 1.3 within
+a couple of days.  Note that the patches have been applied to both the
+'main' and the 'classic' trees.
+
+Cheers,
+Dario
+
+P.S. Vincent: I modified your new point_of_string slightly so that the
+     regex is processed only once.
+
+
+
+      
+
+
+From darioteixeira at yahoo.com  Tue Jun  9 15:23:45 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Tue, 9 Jun 2009 06:23:45 -0700 (PDT)
+Subject: [Pgocaml-dev] 1.3 is here
+Message-ID: <726925.28622.qm@web111505.mail.gq1.yahoo.com>
+
+
+Hi,
+
+I've just tagged and released 1.3, featuring Mykola Stryebkov's and
+Vincent Bernardoff's patches.  The web page has been updated as well.
+Feedback is, as always, welcome.
+
+Note to packagers: though I kept the two branches in synch for this release,
+in the future only the 'main' branch will be updated.  If you're packaging
+PG'OCaml, please consider only the 'main' branch.  (This applies also to
+patches: please provide diffs against the main branch only).
+
+Cheers,
+Dario Teixeira
+
+
+
+      
+
+
+From guillaume.yziquel at citycable.ch  Wed Jun 10 08:29:00 2009
+From: guillaume.yziquel at citycable.ch (Guillaume Yziquel)
+Date: Wed, 10 Jun 2009 08:29:00 +0200
+Subject: [Pgocaml-dev] Licence of PG'OCaml.
+In-Reply-To: <4A2EE32E.4070403@yziquel.homelinux.org>
+References: <515459.19113.qm@web111505.mail.gq1.yahoo.com>
+	<200906091341.n59Dfhgh026516@mi0.bluebottle.com>
+	<200906092016.n59KGgML004271@mi1.bluebottle.com>
+	<4A2EE32E.4070403@yziquel.homelinux.org>
+Message-ID: <4A2F52AC.2020003@citycable.ch>
+
+Hello.
+
+I'm currently packaging PG'OCaml in Debian. Concerning its licence, I 
+wish to include the following copyright notice in the package. As there 
+has been some code change lately, I would like to hear from people not 
+happy with the proposed copyright notice.
+
+All the best,
+
+Guillaume Yziquel.
+
+
+> Format-Specification: http://wiki.debian.org/Proposals/CopyrightFormat
+> Upstream-Name: PG'OCaml
+> Upstream-Maintainer: Richard W.M. Jones <rjones at annexia.org>
+> Upstream-Source: http://developer.berlios.de/projects/pgocaml/
+> Packaged-By: Guillaume Yziquel <guillaume.yziquel at citycable.ch>
+> Packaged-Date: Thu, 02 Jun 2009 17:13:41 +0100
+> Upstream-author: Richard W.M. Jones <rjones at annexia.org>
+> Original-Source-Location: http://developer.berlios.de/projects/pgocaml/
+> 
+> Files: *
+> Copyright: (C) Copyright 2006 Richard W.M. Jones, Merjis Ltd. <rjones at annexia.org>
+> License: LGPL-2.1+ | other
+>  As a special exception to the GNU Library General Public License, you
+>  may link, statically or dynamically, a "work that uses the Library"
+>  with a publicly distributed version of the Library to produce an
+>  executable file containing portions of the Library, and distribute
+>  that executable file under terms of your choice, without any of the
+>  additional requirements listed in clause 6 of the GNU Library General
+>  Public License.  By "a publicly distributed version of the Library",
+>  we mean either the unmodified Library as distributed by Red Hat, or a
+>  modified version of the Library that is distributed under the
+>  conditions defined in clause 2 of the GNU Library General Public
+>  License.  This exception does not however invalidate any other reasons
+>  why the executable file might be covered by the GNU Library General
+>  Public License.
+>  .
+>  On Debian GNU/Linux systems, the complete text of the GNU Lesser General
+>  Public License can be found in `/usr/share/common-licenses/LGPL-2.1'.
+> 
+> Files: debian/*
+> Copyright: (C) Copyright 2009 Guillaume Yziquel <guillaume.yziquel at citycable.ch>
+> License: GPL-2+
+>  On Debian GNU/Linux systems, the complete text of the GNU Lesser General
+>  Public License can be found in `/usr/share/common-licenses/GPL'.
+
+
+From vb at vb.fdn.fr  Wed Jun 10 09:56:33 2009
+From: vb at vb.fdn.fr (Vincent Bernardoff)
+Date: Wed, 10 Jun 2009 09:56:33 +0200
+Subject: [Pgocaml-dev] Unable to connect to database
+Message-ID: <200906100956.33518.vb@vb.fdn.fr>
+
+I am really unable to connect to the database at compile time since 1.3
+Sure something has changed between 1.2 and 1.3 that broke something?
+I am using postgres 8.3.7 (Archlinux)
+
+[vb at nerenyi one]$ make
+ocamlfind ocamlc -package pgocaml,pgocaml.syntax -syntax camlp4o -c one.ml
+File "one.ml", line 2, characters 27-184 (end at line 7, character 8):
+Camlp4: Uncaught exception: Unix.Unix_error (20 | CstTag21, "connect", "")
+
+
+-- 
+Vincent Bernardoff
+
+
+From nick at mykola.org  Wed Jun 10 12:57:34 2009
+From: nick at mykola.org (Mykola Stryebkov)
+Date: Wed, 10 Jun 2009 13:57:34 +0300
+Subject: [Pgocaml-dev] Licence of PG'OCaml.
+In-Reply-To: <4A2F52AC.2020003@citycable.ch>
+References: <515459.19113.qm@web111505.mail.gq1.yahoo.com>
+	<200906091341.n59Dfhgh026516@mi0.bluebottle.com>
+	<200906092016.n59KGgML004271@mi1.bluebottle.com>
+	<4A2EE32E.4070403@yziquel.homelinux.org>
+	<4A2F52AC.2020003@citycable.ch>
+Message-ID: <6DFEFE68-D200-466B-B663-7E8C893CE29D@mykola.org>
+
+Hi,
+
+On 10 ??? 2009, at 09:29, Guillaume Yziquel wrote:
+
+> I'm currently packaging PG'OCaml in Debian. Concerning its licence, I
+> wish to include the following copyright notice in the package. As  
+> there
+> has been some code change lately, I would like to hear from people not
+> happy with the proposed copyright notice.
+
+Sounds like everybody happy :-)
+
+-- 
+Mykola Stryebkov
+Blog: http://mykola.org/blog/
+Public key: http://mykola.org/pubkey.txt
+fpr: 552C 88D6 895B 6E64 F277 D367 8A70 8132 47F5 C1B6
+
+
+
+
+
+
+From darioteixeira at yahoo.com  Wed Jun 10 16:57:34 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Wed, 10 Jun 2009 07:57:34 -0700 (PDT)
+Subject: [Pgocaml-dev] Unable to connect to database
+Message-ID: <532476.42061.qm@web111515.mail.gq1.yahoo.com>
+
+
+Hi,
+
+> I am really unable to connect to the
+> database at compile time since 1.3
+> Sure something has changed between 1.2 and 1.3 that broke
+> something?
+> I am using postgres 8.3.7 (Archlinux)
+
+Can someone replicate this problem?  Everything runs fine on my end.
+
+Cheers,
+Dario
+
+
+
+      
+
+
+From darioteixeira at yahoo.com  Wed Jun 10 16:58:49 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Wed, 10 Jun 2009 07:58:49 -0700 (PDT)
+Subject: [Pgocaml-dev] Licence of PG'OCaml.
+Message-ID: <108441.94728.qm@web111502.mail.gq1.yahoo.com>
+
+
+Hi,
+
+> I'm currently packaging PG'OCaml in Debian. Concerning its licence,
+> I  wish to include the following copyright notice in the package.
+> As there has been some code change lately, I would like to hear from
+> people not happy with the proposed copyright notice.
+
+Looks fine to me.
+
+Cheers,
+Dario
+
+
+
+      
+
+
+From vincent.balat at pps.jussieu.fr  Wed Jun 10 17:46:02 2009
+From: vincent.balat at pps.jussieu.fr (Vincent Balat)
+Date: Wed, 10 Jun 2009 17:46:02 +0200
+Subject: [Pgocaml-dev] Unable to connect to database
+In-Reply-To: <532476.42061.qm@web111515.mail.gq1.yahoo.com>
+References: <532476.42061.qm@web111515.mail.gq1.yahoo.com>
+Message-ID: <200906101746.03741.vincent.balat@pps.jussieu.fr>
+
+Everything is ok for us (with last SVN version). Are you sure your pg_hba.conf 
+is ok and also the environment variables (PGPASSWORD etc) ?
+
+Le Wednesday 10 June 2009 16:57:34 Dario Teixeira a ?crit :
+> Hi,
+>
+> > I am really unable to connect to the
+> > database at compile time since 1.3
+> > Sure something has changed between 1.2 and 1.3 that broke
+> > something?
+> > I am using postgres 8.3.7 (Archlinux)
+>
+> Can someone replicate this problem?  Everything runs fine on my end.
+>
+> Cheers,
+> Dario
+>
+>
+>
+>
+> _______________________________________________
+> Pgocaml-dev mailing list
+> Pgocaml-dev at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/pgocaml-dev
+
+
+
+From guillaume.yziquel at citycable.ch  Sat Jun 13 01:51:52 2009
+From: guillaume.yziquel at citycable.ch (Guillaume Yziquel)
+Date: Sat, 13 Jun 2009 01:51:52 +0200
+Subject: [Pgocaml-dev] Distributing .mli files.
+Message-ID: <4A32EA18.8080001@citycable.ch>
+
+Hello.
+
+Here is a patch I used in order to package pgocaml for debian. It simply 
+adds .mli files to the files installed by findlib, and thus allows 
+automatic ocamldoc documentation generation.
+
+Could it be possible to include this patch upstream?
+
+All the best,
+
+Guillaume Yziquel.
+
+
+> #! /bin/sh /usr/share/dpatch/dpatch-run
+> ## 02_makefile_mli.dpatch by Guillaume Yziquel <guillaume.yziquel at citycable.ch>
+> ##
+> ## DP: Including .mli files for documentation generation.
+> 
+> @DPATCH@
+> diff -urNad pgocaml-1.3~/Makefile pgocaml-1.3/Makefile
+> --- pgocaml-1.3~/Makefile       2009-06-09 15:31:01.000000000 +0200
+> +++ pgocaml-1.3/Makefile        2009-06-09 15:31:49.000000000 +0200
+> @@ -155,7 +155,7 @@
+>  #
+>  
+>  findlib_install:
+> -       ocamlfind install $(PACKAGE) META pgocaml.a pgocaml.cma pgocaml.cmxa pGOCaml_generic.cm[ix] pGOCaml.cm[ix] pa_pgsql.cmo
+> +       ocamlfind install $(PACKAGE) META pgocaml.a pgocaml.cma pgocaml.cmxa pGOCaml_generic.cm[ix] pGOCaml.cm[ix] pa_pgsql.cmo pGOCaml_generic.mli pGOCaml.mli
+>  
+>  reinstall:
+>         ocamlfind remove $(PACKAGE)
+
+
+
+From guillaume.yziquel at citycable.ch  Sat Jun 13 02:00:00 2009
+From: guillaume.yziquel at citycable.ch (Guillaume Yziquel)
+Date: Sat, 13 Jun 2009 02:00:00 +0200
+Subject: [Pgocaml-dev] Copyright dates.
+In-Reply-To: <4A32E89E.4060200@yziquel.homelinux.org>
+References: <4A2F6BA0.5030100@glondu.net>
+	<4A31ADAE.2010009@yziquel.homelinux.org>
+	<4A32E89E.4060200@yziquel.homelinux.org>
+Message-ID: <4A32EC00.2080802@citycable.ch>
+
+Hello.
+
+Concerning copyright dates, it seems to me that work was done this year 
+on PG'OCaml. However, the copyright dates do not reflect this fact.
+
+Could it be possible to amend this?
+
+All the best,
+
+Guillaume Yziquel.
+
+> yziquel at seldon:~/sandbox/debian-ocaml/pgocaml/pgocaml$ grep 2009 *
+> yziquel at seldon:~/sandbox/debian-ocaml/pgocaml/pgocaml$ grep 2008 *
+> Makefile:# Copyright (C) 2005-2008 Richard Jones and other authors.
+> yziquel at seldon:~/sandbox/debian-ocaml/pgocaml/pgocaml$ grep 2007 *
+> HOW_IT_WORKS.txt:$Id: HOW_IT_WORKS.txt,v 1.1 2007-05-24 12:59:55 rich Exp $
+> Makefile.config:# $Id: Makefile.config,v 1.12 2007-10-28 20:15:26 rich Exp $
+> pa_pgsql.ml4:(* $Id: pa_pgsql.ml4,v 1.13 2007-09-03 17:18:38 rich Exp $
+> pa_pgsql.ml4:	     * http://caml.inria.fr/pub/ml-archives/caml-list/2007/05/ab49714d974451f669cf46455627466d.en.html
+> pGOCaml_generic.ml: * $Id: pGOCaml.ml,v 1.24 2007-10-14 14:52:27 rich Exp $
+> pGOCaml_generic.mli: * $Id: pGOCaml.mli,v 1.14 2007-10-14 14:52:27 rich Exp $
+> pGOCaml.ml: * $Id: pGOCaml.ml,v 1.24 2007-10-14 14:52:27 rich Exp $
+> pGOCaml.mli: * $Id: pGOCaml.mli,v 1.14 2007-10-14 14:52:27 rich Exp $
+> pgocaml_prof.ml: * $Id: pgocaml_prof.ml,v 1.3 2007-02-25 12:01:31 rich Exp $
+> README.txt:$Id: README.txt,v 1.5 2007-09-03 17:18:38 rich Exp $
+> yziquel at seldon:~/sandbox/debian-ocaml/pgocaml/pgocaml$ grep 2006 *
+> BUGS.txt:$Id: BUGS.txt,v 1.2 2006/02/27 16:31:07 rich Exp $
+> pa_pgsql.ml4:   * http://archives.postgresql.org/pgsql-interfaces/2006-01/msg00043.php
+> README.txt:PG'OCaml (C) Copyright 2006 Merjis Ltd, Richard W.M. Jones (rich at annexia.org)
+> test_pgocaml_lowlevel.ml: * $Id: test_pgocaml_lowlevel.ml,v 1.1 2006/07/19 10:21:38 rich Exp $
+> test_pgocaml.ml: * $Id: test_pgocaml.ml,v 1.1 2006/07/19 10:21:38 rich Exp $
+> yziquel at seldon:~/sandbox/debian-ocaml/pgocaml/pgocaml$ grep 2005 *
+> Makefile:# Copyright (C) 2005-2008 Richard Jones and other authors.
+
+
+
+From rich at annexia.org  Sat Jun 13 10:50:18 2009
+From: rich at annexia.org (Richard Jones)
+Date: Sat, 13 Jun 2009 09:50:18 +0100
+Subject: [Pgocaml-dev] Distributing .mli files.
+In-Reply-To: <4A32EA18.8080001@citycable.ch>
+References: <4A32EA18.8080001@citycable.ch>
+Message-ID: <20090613085018.GV27900@annexia.org>
+
+On Sat, Jun 13, 2009 at 01:51:52AM +0200, Guillaume Yziquel wrote:
+> Hello.
+> 
+> Here is a patch I used in order to package pgocaml for debian. It simply 
+> adds .mli files to the files installed by findlib, and thus allows 
+> automatic ocamldoc documentation generation.
+> 
+> Could it be possible to include this patch upstream?
+> 
+> All the best,
+> 
+> Guillaume Yziquel.
+> 
+> 
+> > #! /bin/sh /usr/share/dpatch/dpatch-run
+> > ## 02_makefile_mli.dpatch by Guillaume Yziquel <guillaume.yziquel at citycable.ch>
+> > ##
+> > ## DP: Including .mli files for documentation generation.
+> > 
+> > @DPATCH@
+> > diff -urNad pgocaml-1.3~/Makefile pgocaml-1.3/Makefile
+> > --- pgocaml-1.3~/Makefile       2009-06-09 15:31:01.000000000 +0200
+> > +++ pgocaml-1.3/Makefile        2009-06-09 15:31:49.000000000 +0200
+> > @@ -155,7 +155,7 @@
+> >  #
+> >  
+> >  findlib_install:
+> > -       ocamlfind install $(PACKAGE) META pgocaml.a pgocaml.cma pgocaml.cmxa pGOCaml_generic.cm[ix] pGOCaml.cm[ix] pa_pgsql.cmo
+> > +       ocamlfind install $(PACKAGE) META pgocaml.a pgocaml.cma pgocaml.cmxa pGOCaml_generic.cm[ix] pGOCaml.cm[ix] pa_pgsql.cmo pGOCaml_generic.mli pGOCaml.mli
+> >  
+> >  reinstall:
+> >         ocamlfind remove $(PACKAGE)
+
++1
+
+Rich.
+
+-- 
+Richard Jones
+Red Hat
+
+
+From darioteixeira at yahoo.com  Sun Jun 14 17:03:53 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Sun, 14 Jun 2009 08:03:53 -0700 (PDT)
+Subject: [Pgocaml-dev] Copyright dates.
+Message-ID: <199776.2033.qm@web111507.mail.gq1.yahoo.com>
+
+
+Hi,
+
+> Concerning copyright dates, it seems to me that work was done this year 
+> on PG'OCaml. However, the copyright dates do not reflect this fact.
+
+Check out current trunk:  I standardised all the headers and copyright
+information.  I also expanded the CONTRIBUTORS.txt file to include recent
+developments.  Let me know if all is kosher.
+
+Moreover, I patched the Makefile to install the mli files.
+
+Cheers,
+Dario Teixeira
+
+
+
+
+      
+
+
+From darioteixeira at yahoo.com  Thu Jun 18 15:16:29 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Thu, 18 Jun 2009 06:16:29 -0700 (PDT)
+Subject: [Pgocaml-dev] Type unraveling
+Message-ID: <180987.97964.qm@web111505.mail.gq1.yahoo.com>
+
+Hi,
+
+As you probably know, SQL's "CREATE DOMAIN" command allows the creation
+of types which are essentially aliases for existing types.  The advantages
+of this are obvious: you can change the underlying type for a column that
+appears in various tables simply by changing its alias.
+
+Currently, PG'OCaml cannot handle these types.  If you tried to insert
+a row into the table "people" defined below, PG'OCaml would complain that
+it knew nothing about the type whose OID corresponds to age_t.
+
+CREATE DOMAIN age_t AS int4;
+
+CREATE TABLE people
+        (
+        id      int4 UNIQUE NOT NULL,
+        name    text NOT NULL,
+        age     age_t NOT NULL,
+        PRIMARY KEY (id)
+        );
+
+Under branches/unravel (and branches/unravel-classic) you'll find an
+experimental branch that adds support for these types.  It's relatively
+simple: it uses the system table pg_type to recursively "unravel" a
+domain-type until it finds a base type it is familiar with.  No attempt
+is made to cache results, because all of this happens at compile-time
+anyway.  Also, I am aware that the upcoming 8.4 release of Postgresql
+features recursive queries, which would eliminate the need for putting
+the recursion client-side.  It will be a long time, however, before 8.4
+is the least common denominator.
+
+Also, under trunk/demos/unravel you'll find a small test example for the
+new feature.
+
+Anyway, your comments are welcome.  Yours in particular, Richard, since
+you're the most familiar with the code.  (The diff is also attached to
+this message).
+
+Cheers,
+Dario
+
+
+      
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: diff
+Type: application/octet-stream
+Size: 3643 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20090618/e71c5086/attachment.obj>
+
+From rich at annexia.org  Thu Jun 18 15:41:58 2009
+From: rich at annexia.org (Richard Jones)
+Date: Thu, 18 Jun 2009 14:41:58 +0100
+Subject: [Pgocaml-dev] Type unraveling
+In-Reply-To: <180987.97964.qm@web111505.mail.gq1.yahoo.com>
+References: <180987.97964.qm@web111505.mail.gq1.yahoo.com>
+Message-ID: <20090618134158.GH11252@annexia.org>
+
+On Thu, Jun 18, 2009 at 06:16:29AM -0700, Dario Teixeira wrote:
+> Anyway, your comments are welcome.  Yours in particular, Richard, since
+> you're the most familiar with the code.  (The diff is also attached to
+> this message).
+
+I had a quick look and it seems OK.  My main question is why
+don't we just do the unravelling by default, instead of having
+an option to enable it?  (Possibly I'm missing something).
+
+Rich.
+
+-- 
+Richard Jones
+Red Hat
+
+
+From darioteixeira at yahoo.com  Thu Jun 18 17:20:34 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Thu, 18 Jun 2009 08:20:34 -0700 (PDT)
+Subject: [Pgocaml-dev] Type unraveling
+Message-ID: <627255.53045.qm@web111502.mail.gq1.yahoo.com>
+
+
+Hi,
+
+> I had a quick look and it seems OK.? My main question is why
+> don't we just do the unravelling by default, instead of having
+> an option to enable it?? (Possibly I'm missing something).
+
+It is enabled by default, and there's no option to turn it off.
+Note that the unraveling is only triggered if there's an exception
+in PGOCaml.name_of_type.  I figured it wasn't worth making the
+unraveling on/off configurable because I can't think of a situation
+where one wouldn't want PG'OCaml to support CREATE DOMAIN.
+
+Cheers,
+Dario
+
+
+
+      
+
+
+From guillaume.yziquel at citycable.ch  Sat Jun 20 22:19:30 2009
+From: guillaume.yziquel at citycable.ch (Guillaume Yziquel)
+Date: Sat, 20 Jun 2009 22:19:30 +0200
+Subject: [Pgocaml-dev] Version number
+Message-ID: <4A3D4452.9030801@citycable.ch>
+
+Hello.
+
+It would be nice to bump the version to 1.3 in Makefile.config.
+
+All the best,
+
+Guillaume Yziquel.
+
+
+From darioteixeira at yahoo.com  Sun Jun 21 15:25:54 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Sun, 21 Jun 2009 06:25:54 -0700 (PDT)
+Subject: [Pgocaml-dev] Version number
+Message-ID: <483151.8689.qm@web111516.mail.gq1.yahoo.com>
+
+
+Hi,
+
+> It would be nice to bump the version to 1.3 in
+> Makefile.config.
+
+Well noted.  I bumped up the version number in trunk to 1.4,
+in anticipation to the upcoming release.
+
+Cheers,
+Dario Teixeira
+
+
+
+      
+
+

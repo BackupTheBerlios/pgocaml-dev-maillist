@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] Some suggested updates
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Some%20suggested%20updates&In-Reply-To=%3C873039.41640.qm%40web111515.mail.gq1.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000037.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] Some suggested updates</H1>
+    <B>Dario Teixeira</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Some%20suggested%20updates&In-Reply-To=%3C873039.41640.qm%40web111515.mail.gq1.yahoo.com%3E"
+       TITLE="[Pgocaml-dev] Some suggested updates">darioteixeira at yahoo.com
+       </A><BR>
+    <I>Thu Apr 23 16:54:42 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000037.html">[Pgocaml-dev] Some suggested updates
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#36">[ date ]</a>
+              <a href="thread.html#36">[ thread ]</a>
+              <a href="subject.html#36">[ subject ]</a>
+              <a href="author.html#36">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Hi,
+
+&gt;<i> a) I think PGOCaml's build system can be cleanup quite a bit by assuming
+</I>&gt;<i> &#160;&#160;&#160;that findlib is always installed.&#160; I know this is true for Debian and
+</I>&gt;<i> &#160;&#160;&#160;GODI, and I am guessing right in assuming that's also true for recent
+</I>&gt;<i> &#160;&#160;&#160;Fedoras?&#160; If so, I vote for the findlibisation of the Makefile.
+</I>
+Just to clarify: the bits of the Makefile that need to be findlib-aware
+are those relating to Camlp4.  For example the invocation &quot;$(shell ocamlfind
+query pcre)/pcre.cma&quot; hardwires the name of the lib to be pcre.cma instead
+of discovering it via findlib.
+
+Cheers,
+Dario
+
+
+
+      
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000037.html">[Pgocaml-dev] Some suggested updates
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#36">[ date ]</a>
+              <a href="thread.html#36">[ thread ]</a>
+              <a href="subject.html#36">[ subject ]</a>
+              <a href="author.html#36">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>

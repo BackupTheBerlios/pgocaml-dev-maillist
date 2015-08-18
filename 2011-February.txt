@@ -1,0 +1,552 @@
+From michael at elehack.net  Tue Feb  1 16:17:19 2011
+From: michael at elehack.net (Michael Ekstrand)
+Date: Tue, 01 Feb 2011 09:17:19 -0600
+Subject: [Pgocaml-dev] PGOCaml in GODI?
+Message-ID: <4D4823FF.3090108@elehack.net>
+
+To date, PGOCaml does not have GODI packages.  Is there a particular
+reason for this, is someone working on it, or is the task free for the
+taking?
+
+I have GODI access as a package maintainer (currently maintaining the
+Batteries package) and would be happy to create and maintain a PGOCaml
+package.
+
+- Michael
+
+
+From darioteixeira at yahoo.com  Tue Feb  1 17:35:51 2011
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Tue, 1 Feb 2011 08:35:51 -0800 (PST)
+Subject: [Pgocaml-dev] PGOCaml in GODI?
+In-Reply-To: <4D4823FF.3090108@elehack.net>
+Message-ID: <161749.3829.qm@web111504.mail.gq1.yahoo.com>
+
+Hi,
+
+> To date, PGOCaml does not have GODI packages.? Is there a particular
+> reason for this, is someone working on it, or is the task free for the
+> taking?
+> 
+> I have GODI access as a package maintainer (currently maintaining the
+> Batteries package) and would be happy to create and maintain a PGOCaml
+> package.
+
+Actually, you would be very welcome to create a GODI package. 
+The directory trunk/godi has existed for quite some time in SVN,
+but it's still empty for lack of a volunteer with GODI experience.
+
+The project is still hosted in BerliOS.  I would in fact prefer moving
+it to the Ocaml Forge, as it would bring more visibility and make life
+easier for potential developers who already have an account there.
+Does anyone object?
+
+(Michael, if you can't wait for the move or already have a BerliOS
+account I can grant you write access to SVN anyway).
+
+Cheers,
+Dario Teixeira
+
+
+
+      
+
+
+From michael at elehack.net  Tue Feb  1 17:40:52 2011
+From: michael at elehack.net (Michael Ekstrand)
+Date: Tue, 01 Feb 2011 10:40:52 -0600
+Subject: [Pgocaml-dev] PGOCaml in GODI?
+In-Reply-To: <161749.3829.qm@web111504.mail.gq1.yahoo.com>
+References: <161749.3829.qm@web111504.mail.gq1.yahoo.com>
+Message-ID: <4D483794.2030107@elehack.net>
+
+On 02/01/2011 10:35 AM, Dario Teixeira wrote:
+> Actually, you would be very welcome to create a GODI package. 
+> The directory trunk/godi has existed for quite some time in SVN,
+> but it's still empty for lack of a volunteer with GODI experience.
+>
+> The project is still hosted in BerliOS.  I would in fact prefer moving
+> it to the Ocaml Forge, as it would bring more visibility and make life
+> easier for potential developers who already have an account there.
+> Does anyone object?
+>
+> (Michael, if you can't wait for the move or already have a BerliOS
+> account I can grant you write access to SVN anyway).
+
+Great.  I'll get on it.  GODI packages are all stored in GODI's own SVN
+repository, so I do not need write access to get started.
+
+- Michael
+
+
+From michael at elehack.net  Tue Feb  1 18:29:28 2011
+From: michael at elehack.net (Michael Ekstrand)
+Date: Tue, 01 Feb 2011 11:29:28 -0600
+Subject: [Pgocaml-dev] Patch to make PGOCaml work with Batteries
+Message-ID: <4D4842F8.1060306@elehack.net>
+
+As I use Batteries rather than Extlib, I've wanted PGOCaml to use
+Batteries. So far, I've been using a locally-patched version. I have
+cleaned up that patch to make it conditional so that if the
+USE_BATTERIES Makefile config variable is set to 'yes', PGOCaml is built
+against Batteries, and is still built against Extlib otherwise.  I've
+attached it for consideration for the main PGOCaml tree.
+
+The patch does the following:
+
+    * Add the USE_BATTERIES config variable (defaulting to no)
+    * Modify Makefile to use an EXTLIB variable, either 'extlib' or
+      'batteries', to specify dependencies.
+    * Substitute EXTLIB into the META file.
+    * Use camlp4.macro to adjust whether Batteries or Extlib is used in
+      pGOCaml_generic.ml and pgocaml_prof.ml.
+    * Use camlp4.macro to adjust whether Batteries or Extlib is used in
+      pa_pgocaml.ml4.  This also involved introducing a local variable &
+      using antiquotations to push the correct module name for the
+      Option module into the generated code.
+
+I also have a version  which does a hard replacement of Extlib with
+Batteries, if that is more desirable.
+
+Feedback is, of course, welcome.
+
+- Michael
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20110201/231a986e/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: pgocaml-batteries.patch
+Type: text/x-patch
+Size: 5505 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20110201/231a986e/attachment.bin>
+
+From michael at elehack.net  Tue Feb  1 22:13:03 2011
+From: michael at elehack.net (Michael Ekstrand)
+Date: Tue, 01 Feb 2011 15:13:03 -0600
+Subject: [Pgocaml-dev] GODI packages now available
+Message-ID: <4D48775F.7040603@elehack.net>
+
+PGOCaml is now in
+
+
+From michael at elehack.net  Tue Feb  1 22:15:43 2011
+From: michael at elehack.net (Michael Ekstrand)
+Date: Tue, 01 Feb 2011 15:15:43 -0600
+Subject: [Pgocaml-dev] PGOCaml now in GODI
+Message-ID: <4D4877FF.60905@elehack.net>
+
+GODI packages for PGOCaml are now published.  It's available in both the
+3.11 and 3.12 distributions as godi-pgocaml.  They've been tested on my
+laptop, a school computer, and by another user on IRC.  If you use GODI,
+your next godi_update will pick them up.
+
+- Michael
+
+
+From michael at elehack.net  Thu Feb  3 00:25:11 2011
+From: michael at elehack.net (Michael Ekstrand)
+Date: Wed, 02 Feb 2011 17:25:11 -0600
+Subject: [Pgocaml-dev] Patch to make PGOCaml work with Batteries
+In-Reply-To: <4D4842F8.1060306@elehack.net>
+References: <4D4842F8.1060306@elehack.net>
+Message-ID: <4D49E7D7.5060603@elehack.net>
+
+On 02/01/2011 11:29 AM, Michael Ekstrand wrote:
+> As I use Batteries rather than Extlib, I've wanted PGOCaml to use
+> Batteries. So far, I've been using a locally-patched version. I have
+> cleaned up that patch to make it conditional so that if the
+> USE_BATTERIES Makefile config variable is set to 'yes', PGOCaml is
+> built against Batteries, and is still built against Extlib otherwise. 
+> I've attached it for consideration for the main PGOCaml tree.
+>
+> The patch does the following:
+>
+>     * Add the USE_BATTERIES config variable (defaulting to no)
+>     * Modify Makefile to use an EXTLIB variable, either 'extlib' or
+>       'batteries', to specify dependencies.
+>     * Substitute EXTLIB into the META file.
+>     * Use camlp4.macro to adjust whether Batteries or Extlib is used
+>       in pGOCaml_generic.ml and pgocaml_prof.ml.
+>     * Use camlp4.macro to adjust whether Batteries or Extlib is used
+>       in pa_pgocaml.ml4.  This also involved introducing a local
+>       variable & using antiquotations to push the correct module name
+>       for the Option module into the generated code.
+>
+> I also have a version  which does a hard replacement of Extlib with
+> Batteries, if that is more desirable.
+
+In more testing and usage, I've found a bug and some suboptimality in
+the original patch.  Attached is an updated version which fixes a bug in
+the syntax extension and makes the USE_BATTERIES variable an
+unconditional set so that the config file must be modified to turn on
+Batteries.  It also substitutes the PACKAGE variable in as a dependency
+for pgocaml.syntax, rather than hard-coding pgocaml, so that it can work
+correctly in Batteries mode with a different package name.
+
+I also have a GODI package that builds the Batteries-enabled version in
+the GODI SVN repository (it has not yet been released to the delivered
+GODI tree):
+
+https://godirepo.camlcity.org/svn/godi-build/trunk/godi/godi-pgocaml-batteries
+
+- Michael
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20110202/e356af93/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: pgocaml-batteries.patch
+Type: text/x-patch
+Size: 5747 bytes
+Desc: not available
+URL: <https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20110202/e356af93/attachment.bin>
+
+From darioteixeira at yahoo.com  Thu Feb  3 19:32:13 2011
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Thu, 3 Feb 2011 10:32:13 -0800 (PST)
+Subject: [Pgocaml-dev] Patch to make PGOCaml work with Batteries
+Message-ID: <157240.71947.qm@web111504.mail.gq1.yahoo.com>
+
+Hi,
+
+>  In more testing and usage, I've found a bug and some suboptimality
+>  in the original patch.? Attached is an updated version which fixes a
+>  bug in the syntax extension and makes the USE_BATTERIES variable an
+>  unconditional set so that the config file must be modified to turn
+>  on Batteries.? It also substitutes the PACKAGE variable in as a
+>  dependency for pgocaml.syntax, rather than hard-coding pgocaml, so
+>  that it can work correctly in Batteries mode with a different
+>  package name.
+
+I'll take a look at the patch and apply it in trunk.  Eventually it will
+make sense to depend on Batteries only, but for now let's keep the choice
+between ExtLib and Batteries.
+
+As for the GODI package, perhaps you could have a single pgocaml package
+by relying on a configuration variable to switch between ExtLib/Batteries?
+Also, there is a configuration option in Makefile.config which at the
+moment is not configurable via the GODI package: the location of the
+Postgresql Unix domain socket.
+
+Cheers,
+Dario
+
+
+
+      
+
+
+From michael at elehack.net  Thu Feb  3 19:53:41 2011
+From: michael at elehack.net (Michael Ekstrand)
+Date: Thu, 03 Feb 2011 12:53:41 -0600
+Subject: [Pgocaml-dev] Patch to make PGOCaml work with Batteries
+In-Reply-To: <157240.71947.qm@web111504.mail.gq1.yahoo.com>
+References: <157240.71947.qm@web111504.mail.gq1.yahoo.com>
+Message-ID: <4D4AF9B5.2060301@elehack.net>
+
+On 02/03/2011 12:32 PM, Dario Teixeira wrote:
+> Hi,
+>
+>>  In more testing and usage, I've found a bug and some suboptimality
+>>  in the original patch.  Attached is an updated version which fixes a
+>>  bug in the syntax extension and makes the USE_BATTERIES variable an
+>>  unconditional set so that the config file must be modified to turn
+>>  on Batteries.  It also substitutes the PACKAGE variable in as a
+>>  dependency for pgocaml.syntax, rather than hard-coding pgocaml, so
+>>  that it can work correctly in Batteries mode with a different
+>>  package name.
+> I'll take a look at the patch and apply it in trunk.  Eventually it will
+> make sense to depend on Batteries only, but for now let's keep the choice
+> between ExtLib and Batteries.
+>
+> As for the GODI package, perhaps you could have a single pgocaml package
+> by relying on a configuration variable to switch between ExtLib/Batteries?
+> Also, there is a configuration option in Makefile.config which at the
+> moment is not configurable via the GODI package: the location of the
+> Postgresql Unix domain socket.
+Thanks for bringing that to my attention.  I will add an option to
+configure it.
+
+Originally, I had the separate package thing set up so that packages
+depending on 'pgocaml' would know which one they're getting.  Upon
+further thought, it seems this doesn't really matter (the only impact of
+the wrong PGOCaml should be an increased executable size), so I'll go
+ahead and make them a single package.
+
+- Michael
+
+
+From michael at elehack.net  Thu Feb  3 21:14:47 2011
+From: michael at elehack.net (Michael Ekstrand)
+Date: Thu, 03 Feb 2011 14:14:47 -0600
+Subject: [Pgocaml-dev] Specifying additional parameters (such as
+ search_path) at connection time
+Message-ID: <4D4B0CB7.50704@elehack.net>
+
+I use schemas to organize my tables and try to keep namespaces clean,
+but this introduces the need to have PGOCaml configure the search path
+in order to find the right tables.  I can successfully set the
+search_path parameter using the low-level interface, but this doesn't
+help at compile time.
+
+I've been able to modify PGOCaml to take a search_path parameter in the
+connect function, defaulting to the value of the PGSEARCHPATH
+environment variable, and pass this as an additional setting in the
+connect message.  This enables me to set the search path and allow
+PGOCaml to find the tables.
+
+Before I clean up the patch and submit it, though, I'd like some design
+feedback.  Is this a good solution, or would it be better to introduce a
+generic 'options' parameter of type (string * string) list, reading from
+a delimited value in PGOPTIONS so that users can set arbitrary options
+at connect time?
+
+Thanks!
+- Michael
+
+
+From dra-news at metastack.com  Sat Feb  5 19:16:12 2011
+From: dra-news at metastack.com (David Allsopp)
+Date: Sat, 5 Feb 2011 18:16:12 -0000
+Subject: [Pgocaml-dev] Patch to make PGOCaml work with Batteries
+Message-ID: <000001cbc560$c58fd0a0$50af71e0$@metastack.com>
+
+[apologies for the message ID being incorrect - I've only just joined the
+list so pasted the email from the archives]
+
+Michael Ekstrand wrote:
+> I use schemas to organize my tables and try to keep namespaces clean,
+> but this introduces the need to have PGOCaml configure the search path
+> in order to find the right tables.  I can successfully set the
+> search_path parameter using the low-level interface, but this doesn't
+> help at compile time.
+
+I also use schemas in the same way. I think you can do this and have PGOCaml
+work correctly without any hacking in some circumstances: just put
+
+PGSQL(dbh) "execute" "SET search_path TO my_schema"
+
+after your PGOCaml.connect call (or "SET SCHEMA TO my_schema" if using
+PostgreSQL 8.4 or later)
+
+> I've been able to modify PGOCaml to take a search_path parameter in the
+> connect function, defaulting to the value of the PGSEARCHPATH
+> environment variable, and pass this as an additional setting in the
+> connect message.  This enables me to set the search path and allow
+> PGOCaml to find the tables.
+
+The problem I got even with that trick above is that my code for connecting
+to the server is in one module (i.e. file) and the queries are in another so
+using "execute" doesn't work unless you redundantly add it to the top of
+each module.
+
+I have a private patch for pa_pgsql.ml4 from a couple of years ago which
+I've never submitted as I didn't think it would be widely useful which
+generalises what you're proposing slightly differently (I keep it to
+pa_pgsql and not the PGOCaml module itself) - it reads the environment
+variable PGCOMMAND and executes the SQL statement in it after connecting.
+This allows you to put *anything* required before compiling a module (so I
+export PGCOMMAND='set search_path to foo' in my Makefile).
+
+
+David
+
+
+
+From darioteixeira at yahoo.com  Sun Feb 13 19:56:21 2011
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Sun, 13 Feb 2011 10:56:21 -0800 (PST)
+Subject: [Pgocaml-dev] New stuff in trunk
+Message-ID: <502041.67086.qm@web111508.mail.gq1.yahoo.com>
+
+Hi,
+
+Michael Ekstrand's patch to make PG'Ocaml work with batteries, together
+with my own patch adding support for Hstore are now in trunk.  Please
+test -- if everything is alright I'll release 1.5 in a few days.
+
+Also, I didn't get any feedback on the issue of switching to the Ocaml
+Forge.  Is everyone on board?
+
+Cheers,
+Dario Teixeira
+
+
+
+      
+
+
+From dra-news at metastack.com  Mon Feb 14 17:10:05 2011
+From: dra-news at metastack.com (David Allsopp)
+Date: Mon, 14 Feb 2011 16:10:05 +0000
+Subject: [Pgocaml-dev] New stuff in trunk
+In-Reply-To: <502041.67086.qm@web111508.mail.gq1.yahoo.com>
+References: <502041.67086.qm@web111508.mail.gq1.yahoo.com>
+Message-ID: <E51C5B015DBD1348A1D85763337FB6D9490DD0F8@Remus.metastack.local>
+
+Dario Teixeira wrote:
+> Michael Ekstrand's patch to make PG'Ocaml work with batteries, together
+> with my own patch adding support for Hstore are now in trunk.  Please test
+> -- if everything is alright I'll release 1.5 in a few days.
+
+Has anyone had a chance to look at bugs #17908 (http://developer.berlios.de/bugs/?func=detailbug&bug_id=17908&group_id=9159) and #16274 http://developer.berlios.de/bugs/?func=detailbug&bug_id=16274&group_id=9159 - I know I'm biased as I reported them both but it would seem to me strange not to incorporate the second as I provided a patch.
+
+Bug #17908 certainly affects PGO'Caml trunk with Postgres 8.4.3 and 8.3.14 servers. I included a simple test case in the bug report - would someone be able to verify that it affects 9.0.x servers as well? The production server I compile for is an 8.3.x series so I don't really want to install 9.0.3 locally as it's irritating to use a new feature by accident while developing only to have to strip it out when compiling for production.
+
+Assuming it does affect 9.0.x too, it would seem odd IMO to make a first official release for just over a year containing a known broken type system...
+
+
+David
+
+PS Just in case this email gives the wrong impression - I *adore* PGO'Caml and the development it /usually/ saves
+
+
+From darioteixeira at yahoo.com  Mon Feb 14 19:11:29 2011
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Mon, 14 Feb 2011 10:11:29 -0800 (PST)
+Subject: [Pgocaml-dev] New stuff in trunk
+In-Reply-To: <E51C5B015DBD1348A1D85763337FB6D9490DD0F8@Remus.metastack.local>
+Message-ID: <873030.12100.qm@web111507.mail.gq1.yahoo.com>
+
+Hi,
+
+> - I know I'm biased as I reported them both but it would
+> seem to me strange not to incorporate the second as I
+> provided a patch.
+
+Developments happening off-list tend to be forgotten.  In fact, it might
+be best to disable the bug tracker at BerliOS to force people to send
+their patches and bug reports to this list.
+
+Anyway, could you send the patch for #16274 against current trunk?
+Please test it thoroughly, since I have no Windows machine to do it
+myself.
+
+
+> Assuming it does affect 9.0.x too, it would seem odd IMO to
+> make a first official release for just over a year
+> containing a known broken type system...
+
+As for bug #17908, have you checked entry (1) in BUGS.txt?
+
+
+> PS Just in case this email gives the wrong impression - I *adore*
+> PGO'Caml and the development it /usually/ saves
+
+Yeah, sometimes the feedback is not as fast as we would like, but
+we're all volunteers here...  (I hope that moving to the Ocaml Forge
+will lower the barrier for other people to contribute).
+
+Cheers,
+Dario Teixeira
+
+
+
+      
+
+
+From dra-news at metastack.com  Fri Feb 18 10:40:33 2011
+From: dra-news at metastack.com (David Allsopp)
+Date: Fri, 18 Feb 2011 09:40:33 +0000
+Subject: [Pgocaml-dev] New stuff in trunk
+In-Reply-To: <873030.12100.qm@web111507.mail.gq1.yahoo.com>
+References: <E51C5B015DBD1348A1D85763337FB6D9490DD0F8@Remus.metastack.local>
+	<873030.12100.qm@web111507.mail.gq1.yahoo.com>
+Message-ID: <E51C5B015DBD1348A1D85763337FB6D9490ED4A3@Remus.metastack.local>
+
+Dario Teixeira wrote:
+> Hi,
+> 
+> > - I know I'm biased as I reported them both but it would seem to me
+> > strange not to incorporate the second as I provided a patch.
+> 
+> Developments happening off-list tend to be forgotten.  In fact, it might
+> be best to disable the bug tracker at BerliOS to force people to send
+> their patches and bug reports to this list.
+
+:o) Will remember that!
+
+> Anyway, could you send the patch for #16274 against current trunk?
+> Please test it thoroughly, since I have no Windows machine to do it
+> myself.
+
+pgocaml-windows-connect.patch is a slightly different patch which I have tested against trunk (incidentally, I noticed that Makefile.config hasn't yet been updated to have version 1.5 specified). It's slightly different from the one listed in the bug report because while caching Unix.getpid() and Unix.getppid() is valid under Windows (they can't change) that doesn't take Unix.fork into account on other OSes.
+
+> > Assuming it does affect 9.0.x too, it would seem odd IMO to make a
+> > first official release for just over a year containing a known broken
+> > type system...
+> 
+> As for bug #17908, have you checked entry (1) in BUGS.txt?
+
+Gah - I remember reading that years ago and had completely forgotten. Attached is a tiny tweak to pa_pgsql.ml4 in pgocaml-nullable-results.patch which I hope you'll accept - it converts the Option.No_value exception (in a way compatible with the batteries stuff) into a Failure exception which includes a much more accurate description of what's gone wrong (including a remedy). Could possibly use Invalid_argument instead as that's never supposed to be caught.
+
+Can I also suggest a better solution to be included in BUGS.txt because nullable-results is not the greatest way of solving the problem as it nulls *everything* in the query. You can alternatively wrap the offending columns (ones which pa_pgsql thinks cannot be null) in your SQL statement with COALESCE(foo, NULL) - pa_pgsql won't be able to infer not NULL and it won't change the results. If the Postgres query optimiser really has its head screwed on then it should notice that that's an identity function and eliminate it (not tested that).
+
+> > PS Just in case this email gives the wrong impression - I *adore*
+> > PGO'Caml and the development it /usually/ saves
+> 
+> Yeah, sometimes the feedback is not as fast as we would like, but we're
+> all volunteers here...  (I hope that moving to the Ocaml Forge will lower
+> the barrier for other people to contribute).
+
+I'll remember to post to the list first in future. Certainly, if it's not in use then switching off the bug tracker would be a good plan.
+
+
+David
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: pgocaml-nullable-results.patch
+Type: application/octet-stream
+Size: 521 bytes
+Desc: pgocaml-nullable-results.patch
+URL: <https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20110218/bf895271/attachment.obj>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: pgocaml-windows-connect.patch
+Type: application/octet-stream
+Size: 771 bytes
+Desc: pgocaml-windows-connect.patch
+URL: <https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20110218/bf895271/attachment-0001.obj>
+
+From darioteixeira at yahoo.com  Fri Feb 18 16:21:23 2011
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Fri, 18 Feb 2011 07:21:23 -0800 (PST)
+Subject: [Pgocaml-dev] New stuff in trunk
+In-Reply-To: <E51C5B015DBD1348A1D85763337FB6D9490ED4A3@Remus.metastack.local>
+Message-ID: <713655.44313.qm@web111508.mail.gq1.yahoo.com>
+
+Hi David,
+
+> Can I also suggest a better solution to be included in
+> BUGS.txt because nullable-results is not the greatest way of
+> solving the problem as it nulls *everything* in the query.
+> You can alternatively wrap the offending columns (ones which
+> pa_pgsql thinks cannot be null) in your SQL statement with
+> COALESCE(foo, NULL) - pa_pgsql won't be able to infer not
+> NULL and it won't change the results. If the Postgres query
+> optimiser really has its head screwed on then it should
+> notice that that's an identity function and eliminate it
+> (not tested that).
+
+Thanks for the patches.  I'll get back to you concerning them and the
+other issues you mentioned in the email, but for now let me just point
+you to branches/commented and branches/nullres.  These contain some
+experiments I've done in the past concerning the nullability issues.
+
+The 'commented' branch relies on the SQL feature that allows one to
+add arbitrary comments to a column -- the comment can be used to pass
+meta information to PG'OCaml.  The 'nullres' branch allows the Ocaml
+programme to provide more fine-grained information about which fields
+are actually NULL.  None of these solutions are entirely satisfactory, 
+which is why I've never pursued them further.
+
+Cheers,
+Dario
+
+
+
+      
+
+

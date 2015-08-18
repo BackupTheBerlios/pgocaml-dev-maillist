@@ -1,0 +1,46 @@
+From rich at annexia.org  Tue Nov 25 10:55:21 2008
+From: rich at annexia.org (Richard Jones)
+Date: Tue, 25 Nov 2008 09:55:21 +0000
+Subject: [Pgocaml-dev] linking pgocaml
+In-Reply-To: <13554395.61227576453638.JavaMail.alexyk@De-Divinatione.local>
+References: <6380587.41227575612436.JavaMail.alexyk@De-Divinatione.local>
+	<13554395.61227576453638.JavaMail.alexyk@De-Divinatione.local>
+Message-ID: <20081125095520.GB19907@annexia.org>
+
+On Mon, Nov 24, 2008 at 07:27:36PM -0600, Alexy Khrabrov wrote:
+> OK.  I also wonder whether one can use cursors with pgocaml, or any
+> piecemeal fetch mechanisms?  I tried to get 2.5 million values from a
+> table and got a stack overflow before I increased OCAMLRUNPARAM, yet I
+> wonder about a scalable way to fetch long things...
+
+I've never used cursors so I've no idea.
+
+Rich.
+
+-- 
+Richard Jones
+Red Hat
+
+
+From rich at annexia.org  Sat Nov 29 23:38:47 2008
+From: rich at annexia.org (Richard Jones)
+Date: Sat, 29 Nov 2008 22:38:47 +0000
+Subject: [Pgocaml-dev] linking pgocaml
+In-Reply-To: <3967008.481227988411260.JavaMail.alexyk@De-Divinatione.local>
+References: <20081125095520.GB19907@annexia.org>
+	<3967008.481227988411260.JavaMail.alexyk@De-Divinatione.local>
+Message-ID: <20081129223846.GA22767@annexia.org>
+
+On Sat, Nov 29, 2008 at 01:53:37PM -0600, Alexy Khrabrov wrote:
+> Rich -- is there a way to get column names from the result set?
+
+Well, we get that from the database, but I'm pretty sure we throw it
+away currently.
+
+Rich.
+
+-- 
+Richard Jones
+Red Hat
+
+

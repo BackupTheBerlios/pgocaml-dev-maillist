@@ -1,0 +1,23 @@
+From darioteixeira at yahoo.com  Sat Oct  2 18:50:29 2010
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Sat, 2 Oct 2010 09:50:29 -0700 (PDT)
+Subject: [Pgocaml-dev] Support for more array types
+Message-ID: <790988.76275.qm@web111506.mail.gq1.yahoo.com>
+
+Hi,
+
+I've added support for more array types in PG'OCaml's SVN trunk.
+Besides the previously supported int4[], trunk now supports bool[],
+int8[], text[], float4[], and float8[].
+
+Under 'demos/arrays' you'll also find a small demo/test programme
+for this feature.
+
+Cheers,
+Dario Teixeira
+
+
+
+      
+
+

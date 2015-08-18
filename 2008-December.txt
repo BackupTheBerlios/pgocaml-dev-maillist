@@ -1,0 +1,95 @@
+From rich at annexia.org  Tue Dec 16 12:37:56 2008
+From: rich at annexia.org (Richard Jones)
+Date: Tue, 16 Dec 2008 11:37:56 -0000
+Subject: [Pgocaml-dev] linking pgocaml
+In-Reply-To: <5653787.01227560345318.JavaMail.alexyk@De-Divinatione.local>
+References: <20081104223753.GA31595@annexia.org>
+	<5653787.01227560345318.JavaMail.alexyk@De-Divinatione.local>
+Message-ID: <20081124210302.GA16129@annexia.org>
+
+On Mon, Nov 24, 2008 at 02:59:08PM -0600, Alexy Khrabrov wrote:
+> Hi Rich -- I noticed in my postgres logs that each compilation throws one
+> 
+> LOG:  unexpected EOF on client connection
+> 
+> -- is there a way to fix that so that logs are not cluttered by results of my hectic make runs? :)
+
+Yes, IIRC we're not sending the right quit command to the Postgres
+server, just closing the connection instead.  I guess if you want to
+fix it, take a close look at the PostgreSQL protocol documentation and
+the source to PG'OCaml ...
+
+Rich.
+
+-- 
+Richard Jones
+Red Hat
+
+
+From guillaume.yziquel at citycable.ch  Wed Dec 31 22:35:58 2008
+From: guillaume.yziquel at citycable.ch (Guillaume Yziquel)
+Date: Wed, 31 Dec 2008 22:35:58 +0100
+Subject: [Pgocaml-dev] Problem compiling pgocaml 1.1
+In-Reply-To: <20081005093737.GA7306@atreides.dyndns.org>
+References: <4b5157c30810040548n296f955esf3fcfb9fab820abf@mail.gmail.com>	<20081004133452.GB26772@annexia.org>	<4b5157c30810040739v33f72e93iea3647c78b455bb4@mail.gmail.com>	<20081004185508.GA6369@annexia.org>
+	<48E7D0FE.8070805@glondu.net>	<20081004203637.GA8785@annexia.org>
+	<48E7D6E1.20806@glondu.net>	<20081004205816.GA9417@annexia.org>
+	<20081005093737.GA7306@atreides.dyndns.org>
+Message-ID: <495BE5BE.2070007@citycable.ch>
+
+Paolo Donadeo a ?crit :
+> Richard Jones wrote:
+> 
+>> Paolo: If you add 'open CalendarLib' somewhere at the top of the
+>> test_pgocaml_lowlevel.ml file, does it link?
+> 
+> Adding "open CalendarLib" on top of pGOCaml.ml *and* pGOCaml.mli, and
+> replacing line 41 of PGOcaml Makefile (from 1.1 source tarball):
+> -I +calendar $(shell ocamlfind query calendar)/calendar.cma \
+> with:
+> -I +calendar $(shell ocamlfind query calendar)/calendarLib.cmo \
+> 
+> everything compiles and links.
+> 
+> In any case, this is the first time a see an OCaml library distributed
+> as cmo/cmx and not as a cma/cmxa package. Unfortunately a standard for
+> package distribution (blessed by INRIA) is far from coming, but Calendar
+> distribution package is certainly weird a lot :-)
+
+Hi. I ran in the same problem as Paolo did.
+
+What should be the way forward? Asking for a change in calendar's debian 
+packaging? Changing pgocaml's code? Putting some notice in README? 
+Packaging pgocaml for debian?
+
+Moreover, making the changes suggested by Paolo didn't exactly work out:
+
+> yziquel at seldon:~/src/pgocaml/trunk/dist$ make
+> ocamlfind ocamlc -g  -package unix,extlib,pcre,calendar,csv -c pGOCaml_config.ml
+> ocamlfind ocamlc -g  -package unix,extlib,pcre,calendar,csv -c pGOCaml.mli
+> ocamlfind ocamlc -g  -package unix,extlib,pcre,calendar,csv -c pGOCaml.ml
+> ocamlfind ocamlc -g -package unix,extlib,pcre,calendar,csv -a -o pgocaml.cma pGOCaml_config.cmo pGOCaml.cmo
+> ocamlfind ocamlopt   -package unix,extlib,pcre,calendar,csv -c pGOCaml_config.ml
+> ocamlfind ocamlopt   -package unix,extlib,pcre,calendar,csv -c pGOCaml.ml
+> ocamlfind ocamlopt  -package unix,extlib,pcre,calendar,csv -a -o pgocaml.cmxa pGOCaml_config.cmx pGOCaml.cmx
+> ocamlfind ocamlc -g -package unix,extlib,pcre,calendar,csv \
+> 	  -pp "camlp4o pa_extend.cmo q_MLast.cmo -loc loc -impl" \
+> 	  -I +camlp4 -c -impl pa_pgsql.ml4
+> ocamlfind ocamlc -g  -package unix,extlib,pcre,calendar,csv -c test_pgocaml_lowlevel.ml
+> ocamlfind ocamlc -g -package unix,extlib,pcre,calendar,csv -linkpkg \
+> 	  pgocaml.cma -o test_pgocaml_lowlevel test_pgocaml_lowlevel.cmo
+> ocamlfind ocamlc -g -package unix,extlib,pcre,calendar,csv -linkpkg \
+> 	  -pp "camlp4o /usr/lib/ocaml/3.10.2/unix.cma /usr/lib/ocaml/3.10.2/str.cma -I +pcre /usr/lib/ocaml/3.10.2/pcre/pcre.cma -I +extlib /usr/lib/ocaml/3.10.2/extlib/extLib.cma -I +calendar /usr/lib/ocaml/3.10.2/calendar/calendarLib.cmo -I +csv /usr/lib/ocaml/3.10.2/csv/csv.cma ./pgocaml.cma ./pa_pgsql.cmo" -c test_pgocaml.ml
+> File "test_pgocaml.ml", line 28, characters 23-168 (end at line 33, character 4):
+> Camlp4: Uncaught exception: Unix.Unix_error (20 | CstTag21, "connect", "")
+> 
+> Preprocessor error
+> make: *** [test_pgocaml.cmo] Erreur 2
+
+But maybe it's something else...
+
+Wishing you all the best for the coming new year.
+
+Guillaume Yziquel.
+
+

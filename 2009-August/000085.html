@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] problem compiling PG'OCaml
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20problem%20compiling%20PG%27OCaml&In-Reply-To=%3C4A902C12.7030606%40citycable.ch%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000086.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] problem compiling PG'OCaml</H1>
+    <B>Guillaume Yziquel</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20problem%20compiling%20PG%27OCaml&In-Reply-To=%3C4A902C12.7030606%40citycable.ch%3E"
+       TITLE="[Pgocaml-dev] problem compiling PG'OCaml">guillaume.yziquel at citycable.ch
+       </A><BR>
+    <I>Sat Aug 22 19:34:10 CEST 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000086.html">[Pgocaml-dev] PGOCaml &amp; Debian.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#85">[ date ]</a>
+              <a href="thread.html#85">[ thread ]</a>
+              <a href="subject.html#85">[ subject ]</a>
+              <a href="author.html#85">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Florent Monnier a &#233;crit :
+&gt;<i> Hi,
+</I>&gt;<i> I have some problem to compile PG'OCaml 1.3:
+</I>&gt;<i> 
+</I>&gt;<i> ocamlfind ocamlopt  -package unix,extlib,pcre,calendar,csv -linkpkg -o 
+</I>&gt;<i> pgocaml_prof pgocaml_prof.cmx
+</I>&gt;<i> /usr/lib/ocaml/calendar/calendarLib.o: In function 
+</I>
+If you're using Debian, you can try the lipgocaml-ocaml-dev package, 
+where these issues are solved.
+
+I think that you need 'open CalendarLib' in your .ml and .mli files. And 
+maybe a tweak or two more.
+
+All the best,
+
+Guillaume Yziquel.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000086.html">[Pgocaml-dev] PGOCaml &amp; Debian.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#85">[ date ]</a>
+              <a href="thread.html#85">[ thread ]</a>
+              <a href="subject.html#85">[ subject ]</a>
+              <a href="author.html#85">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>

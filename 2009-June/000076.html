@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] Distributing .mli files.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Distributing%20.mli%20files.&In-Reply-To=%3C20090613085018.GV27900%40annexia.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000074.html">
+   <LINK REL="Next"  HREF="000075.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] Distributing .mli files.</H1>
+    <B>Richard Jones</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Distributing%20.mli%20files.&In-Reply-To=%3C20090613085018.GV27900%40annexia.org%3E"
+       TITLE="[Pgocaml-dev] Distributing .mli files.">rich at annexia.org
+       </A><BR>
+    <I>Sat Jun 13 10:50:18 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000074.html">[Pgocaml-dev] Distributing .mli files.
+</A></li>
+        <LI>Next message: <A HREF="000075.html">[Pgocaml-dev] Copyright dates.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#76">[ date ]</a>
+              <a href="thread.html#76">[ thread ]</a>
+              <a href="subject.html#76">[ subject ]</a>
+              <a href="author.html#76">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, Jun 13, 2009 at 01:51:52AM +0200, Guillaume Yziquel wrote:
+&gt;<i> Hello.
+</I>&gt;<i> 
+</I>&gt;<i> Here is a patch I used in order to package pgocaml for debian. It simply 
+</I>&gt;<i> adds .mli files to the files installed by findlib, and thus allows 
+</I>&gt;<i> automatic ocamldoc documentation generation.
+</I>&gt;<i> 
+</I>&gt;<i> Could it be possible to include this patch upstream?
+</I>&gt;<i> 
+</I>&gt;<i> All the best,
+</I>&gt;<i> 
+</I>&gt;<i> Guillaume Yziquel.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> &gt; #! /bin/sh /usr/share/dpatch/dpatch-run
+</I>&gt;<i> &gt; ## 02_makefile_mli.dpatch by Guillaume Yziquel &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">guillaume.yziquel at citycable.ch</A>&gt;
+</I>&gt;<i> &gt; ##
+</I>&gt;<i> &gt; ## DP: Including .mli files for documentation generation.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; @DPATCH@
+</I>&gt;<i> &gt; diff -urNad pgocaml-1.3~/Makefile pgocaml-1.3/Makefile
+</I>&gt;<i> &gt; --- pgocaml-1.3~/Makefile       2009-06-09 15:31:01.000000000 +0200
+</I>&gt;<i> &gt; +++ pgocaml-1.3/Makefile        2009-06-09 15:31:49.000000000 +0200
+</I>&gt;<i> &gt; @@ -155,7 +155,7 @@
+</I>&gt;<i> &gt;  #
+</I>&gt;<i> &gt;  
+</I>&gt;<i> &gt;  findlib_install:
+</I>&gt;<i> &gt; -       ocamlfind install $(PACKAGE) META pgocaml.a pgocaml.cma pgocaml.cmxa pGOCaml_generic.cm[ix] pGOCaml.cm[ix] pa_pgsql.cmo
+</I>&gt;<i> &gt; +       ocamlfind install $(PACKAGE) META pgocaml.a pgocaml.cma pgocaml.cmxa pGOCaml_generic.cm[ix] pGOCaml.cm[ix] pa_pgsql.cmo pGOCaml_generic.mli pGOCaml.mli
+</I>&gt;<i> &gt;  
+</I>&gt;<i> &gt;  reinstall:
+</I>&gt;<i> &gt;         ocamlfind remove $(PACKAGE)
+</I>
++1
+
+Rich.
+
+-- 
+Richard Jones
+Red Hat
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000074.html">[Pgocaml-dev] Distributing .mli files.
+</A></li>
+	<LI>Next message: <A HREF="000075.html">[Pgocaml-dev] Copyright dates.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#76">[ date ]</a>
+              <a href="thread.html#76">[ thread ]</a>
+              <a href="subject.html#76">[ subject ]</a>
+              <a href="author.html#76">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>

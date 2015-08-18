@@ -1,0 +1,22 @@
+From celtic at sairyx.org  Wed Jan 26 04:13:18 2011
+From: celtic at sairyx.org (Arlen Cuss)
+Date: Wed, 26 Jan 2011 14:13:18 +1100
+Subject: [Pgocaml-dev] Thank you for PG'OCaml
+Message-ID: <1296011598.2393.3.camel@asu>
+
+Hi guys (and/or gals);
+
+Just a small note to say; thanks! I love PG'OCaml - the idea behind it
+is amazing, and the implementation likewise :-)
+
+Cheers,
+
+Arlen
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: signature.asc
+Type: application/pgp-signature
+Size: 836 bytes
+Desc: This is a digitally signed message part
+URL: <https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20110126/a71bb94a/attachment.pgp>
+

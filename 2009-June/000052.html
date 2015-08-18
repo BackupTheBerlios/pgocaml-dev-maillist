@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] Problems with calendar
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Problems%20with%20calendar&In-Reply-To=%3C200906011113.06767.vb%40vb.fdn.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000051.html">
+   <LINK REL="Next"  HREF="000053.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] Problems with calendar</H1>
+    <B>Vincent Bernardoff</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Problems%20with%20calendar&In-Reply-To=%3C200906011113.06767.vb%40vb.fdn.fr%3E"
+       TITLE="[Pgocaml-dev] Problems with calendar">vb at vb.fdn.fr
+       </A><BR>
+    <I>Mon Jun  1 11:13:06 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000051.html">[Pgocaml-dev] pgocaml don't compile
+</A></li>
+        <LI>Next message: <A HREF="000053.html">[Pgocaml-dev] Calendar problem.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#52">[ date ]</a>
+              <a href="thread.html#52">[ thread ]</a>
+              <a href="subject.html#52">[ subject ]</a>
+              <a href="author.html#52">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+I have another problem, this time with the Calendar package.
+
+I'm using GODI, and I have installed all dependecies of pgocaml using GODI 
+(godi-calendar, godi-extlib, godi-csv).
+
+When compiling pgocaml, after the Makefile problem, I have another problem with 
+Calendar,
+
+/home/vb/godi311/lib/ocaml/pkg-lib/calendar/calendarLib.a(calendarLib.o):
+(.data+0x4a08): first defined here
+/home/vb/godi311/lib/ocaml/pkg-lib/calendar/calendarLib.o: In function 
+`camlCalendarLib__Printer__hour_388':
+(.text+0x10aa0): multiple definition of `camlCalendarLib__Printer__hour_388'
+
+I have many lines of this kind. Did you encounter this problem before ?
+
+Thanks in advance,
+
+-- 
+Vincent Bernardoff
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000051.html">[Pgocaml-dev] pgocaml don't compile
+</A></li>
+	<LI>Next message: <A HREF="000053.html">[Pgocaml-dev] Calendar problem.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#52">[ date ]</a>
+              <a href="thread.html#52">[ thread ]</a>
+              <a href="subject.html#52">[ subject ]</a>
+              <a href="author.html#52">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>

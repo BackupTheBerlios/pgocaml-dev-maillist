@@ -1,0 +1,15 @@
+From michael at elehack.net  Thu Dec 22 03:57:41 2011
+From: michael at elehack.net (Michael Ekstrand)
+Date: Wed, 21 Dec 2011 20:57:41 -0600
+Subject: [Pgocaml-dev] New maintainer needed for the Batteries package
+Message-ID: <4EF29CA5.7010500@elehack.net>
+
+I no longer have time to maintain the Batteries package for PGOCaml. If
+someone would like to take over the packages, just let me know & start
+committing :) (and ping Gerd Stolpmann if you don't have a GODI account
+yet).
+
+Thanks,
+- Michael
+
+

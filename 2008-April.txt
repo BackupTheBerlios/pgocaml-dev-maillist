@@ -1,0 +1,72 @@
+From darioteixeira at yahoo.com  Thu Apr 10 18:52:12 2008
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Thu, 10 Apr 2008 17:52:12 +0100 (BST)
+Subject: [Pgocaml-dev] Organising PG'OCaml development
+Message-ID: <492403.82483.qm@web54607.mail.re2.yahoo.com>
+
+Hi,
+
+In the past few months I had little time to dedicate to PG'OCaml,
+but I'm now actively using it again, and would like to revive the
+development of the project.  Besides J?r?me Vouillon's suggested
+patch, there are other proposed patches and ideas floating around;
+therefore, it's time to get ourselves organised.
+
+In the very short term, I suggest you guys make yourselves members
+of the Pgocaml-dev list (if you're getting this email twice is because
+you already are...).  I will then post a list of issues to be addressed.
+
+Cheers,
+Dario
+
+
+
+
+
+      ___________________________________________________________ 
+Yahoo! For Good helps you make a difference  
+
+http://uk.promotions.yahoo.com/forgood/
+
+
+From darioteixeira at yahoo.com  Wed Apr 16 17:03:05 2008
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Wed, 16 Apr 2008 16:03:05 +0100 (BST)
+Subject: [Pgocaml-dev] Proposed SVN etiquette
+Message-ID: <406620.1408.qm@web54605.mail.re2.yahoo.com>
+
+Hi,
+
+The purpose of this email is to kickstart the discussion on this list.
+To begin, I suggest we agree on basic rules concerning modifications to
+the SVN repository.  Here are my suggestions:
+
+a) Patches to trunk should be discussed on this list before being commited;
+
+b) Patches to trunk should be independent.  Therefore, "I have a patch that
+   does A, B, and C" is not encouraged; it is better to post them independently
+   (assuming A, B, and C are independent, of course);
+
+c) The 'branches' tree is open to experiments and/or demonstrating proposed
+   patches to trunk;
+
+d) For the time being, the pgocaml-lwt patches by J?r?me Vouillon can reside
+   in branches.  However, due to their usefulness to Ocsigen users, I suggest
+   we make them available as a tarball alongside trunk's.
+
+
+Any other points that should be addressed?
+
+Cheers,
+Dario
+
+
+
+
+
+      ___________________________________________________________ 
+Yahoo! For Good helps you make a difference  
+
+http://uk.promotions.yahoo.com/forgood/
+
+

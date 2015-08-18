@@ -1,0 +1,81 @@
+From guillaume.yziquel at citycable.ch  Sat Aug 22 19:34:10 2009
+From: guillaume.yziquel at citycable.ch (Guillaume Yziquel)
+Date: Sat, 22 Aug 2009 19:34:10 +0200
+Subject: [Pgocaml-dev] problem compiling PG'OCaml
+In-Reply-To: <200907302116.39606.monnier.florent@gmail.com>
+References: <200907302116.39606.monnier.florent@gmail.com>
+Message-ID: <4A902C12.7030606@citycable.ch>
+
+Florent Monnier a ?crit :
+> Hi,
+> I have some problem to compile PG'OCaml 1.3:
+> 
+> ocamlfind ocamlopt  -package unix,extlib,pcre,calendar,csv -linkpkg -o 
+> pgocaml_prof pgocaml_prof.cmx
+> /usr/lib/ocaml/calendar/calendarLib.o: In function 
+
+If you're using Debian, you can try the lipgocaml-ocaml-dev package, 
+where these issues are solved.
+
+I think that you need 'open CalendarLib' in your .ml and .mli files. And 
+maybe a tweak or two more.
+
+All the best,
+
+Guillaume Yziquel.
+
+
+From guillaume.yziquel at citycable.ch  Sat Aug 22 19:56:13 2009
+From: guillaume.yziquel at citycable.ch (Guillaume Yziquel)
+Date: Sat, 22 Aug 2009 19:56:13 +0200
+Subject: [Pgocaml-dev] PGOCaml & Debian.
+In-Reply-To: <4A902C12.7030606@citycable.ch>
+References: <200907302116.39606.monnier.florent@gmail.com>
+	<4A902C12.7030606@citycable.ch>
+Message-ID: <4A90313D.3090008@citycable.ch>
+
+By the way, you might eventually want to mention in section 'Building 
+instructions' on
+
+	http://pgocaml.berlios.de/
+
+that there is a Debian package for PGOCaml.
+
+Feedback would be appreciated.
+
+All the best,
+
+Guillaume Yziquel
+
+
+From darioteixeira at yahoo.com  Mon Aug 24 16:50:34 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Mon, 24 Aug 2009 07:50:34 -0700 (PDT)
+Subject: [Pgocaml-dev] PGOCaml & Debian.
+In-Reply-To: <4A90313D.3090008@citycable.ch>
+Message-ID: <978892.39309.qm@web111505.mail.gq1.yahoo.com>
+
+Hi,
+
+> By the way, you might eventually want
+> to mention in section 'Building 
+> instructions' on
+> 
+> ??? http://pgocaml.berlios.de/
+> 
+> that there is a Debian package for PGOCaml.
+> 
+> Feedback would be appreciated.
+
+Done!  I've linked to the package's page at Debian's tracking system.
+Is that the canonical homepage for a Debian package?  I've also added
+a link to Fedora's equivalent.
+
+Cheers,
+Dario
+
+
+
+      
+
+

@@ -1,0 +1,198 @@
+From vincent.balat at pps.jussieu.fr  Wed Sep 10 21:35:55 2008
+From: vincent.balat at pps.jussieu.fr (Vincent Balat)
+Date: Wed, 10 Sep 2008 21:35:55 +0200
+Subject: [Pgocaml-dev] password authentication
+Message-ID: <200809102135.56035.vincent.balat@pps.jussieu.fr>
+
+Hi,
+
+I'm trying to use password authentication with pgocaml. How does it work?
+I can't manage to make it work at compile time ... (after that it works).
+
+I read in Dario's manual that we need an environment variable PGPASSWORD
+but I can't even find that string in the sources ...
+
+Cheers,
+Vincent
+
+
+
+From darioteixeira at yahoo.com  Thu Sep 11 14:45:33 2008
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Thu, 11 Sep 2008 05:45:33 -0700 (PDT)
+Subject: [Pgocaml-dev] password authentication
+In-Reply-To: <200809102135.56035.vincent.balat@pps.jussieu.fr>
+Message-ID: <471501.31364.qm@web54601.mail.re2.yahoo.com>
+
+Hi,
+
+> I read in Dario's manual that we need an environment
+> variable PGPASSWORD
+> but I can't even find that string in the sources ...
+
+You're right, and sorry about that, Vincent.   I've never
+used password authentication myself, so that part of the
+guide was written about the expected behaviour, not the
+one actually observed.
+
+Anyway, I am attaching a small diff that adds support for
+the PGPASSORD env variable.  Please let us know if it works
+as expected.  However, note that PGOCaml's authentication
+support is very basic: it only allows for clear text passwords.
+For this reason, relying on PGPASSWORD for security is not a
+good idea (which I reckon is the reason that Richard didn't
+implement it in the first place).
+
+Cheers,
+Dario
+
+
+--- pGOCaml.ml.old      2008-09-11 13:24:38.000000000 +0100
++++ pGOCaml.ml  2008-09-11 13:27:15.000000000 +0100
+@@ -550,7 +550,7 @@
+
+ (*----- Connection. -----*)
+
+-let connect ?host ?port ?user ?(password = "") ?database
++let connect ?host ?port ?user ?password ?database
+     ?(unix_domain_socket_dir = PGOCaml_config.default_unix_domain_socket_dir)
+     () =
+   (* Get the username. *)
+@@ -566,6 +566,14 @@
+          with
+            Not_found -> "postgres" in
+
++  (* Get the password. *)
++  let password =
++    match password with
++    | Some password -> password
++    | None ->
++       try Sys.getenv "PGPASSWORD"
++       with Not_found -> "" in
++
+   (* Get the database name. *)
+   let database =
+     match database with
+
+
+
+
+
+      
+
+
+From rich at annexia.org  Thu Sep 11 15:18:53 2008
+From: rich at annexia.org (Richard Jones)
+Date: Thu, 11 Sep 2008 14:18:53 +0100
+Subject: [Pgocaml-dev] password authentication
+In-Reply-To: <471501.31364.qm@web54601.mail.re2.yahoo.com>
+References: <200809102135.56035.vincent.balat@pps.jussieu.fr>
+	<471501.31364.qm@web54601.mail.re2.yahoo.com>
+Message-ID: <20080911131852.GC25808@annexia.org>
+
+On Thu, Sep 11, 2008 at 05:45:33AM -0700, Dario Teixeira wrote:
+> Anyway, I am attaching a small diff that adds support for
+> the PGPASSORD env variable.  Please let us know if it works
+> as expected.  However, note that PGOCaml's authentication
+> support is very basic: it only allows for clear text passwords.
+> For this reason, relying on PGPASSWORD for security is not a
+> good idea (which I reckon is the reason that Richard didn't
+> implement it in the first place).
+
+The patch looks good.  Vincent, if it works for you then let me know
+and I'll apply it.
+
+Rich.
+
+-- 
+Richard Jones
+Red Hat
+
+
+From vincent.balat at pps.jussieu.fr  Thu Sep 11 15:42:29 2008
+From: vincent.balat at pps.jussieu.fr (Vincent Balat)
+Date: Thu, 11 Sep 2008 15:42:29 +0200
+Subject: [Pgocaml-dev] password authentication
+In-Reply-To: <20080911131852.GC25808@annexia.org>
+References: <200809102135.56035.vincent.balat@pps.jussieu.fr>
+	<471501.31364.qm@web54601.mail.re2.yahoo.com>
+	<20080911131852.GC25808@annexia.org>
+Message-ID: <200809111542.29760.vincent.balat@pps.jussieu.fr>
+
+Le Thursday 11 September 2008 15:18:53 Richard Jones, vous avez ?crit :
+> On Thu, Sep 11, 2008 at 05:45:33AM -0700, Dario Teixeira wrote:
+> > Anyway, I am attaching a small diff that adds support for
+> > the PGPASSORD env variable.  Please let us know if it works
+> > as expected.  However, note that PGOCaml's authentication
+> > support is very basic: it only allows for clear text passwords.
+> > For this reason, relying on PGPASSWORD for security is not a
+> > good idea (which I reckon is the reason that Richard didn't
+> > implement it in the first place).
+>
+> The patch looks good.  Vincent, if it works for you then let me know
+> and I'll apply it.
+>
+> Rich.
+
+Yes it works well. Thank you to both of you.
+Actually I'm using the lwt branch. I suppose Jaap is maintaining it?
+Jaap, could you apply the patch in that version too?
+
+Vincent
+
+
+
+From rich at annexia.org  Thu Sep 11 20:40:20 2008
+From: rich at annexia.org (Richard Jones)
+Date: Thu, 11 Sep 2008 19:40:20 +0100
+Subject: [Pgocaml-dev] password authentication
+In-Reply-To: <471501.31364.qm@web54601.mail.re2.yahoo.com>
+References: <200809102135.56035.vincent.balat@pps.jussieu.fr>
+	<471501.31364.qm@web54601.mail.re2.yahoo.com>
+Message-ID: <20080911184020.GD4090@annexia.org>
+
+
+OK, I pushed that patch to the SVN repo.  Thanks both of you.
+
+Rich.
+
+-- 
+Richard Jones
+Red Hat
+
+
+From rich at annexia.org  Wed Sep 10 22:57:14 2008
+From: rich at annexia.org (Richard Jones)
+Date: Wed, 10 Sep 2008 21:57:14 +0100
+Subject: [Pgocaml-dev] password authentication
+In-Reply-To: <200809102135.56035.vincent.balat@pps.jussieu.fr>
+References: <200809102135.56035.vincent.balat@pps.jussieu.fr>
+Message-ID: <20080910205714.GA23453@annexia.org>
+
+On Wed, Sep 10, 2008 at 09:35:55PM +0200, Vincent Balat wrote:
+> I'm trying to use password authentication with pgocaml. How does it work?
+> I can't manage to make it work at compile time ... (after that it works).
+> 
+> I read in Dario's manual that we need an environment variable PGPASSWORD
+> but I can't even find that string in the sources ...
+
+Yes, looks like in fact we don't get the password from any environment
+variable.
+
+I don't use password authentication with postgres - either ident or
+trust (host-based).
+
+You can set it per-statement using:
+
+  PGSQL(dbh) "password=foo" "select ..."
+
+although that might not scale very well for you ...  Alternatively
+you'll need to patch pGOCaml.ml.
+
+Rich.
+
+-- 
+Richard Jones
+Red Hat
+
+

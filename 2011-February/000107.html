@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] Patch to make PGOCaml work with Batteries
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2011-February/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Patch%20to%20make%20PGOCaml%20work%20with%20Batteries&In-Reply-To=%3C4D49E7D7.5060603%40elehack.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000104.html">
+   <LINK REL="Next"  HREF="000105.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] Patch to make PGOCaml work with Batteries</H1>
+    <B>Michael Ekstrand</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Patch%20to%20make%20PGOCaml%20work%20with%20Batteries&In-Reply-To=%3C4D49E7D7.5060603%40elehack.net%3E"
+       TITLE="[Pgocaml-dev] Patch to make PGOCaml work with Batteries">michael at elehack.net
+       </A><BR>
+    <I>Thu Feb  3 00:25:11 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000104.html">[Pgocaml-dev] Patch to make PGOCaml work with Batteries
+</A></li>
+        <LI>Next message: <A HREF="000105.html">[Pgocaml-dev] GODI packages now available
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#107">[ date ]</a>
+              <a href="thread.html#107">[ thread ]</a>
+              <a href="subject.html#107">[ subject ]</a>
+              <a href="author.html#107">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 02/01/2011 11:29 AM, Michael Ekstrand wrote:
+&gt;<i> As I use Batteries rather than Extlib, I've wanted PGOCaml to use
+</I>&gt;<i> Batteries. So far, I've been using a locally-patched version. I have
+</I>&gt;<i> cleaned up that patch to make it conditional so that if the
+</I>&gt;<i> USE_BATTERIES Makefile config variable is set to 'yes', PGOCaml is
+</I>&gt;<i> built against Batteries, and is still built against Extlib otherwise. 
+</I>&gt;<i> I've attached it for consideration for the main PGOCaml tree.
+</I>&gt;<i>
+</I>&gt;<i> The patch does the following:
+</I>&gt;<i>
+</I>&gt;<i>     * Add the USE_BATTERIES config variable (defaulting to no)
+</I>&gt;<i>     * Modify Makefile to use an EXTLIB variable, either 'extlib' or
+</I>&gt;<i>       'batteries', to specify dependencies.
+</I>&gt;<i>     * Substitute EXTLIB into the META file.
+</I>&gt;<i>     * Use camlp4.macro to adjust whether Batteries or Extlib is used
+</I>&gt;<i>       in pGOCaml_generic.ml and pgocaml_prof.ml.
+</I>&gt;<i>     * Use camlp4.macro to adjust whether Batteries or Extlib is used
+</I>&gt;<i>       in pa_pgocaml.ml4.  This also involved introducing a local
+</I>&gt;<i>       variable &amp; using antiquotations to push the correct module name
+</I>&gt;<i>       for the Option module into the generated code.
+</I>&gt;<i>
+</I>&gt;<i> I also have a version  which does a hard replacement of Extlib with
+</I>&gt;<i> Batteries, if that is more desirable.
+</I>
+In more testing and usage, I've found a bug and some suboptimality in
+the original patch.  Attached is an updated version which fixes a bug in
+the syntax extension and makes the USE_BATTERIES variable an
+unconditional set so that the config file must be modified to turn on
+Batteries.  It also substitutes the PACKAGE variable in as a dependency
+for pgocaml.syntax, rather than hard-coding pgocaml, so that it can work
+correctly in Batteries mode with a different package name.
+
+I also have a GODI package that builds the Batteries-enabled version in
+the GODI SVN repository (it has not yet been released to the delivered
+GODI tree):
+
+<A HREF="https://godirepo.camlcity.org/svn/godi-build/trunk/godi/godi-pgocaml-batteries">https://godirepo.camlcity.org/svn/godi-build/trunk/godi/godi-pgocaml-batteries</A>
+
+- Michael
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20110202/e356af93/attachment.html">https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20110202/e356af93/attachment.html</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: pgocaml-batteries.patch
+Type: text/x-patch
+Size: 5747 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20110202/e356af93/attachment.bin">https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20110202/e356af93/attachment.bin</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000104.html">[Pgocaml-dev] Patch to make PGOCaml work with Batteries
+</A></li>
+	<LI>Next message: <A HREF="000105.html">[Pgocaml-dev] GODI packages now available
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#107">[ date ]</a>
+              <a href="thread.html#107">[ thread ]</a>
+              <a href="subject.html#107">[ subject ]</a>
+              <a href="author.html#107">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>

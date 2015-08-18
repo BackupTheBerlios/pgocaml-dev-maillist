@@ -1,0 +1,68 @@
+From darioteixeira at yahoo.com  Tue Mar 15 19:42:49 2011
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Tue, 15 Mar 2011 11:42:49 -0700 (PDT)
+Subject: [Pgocaml-dev] New stuff in trunk
+In-Reply-To: <E51C5B015DBD1348A1D85763337FB6D9490ED4A3@Remus.metastack.local>
+Message-ID: <933246.40287.qm@web111502.mail.gq1.yahoo.com>
+
+Hi,
+
+> pgocaml-windows-connect.patch is a slightly different patch
+> which I have tested against trunk (incidentally, I noticed
+> that Makefile.config hasn't yet been updated to have version
+> 1.5 specified). It's slightly different from the one listed
+> in the bug report because while caching Unix.getpid() and
+> Unix.getppid() is valid under Windows (they can't change)
+> that doesn't take Unix.fork into account on other OSes.
+
+I have applied both patches, updated the changelog, and upped
+the version number.  Version 1.5 should be released soon (possibly
+after we move to the Ocaml Forge).
+
+
+> Gah - I remember reading that years ago and had completely
+> forgotten. Attached is a tiny tweak to pa_pgsql.ml4 in
+> pgocaml-nullable-results.patch which I hope you'll accept -
+> it converts the Option.No_value exception (in a way
+> compatible with the batteries stuff) into a Failure
+> exception which includes a much more accurate description of
+> what's gone wrong (including a remedy). Could possibly use
+> Invalid_argument instead as that's never supposed to be
+> caught.
+
+Yes, I've applied it.  It is indeed better to offer a remedy than
+relying on users to remember some obscure caveat in BUGS.txt...
+
+Cheers,
+Dario Teixeira
+
+
+
+      
+
+
+From darioteixeira at yahoo.com  Wed Mar 30 20:12:00 2011
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Wed, 30 Mar 2011 11:12:00 -0700 (PDT)
+Subject: [Pgocaml-dev] New serialisation format in PostgreSQL 9.0
+Message-ID: <408228.65155.qm@web111515.mail.gq1.yahoo.com>
+
+Hi,
+
+No one has complained about this issue yet, so I may have been the first
+one to come across it: starting with version 9.0, PostgreSQL introduced
+the 'hex' serialisation format for bytea types [1].  PG'OCaml only
+supported the old 'escape' format and would incorrectly deserialise
+data encoded with the new format.  I have commited to trunk support
+for the new format (the old format is of course also supported).
+
+Anyway, don't forget to also upgrade PG'OCaml if you've upgraded PostgreSQL!
+(And as always, testing and feedback is welcome!)
+
+Cheers,
+Dario Teixeira
+
+[1] http://www.postgresql.org/docs/9.0/static/datatype-binary.html
+
+
+

@@ -1,0 +1,71 @@
+From darioteixeira at yahoo.com  Mon Nov 29 17:00:43 2010
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Mon, 29 Nov 2010 08:00:43 -0800 (PST)
+Subject: [Pgocaml-dev] New branch adding support for hstore
+Message-ID: <887952.22089.qm@web111502.mail.gq1.yahoo.com>
+
+Hi,
+
+Under branches/hstore you will find a new branch (forked from the latest
+trunk) that adds support for hstore types.  As you may know, the hstore
+type is essentially a dictionary that maps text keys into text values
+(possibly NULL).
+
+Hstore is still part of Postgresql's contrib modules, and though it was
+also provided in previous versions, in 9.0 it has seen many improvements.
+
+On the Ocaml side, I've chosen to represent a hstore as an association
+list of key/value pairs, with the key being a string, and the value a
+string option.  In other words:
+
+type hstore = (string * string option) list
+
+While it would be trivial to use a Hashtbl or Map instead, I reckon that
+if you are relying on hstores to store huge dictionaries you may be altogether
+better off rethinking your choice of Postgresql as a backend...
+
+The patch is fairly straightforward, with the exception that it does
+require adding a wrapper around name_of_type to query the database
+concerning the type name when the OID is unknown (Hstores do not have
+a fixed OID).  In fact, I think that in a future refactoring/cleanup
+of PG'OCaml, it would make sense to rely more on this mechanism than
+on 'magic' OIDs.
+
+Anyway, let me know what you think.  If others find this useful I can
+merge the branch back into trunk...
+
+Best regards,
+Dario Teixeira
+
+P.S. Under demos/hstore you will find a simple example that illustrates
+     the use of hstores.
+
+
+
+      
+
+
+From darioteixeira at yahoo.com  Tue Nov 30 13:08:16 2010
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Tue, 30 Nov 2010 04:08:16 -0800 (PST)
+Subject: [Pgocaml-dev] New branch adding support for hstore
+In-Reply-To: <20101129160543.GA20848@annexia.org>
+Message-ID: <591708.56618.qm@web111506.mail.gq1.yahoo.com>
+
+Hi,
+
+> I wonder, is there a reason not to merge it in anyway?? It
+> doesn't seem like it would break existing code.
+
+True, I may be being over-cautious.  I would just like to stress it a bit
+more and test it with other Postgresql versions other than 9.0 before I
+deem hstore support trunk-worthy...
+
+Cheers,
+Dario Teixeira
+
+
+
+      
+
+

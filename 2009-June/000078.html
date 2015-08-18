@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] Type unraveling
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Type%20unraveling&In-Reply-To=%3C180987.97964.qm%40web111505.mail.gq1.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000077.html">
+   <LINK REL="Next"  HREF="000079.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] Type unraveling</H1>
+    <B>Dario Teixeira</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Type%20unraveling&In-Reply-To=%3C180987.97964.qm%40web111505.mail.gq1.yahoo.com%3E"
+       TITLE="[Pgocaml-dev] Type unraveling">darioteixeira at yahoo.com
+       </A><BR>
+    <I>Thu Jun 18 15:16:29 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000077.html">[Pgocaml-dev] Copyright dates.
+</A></li>
+        <LI>Next message: <A HREF="000079.html">[Pgocaml-dev] Type unraveling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#78">[ date ]</a>
+              <a href="thread.html#78">[ thread ]</a>
+              <a href="subject.html#78">[ subject ]</a>
+              <a href="author.html#78">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+As you probably know, SQL's &quot;CREATE DOMAIN&quot; command allows the creation
+of types which are essentially aliases for existing types.  The advantages
+of this are obvious: you can change the underlying type for a column that
+appears in various tables simply by changing its alias.
+
+Currently, PG'OCaml cannot handle these types.  If you tried to insert
+a row into the table &quot;people&quot; defined below, PG'OCaml would complain that
+it knew nothing about the type whose OID corresponds to age_t.
+
+CREATE DOMAIN age_t AS int4;
+
+CREATE TABLE people
+        (
+        id      int4 UNIQUE NOT NULL,
+        name    text NOT NULL,
+        age     age_t NOT NULL,
+        PRIMARY KEY (id)
+        );
+
+Under branches/unravel (and branches/unravel-classic) you'll find an
+experimental branch that adds support for these types.  It's relatively
+simple: it uses the system table pg_type to recursively &quot;unravel&quot; a
+domain-type until it finds a base type it is familiar with.  No attempt
+is made to cache results, because all of this happens at compile-time
+anyway.  Also, I am aware that the upcoming 8.4 release of Postgresql
+features recursive queries, which would eliminate the need for putting
+the recursion client-side.  It will be a long time, however, before 8.4
+is the least common denominator.
+
+Also, under trunk/demos/unravel you'll find a small test example for the
+new feature.
+
+Anyway, your comments are welcome.  Yours in particular, Richard, since
+you're the most familiar with the code.  (The diff is also attached to
+this message).
+
+Cheers,
+Dario
+
+
+      
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: diff
+Type: application/octet-stream
+Size: 3643 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20090618/e71c5086/attachment.obj">https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20090618/e71c5086/attachment.obj</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000077.html">[Pgocaml-dev] Copyright dates.
+</A></li>
+	<LI>Next message: <A HREF="000079.html">[Pgocaml-dev] Type unraveling
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#78">[ date ]</a>
+              <a href="thread.html#78">[ thread ]</a>
+              <a href="subject.html#78">[ subject ]</a>
+              <a href="author.html#78">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,30 @@
+From darioteixeira at yahoo.com  Fri Oct  7 20:20:02 2011
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Fri, 7 Oct 2011 11:20:02 -0700 (PDT)
+Subject: [Pgocaml-dev] PG'OCaml now officially on the OCaml Forge
+Message-ID: <1318011602.47954.YahooMailNeo@web111513.mail.gq1.yahoo.com>
+
+Hi,
+
+The migration of PG'OCaml from BerliOS to the OCaml Forge is now complete.
+Coincidentally, BerliOS recently announced they would be shutting down within
+a few months, so this migration was bound to happen anyway! 
+
+
+Please update your links and bookmarks to the project's new homepage:
+http://pgocaml.forge.ocamlcore.org/
+
+A new mailing-list has been created on the Forge. I have taken the liberty
+of inviting to the new list all current subscribers to this (old) list.? You will
+need to accept the invitation for your new subscription to take effect.
+
+
+I've also copied the Subversion repository to its new home.? If you wish
+to contribute please apply for project membership on the Forge and I'll
+be happy to add you to the developer list.
+Best regards,
+Dario Teixeira
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20111007/645ed0f6/attachment.html>
+

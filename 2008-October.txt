@@ -1,0 +1,367 @@
+From p.donadeo at gmail.com  Sat Oct  4 14:48:13 2008
+From: p.donadeo at gmail.com (Paolo Donadeo)
+Date: Sat, 4 Oct 2008 14:48:13 +0200
+Subject: [Pgocaml-dev] Problem compiling pgocaml 1.1
+Message-ID: <4b5157c30810040548n296f955esf3fcfb9fab820abf@mail.gmail.com>
+
+Yesterday I tried to compile pgocaml, but I couldn't link the test suite:
+
+================================ 8< CUT HERE >8 ================================
+$ make
+ocamlfind ocamlc -g  -package unix,extlib,pcre,calendar,csv -c pGOCaml_config.ml
+ocamlfind ocamlc -g  -package unix,extlib,pcre,calendar,csv -c pGOCaml.mli
+ocamlfind ocamlc -g  -package unix,extlib,pcre,calendar,csv -c pGOCaml.ml
+ocamlfind ocamlc -g -package unix,extlib,pcre,calendar,csv -a -o
+pgocaml.cma pGOCaml_config.cmo pGOCaml.cmo
+ocamlfind ocamlopt   -package unix,extlib,pcre,calendar,csv -c pGOCaml_config.ml
+ocamlfind ocamlopt   -package unix,extlib,pcre,calendar,csv -c pGOCaml.ml
+ocamlfind ocamlopt  -package unix,extlib,pcre,calendar,csv -a -o
+pgocaml.cmxa pGOCaml_config.cmx pGOCaml.cmx
+ocamlfind ocamlc -g -package unix,extlib,pcre,calendar,csv \
+	  -pp "camlp4o pa_extend.cmo q_MLast.cmo -loc loc -impl" \
+	  -I +camlp4 -c -impl pa_pgsql.ml4
+ocamlfind ocamlc -g  -package unix,extlib,pcre,calendar,csv -c
+test_pgocaml_lowlevel.ml
+ocamlfind ocamlc -g -package unix,extlib,pcre,calendar,csv -linkpkg \
+	  pgocaml.cma -o test_pgocaml_lowlevel test_pgocaml_lowlevel.cmo
+Error while linking pgocaml.cma(PGOCaml):
+Reference to undefined global `Calendar'
+make: *** [test_pgocaml_lowlevel] Error 2
+================================ 8< END HERE >8 ================================
+
+As you can see the package "calendar" is present and actually the
+library successfully compiles, both native and bytecode.
+
+My system is a Debian (unstable), OCaml 3.10.2, extlib 1.5.1, calendar
+2.0.2 and csv 1.1.6. I think I'm probably missing something *very*
+obvious that I should see at a glance. Can anyone of you help me?
+
+Thanks a lot,
+
+
+-- 
+Paolo
+~
+~
+:wq
+
+
+From darioteixeira at yahoo.com  Sat Oct  4 14:59:53 2008
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Sat, 4 Oct 2008 05:59:53 -0700 (PDT)
+Subject: [Pgocaml-dev] Problem compiling pgocaml 1.1
+In-Reply-To: <4b5157c30810040548n296f955esf3fcfb9fab820abf@mail.gmail.com>
+Message-ID: <621858.18854.qm@web54607.mail.re2.yahoo.com>
+
+> As you can see the package "calendar" is present
+> and actually the
+> library successfully compiles, both native and bytecode.
+
+Hi,
+
+The problem happens during the linking.  Can you verify
+that the Calendar cma/cmxa are indeed present?  Also,
+what's the content of Calendar's META file?
+
+Cheers,
+Dario
+
+
+
+      
+
+
+From rich at annexia.org  Sat Oct  4 15:33:11 2008
+From: rich at annexia.org (Richard Jones)
+Date: Sat, 4 Oct 2008 14:33:11 +0100
+Subject: [Pgocaml-dev] Problem compiling pgocaml 1.1
+In-Reply-To: <4b5157c30810040548n296f955esf3fcfb9fab820abf@mail.gmail.com>
+References: <4b5157c30810040548n296f955esf3fcfb9fab820abf@mail.gmail.com>
+Message-ID: <20081004133311.GA26772@annexia.org>
+
+On Sat, Oct 04, 2008 at 02:48:13PM +0200, Paolo Donadeo wrote:
+> ocamlfind ocamlc -g -package unix,extlib,pcre,calendar,csv -linkpkg \
+> 	  pgocaml.cma -o test_pgocaml_lowlevel test_pgocaml_lowlevel.cmo
+> Error while linking pgocaml.cma(PGOCaml):
+> Reference to undefined global `Calendar'
+> make: *** [test_pgocaml_lowlevel] Error 2
+[...]
+> My system is a Debian (unstable), OCaml 3.10.2, extlib 1.5.1, calendar
+> 2.0.2 and csv 1.1.6. I think I'm probably missing something *very*
+> obvious that I should see at a glance. Can anyone of you help me?
+
+Isn't this a mismatch between the version of PG'OCaml (which you don't
+mention) and the new Calendar layout in calendar 2.0.x?
+
+For reference, we have PG'OCaml & Calendar 2.0 compiled and linked
+together in Fedora, so you should compare your versions with our
+versions:
+
+http://cocan.org/fedora#Package_status
+
+Rich.
+
+-- 
+Richard Jones
+Red Hat
+
+
+From rich at annexia.org  Sat Oct  4 15:34:52 2008
+From: rich at annexia.org (Richard Jones)
+Date: Sat, 4 Oct 2008 14:34:52 +0100
+Subject: [Pgocaml-dev] Problem compiling pgocaml 1.1
+In-Reply-To: <4b5157c30810040548n296f955esf3fcfb9fab820abf@mail.gmail.com>
+References: <4b5157c30810040548n296f955esf3fcfb9fab820abf@mail.gmail.com>
+Message-ID: <20081004133452.GB26772@annexia.org>
+
+On Sat, Oct 04, 2008 at 02:48:13PM +0200, Paolo Donadeo wrote:
+> Yesterday I tried to compile pgocaml, but I couldn't link the test suite:
+> ocamlfind ocamlc -g -package unix,extlib,pcre,calendar,csv -linkpkg \
+> 	  pgocaml.cma -o test_pgocaml_lowlevel test_pgocaml_lowlevel.cmo
+> Error while linking pgocaml.cma(PGOCaml):
+> Reference to undefined global `Calendar'
+
+Ah, OK I notice now that you're using 1.1.
+
+Still, strange problem -- is calendar.cma/cmxa installed in the right
+location?  If you add -verbose to the linking command line what does
+it show?
+
+Rich.
+
+-- 
+Richard Jones
+Red Hat
+
+
+From p.donadeo at gmail.com  Sat Oct  4 16:39:36 2008
+From: p.donadeo at gmail.com (Paolo Donadeo)
+Date: Sat, 4 Oct 2008 16:39:36 +0200
+Subject: [Pgocaml-dev] Problem compiling pgocaml 1.1
+In-Reply-To: <20081004133452.GB26772@annexia.org>
+References: <4b5157c30810040548n296f955esf3fcfb9fab820abf@mail.gmail.com>
+	<20081004133452.GB26772@annexia.org>
+Message-ID: <4b5157c30810040739v33f72e93iea3647c78b455bb4@mail.gmail.com>
+
+Thanks, Richard and Dario, for help. The problem is actually the
+absence of .cma, .cmxa and .a files in the Debian package. Downloading
+the original source package [1] I found that the problem is present in
+the source distribution itself. I'll send a note to Julien Signoles.
+
+Best regards,
+
+
+[1] http://www.lri.fr/~signoles/prog/calendar/calendar-2.0.4.tar.gz
+
+
+-- 
+Paolo
+~
+~
+:wq
+
+
+From rich at annexia.org  Sat Oct  4 20:55:08 2008
+From: rich at annexia.org (Richard Jones)
+Date: Sat, 4 Oct 2008 19:55:08 +0100
+Subject: [Pgocaml-dev] Problem compiling pgocaml 1.1
+In-Reply-To: <4b5157c30810040739v33f72e93iea3647c78b455bb4@mail.gmail.com>
+References: <4b5157c30810040548n296f955esf3fcfb9fab820abf@mail.gmail.com>
+	<20081004133452.GB26772@annexia.org>
+	<4b5157c30810040739v33f72e93iea3647c78b455bb4@mail.gmail.com>
+Message-ID: <20081004185508.GA6369@annexia.org>
+
+On Sat, Oct 04, 2008 at 04:39:36PM +0200, Paolo Donadeo wrote:
+> Thanks, Richard and Dario, for help. The problem is actually the
+> absence of .cma, .cmxa and .a files in the Debian package. Downloading
+> the original source package [1] I found that the problem is present in
+> the source distribution itself. I'll send a note to Julien Signoles.
+
+Sounds also like a Debian packaging bug with the Debian Calendar
+package.  Have you thought about asking them (CC'd)?
+
+Rich.
+
+-- 
+Richard Jones
+Red Hat
+
+
+From rich at annexia.org  Sat Oct  4 22:36:37 2008
+From: rich at annexia.org (Richard Jones)
+Date: Sat, 4 Oct 2008 21:36:37 +0100
+Subject: [Pgocaml-dev] Problem compiling pgocaml 1.1
+In-Reply-To: <48E7D0FE.8070805@glondu.net>
+References: <4b5157c30810040548n296f955esf3fcfb9fab820abf@mail.gmail.com>
+	<20081004133452.GB26772@annexia.org>
+	<4b5157c30810040739v33f72e93iea3647c78b455bb4@mail.gmail.com>
+	<20081004185508.GA6369@annexia.org> <48E7D0FE.8070805@glondu.net>
+Message-ID: <20081004203637.GA8785@annexia.org>
+
+On Sat, Oct 04, 2008 at 10:24:30PM +0200, St?phane Glondu wrote:
+> Richard Jones wrote:
+> >> Thanks, Richard and Dario, for help. The problem is actually the
+> >> absence of .cma, .cmxa and .a files in the Debian package. Downloading
+> >> the original source package [1] I found that the problem is present in
+> >> the source distribution itself. I'll send a note to Julien Signoles.
+> > 
+> > Sounds also like a Debian packaging bug with the Debian Calendar
+> > package.  Have you thought about asking them (CC'd)?
+> 
+> Is it possible to get some context?
+
+Yes, sorry for that, I'll attach the original message ...
+
+> In Debian, there is version 2 of calendar, where everything is packed
+> into calendarLib.cmo. Maybe this is your problem?
+
+Hmmm -- shouldn't ocamlfind ... -package calendar pick this up?
+
+Rich.
+
+-- 
+Richard Jones
+Red Hat
+-------------- next part --------------
+An embedded message was scrubbed...
+From: "Paolo Donadeo" <p.donadeo at gmail.com>
+Subject: [Pgocaml-dev] Problem compiling pgocaml 1.1
+Date: Sat, 4 Oct 2008 14:48:13 +0200
+Size: 4213
+URL: <https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20081004/f59f79e2/attachment.mht>
+
+From rich at annexia.org  Sat Oct  4 22:58:16 2008
+From: rich at annexia.org (Richard Jones)
+Date: Sat, 4 Oct 2008 21:58:16 +0100
+Subject: [Pgocaml-dev] Problem compiling pgocaml 1.1
+In-Reply-To: <48E7D6E1.20806@glondu.net>
+References: <4b5157c30810040548n296f955esf3fcfb9fab820abf@mail.gmail.com>
+	<20081004133452.GB26772@annexia.org>
+	<4b5157c30810040739v33f72e93iea3647c78b455bb4@mail.gmail.com>
+	<20081004185508.GA6369@annexia.org> <48E7D0FE.8070805@glondu.net>
+	<20081004203637.GA8785@annexia.org> <48E7D6E1.20806@glondu.net>
+Message-ID: <20081004205816.GA9417@annexia.org>
+
+On Sat, Oct 04, 2008 at 10:49:37PM +0200, St?phane Glondu wrote:
+> Richard Jones wrote:
+> > Hmmm -- shouldn't ocamlfind ... -package calendar pick this up?
+> 
+> It does. Actually, I think the problem is in PGOcaml itself (I've faced
+> a similar situation with nurpawiki): the compilation of each module
+> succeeds because .cmi files for each submodule are there (maybe they
+> shouldn't, BTW). Adding "open CalendarLib" at the beginning of each
+> module using calendar's ones solved all my problems in nurpawiki.
+
+Fair enough, I can believe it's a problem in PG'OCaml.
+
+Paolo: If you add 'open CalendarLib' somewhere at the top of the
+test_pgocaml_lowlevel.ml file, does it link?
+
+Rich.
+
+-- 
+Richard Jones
+Red Hat
+
+
+From steph at glondu.net  Sat Oct  4 22:24:30 2008
+From: steph at glondu.net (=?UTF-8?B?U3TDqXBoYW5lIEdsb25kdQ==?=)
+Date: Sat, 04 Oct 2008 22:24:30 +0200
+Subject: [Pgocaml-dev] Problem compiling pgocaml 1.1
+In-Reply-To: <20081004185508.GA6369@annexia.org>
+References: <4b5157c30810040548n296f955esf3fcfb9fab820abf@mail.gmail.com>
+	<20081004133452.GB26772@annexia.org>
+	<4b5157c30810040739v33f72e93iea3647c78b455bb4@mail.gmail.com>
+	<20081004185508.GA6369@annexia.org>
+Message-ID: <48E7D0FE.8070805@glondu.net>
+
+Richard Jones wrote:
+>> Thanks, Richard and Dario, for help. The problem is actually the
+>> absence of .cma, .cmxa and .a files in the Debian package. Downloading
+>> the original source package [1] I found that the problem is present in
+>> the source distribution itself. I'll send a note to Julien Signoles.
+> 
+> Sounds also like a Debian packaging bug with the Debian Calendar
+> package.  Have you thought about asking them (CC'd)?
+
+Is it possible to get some context?
+
+In Debian, there is version 2 of calendar, where everything is packed
+into calendarLib.cmo. Maybe this is your problem?
+
+
+Cheers,
+
+-- 
+St?phane
+
+
+
+From steph at glondu.net  Sat Oct  4 22:49:37 2008
+From: steph at glondu.net (=?UTF-8?B?U3TDqXBoYW5lIEdsb25kdQ==?=)
+Date: Sat, 04 Oct 2008 22:49:37 +0200
+Subject: [Pgocaml-dev] Problem compiling pgocaml 1.1
+In-Reply-To: <20081004203637.GA8785@annexia.org>
+References: <4b5157c30810040548n296f955esf3fcfb9fab820abf@mail.gmail.com>
+	<20081004133452.GB26772@annexia.org>
+	<4b5157c30810040739v33f72e93iea3647c78b455bb4@mail.gmail.com>
+	<20081004185508.GA6369@annexia.org> <48E7D0FE.8070805@glondu.net>
+	<20081004203637.GA8785@annexia.org>
+Message-ID: <48E7D6E1.20806@glondu.net>
+
+Richard Jones wrote:
+> Hmmm -- shouldn't ocamlfind ... -package calendar pick this up?
+
+It does. Actually, I think the problem is in PGOcaml itself (I've faced
+a similar situation with nurpawiki): the compilation of each module
+succeeds because .cmi files for each submodule are there (maybe they
+shouldn't, BTW). Adding "open CalendarLib" at the beginning of each
+module using calendar's ones solved all my problems in nurpawiki.
+
+
+Cheers,
+
+-- 
+St?phane
+
+
+
+From p.donadeo at gmail.com  Sun Oct  5 11:37:37 2008
+From: p.donadeo at gmail.com (Paolo Donadeo)
+Date: Sun, 5 Oct 2008 11:37:37 +0200
+Subject: [Pgocaml-dev] Problem compiling pgocaml 1.1
+In-Reply-To: <20081004205816.GA9417@annexia.org>
+References: <4b5157c30810040548n296f955esf3fcfb9fab820abf@mail.gmail.com>
+	<20081004133452.GB26772@annexia.org>
+	<4b5157c30810040739v33f72e93iea3647c78b455bb4@mail.gmail.com>
+	<20081004185508.GA6369@annexia.org> <48E7D0FE.8070805@glondu.net>
+	<20081004203637.GA8785@annexia.org> <48E7D6E1.20806@glondu.net>
+	<20081004205816.GA9417@annexia.org>
+Message-ID: <20081005093737.GA7306@atreides.dyndns.org>
+
+Richard Jones wrote:
+
+> Paolo: If you add 'open CalendarLib' somewhere at the top of the
+> test_pgocaml_lowlevel.ml file, does it link?
+
+Adding "open CalendarLib" on top of pGOCaml.ml *and* pGOCaml.mli, and
+replacing line 41 of PGOcaml Makefile (from 1.1 source tarball):
+-I +calendar $(shell ocamlfind query calendar)/calendar.cma \
+with:
+-I +calendar $(shell ocamlfind query calendar)/calendarLib.cmo \
+
+everything compiles and links.
+
+In any case, this is the first time a see an OCaml library distributed
+as cmo/cmx and not as a cma/cmxa package. Unfortunately a standard for
+package distribution (blessed by INRIA) is far from coming, but Calendar
+distribution package is certainly weird a lot :-)
+
+
+-- 
+                                            Paolo
+~
+~
+:wq
+
+

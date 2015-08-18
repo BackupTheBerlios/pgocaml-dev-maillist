@@ -1,0 +1,25 @@
+From darioteixeira at yahoo.com  Thu Jan  1 20:28:35 2009
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Thu, 1 Jan 2009 11:28:35 -0800 (PST)
+Subject: [Pgocaml-dev] Problem compiling pgocaml 1.1
+In-Reply-To: <495BE5BE.2070007@citycable.ch>
+Message-ID: <13246.5941.qm@web111501.mail.gq1.yahoo.com>
+
+Hi,
+
+> What should be the way forward? Asking for a change in calendar's debian
+> packaging? Changing pgocaml's code? Putting some notice in README? 
+> Packaging pgocaml for debian?
+
+You can indeed suggest to the Debian guys that they package PG'OCaml.
+Also, have you considered giving GODI a try?  (While there's no PG'OCaml
+package for GODI yet, all its dependencies are there).
+
+Cheers + happy new year to everyone,
+Dario Teixeira
+
+
+
+      
+
+

@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] Distributing .mli files.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Distributing%20.mli%20files.&In-Reply-To=%3C4A32EA18.8080001%40citycable.ch%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000072.html">
+   <LINK REL="Next"  HREF="000076.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] Distributing .mli files.</H1>
+    <B>Guillaume Yziquel</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Distributing%20.mli%20files.&In-Reply-To=%3C4A32EA18.8080001%40citycable.ch%3E"
+       TITLE="[Pgocaml-dev] Distributing .mli files.">guillaume.yziquel at citycable.ch
+       </A><BR>
+    <I>Sat Jun 13 01:51:52 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000072.html">[Pgocaml-dev] Licence of PG'OCaml.
+</A></li>
+        <LI>Next message: <A HREF="000076.html">[Pgocaml-dev] Distributing .mli files.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#74">[ date ]</a>
+              <a href="thread.html#74">[ thread ]</a>
+              <a href="subject.html#74">[ subject ]</a>
+              <a href="author.html#74">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello.
+
+Here is a patch I used in order to package pgocaml for debian. It simply 
+adds .mli files to the files installed by findlib, and thus allows 
+automatic ocamldoc documentation generation.
+
+Could it be possible to include this patch upstream?
+
+All the best,
+
+Guillaume Yziquel.
+
+
+&gt;<i> #! /bin/sh /usr/share/dpatch/dpatch-run
+</I>&gt;<i> ## 02_makefile_mli.dpatch by Guillaume Yziquel &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">guillaume.yziquel at citycable.ch</A>&gt;
+</I>&gt;<i> ##
+</I>&gt;<i> ## DP: Including .mli files for documentation generation.
+</I>&gt;<i> 
+</I>&gt;<i> @DPATCH@
+</I>&gt;<i> diff -urNad pgocaml-1.3~/Makefile pgocaml-1.3/Makefile
+</I>&gt;<i> --- pgocaml-1.3~/Makefile       2009-06-09 15:31:01.000000000 +0200
+</I>&gt;<i> +++ pgocaml-1.3/Makefile        2009-06-09 15:31:49.000000000 +0200
+</I>&gt;<i> @@ -155,7 +155,7 @@
+</I>&gt;<i>  #
+</I>&gt;<i>  
+</I>&gt;<i>  findlib_install:
+</I>&gt;<i> -       ocamlfind install $(PACKAGE) META pgocaml.a pgocaml.cma pgocaml.cmxa pGOCaml_generic.cm[ix] pGOCaml.cm[ix] pa_pgsql.cmo
+</I>&gt;<i> +       ocamlfind install $(PACKAGE) META pgocaml.a pgocaml.cma pgocaml.cmxa pGOCaml_generic.cm[ix] pGOCaml.cm[ix] pa_pgsql.cmo pGOCaml_generic.mli pGOCaml.mli
+</I>&gt;<i>  
+</I>&gt;<i>  reinstall:
+</I>&gt;<i>         ocamlfind remove $(PACKAGE)
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000072.html">[Pgocaml-dev] Licence of PG'OCaml.
+</A></li>
+	<LI>Next message: <A HREF="000076.html">[Pgocaml-dev] Distributing .mli files.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#74">[ date ]</a>
+              <a href="thread.html#74">[ thread ]</a>
+              <a href="subject.html#74">[ subject ]</a>
+              <a href="author.html#74">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,30 @@
+From darioteixeira at yahoo.com  Thu Sep 15 15:56:10 2011
+From: darioteixeira at yahoo.com (Dario Teixeira)
+Date: Thu, 15 Sep 2011 06:56:10 -0700 (PDT)
+Subject: [Pgocaml-dev] =?iso-8859-1?q?Cursor_support_patch_by_Mat=EDas_Gio?=
+	=?iso-8859-1?q?vannini?=
+Message-ID: <1316094970.27683.YahooMailNeo@web111513.mail.gq1.yahoo.com>
+
+Hi,
+
+I received a patch from Mat?as Giovanniniadding support for cursors.
+I haven't had much time to play with it yet, but I did create a branch
+(under branches/cursor) where this patch is applied, so everyone can
+check out this new feature in the meantime.
+
+
+In unrelated news, I've registered the PG'OCaml project in the OCaml Forge.
+I realise moving is a minor inconvenience, but I reckon it to be outweighed
+by the advantages:
+
+? - Better visibility within the OCaml community.
+? - Larger pool of OCaml developers who already have a Forge account.
+Moreover, it's possible to import the entire SVN repository, so there
+will be no loss of commit history.
+
+Cheers,
+Dario Teixeira
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://lists.berlios.de/pipermail/pgocaml-dev/attachments/20110915/7fd80684/attachment.html>
+

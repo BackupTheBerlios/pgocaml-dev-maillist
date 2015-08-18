@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Pgocaml-dev] Patch to make PGOCaml work with Batteries
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/pgocaml-dev/2011-February/index.html" >
+   <LINK REL="made" HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Patch%20to%20make%20PGOCaml%20work%20with%20Batteries&In-Reply-To=%3C000001cbc560%24c58fd0a0%2450af71e0%24%40metastack.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000110.html">
+   <LINK REL="Next"  HREF="000112.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Pgocaml-dev] Patch to make PGOCaml work with Batteries</H1>
+    <B>David Allsopp</B> 
+    <A HREF="mailto:pgocaml-dev%40lists.berlios.de?Subject=Re%3A%20%5BPgocaml-dev%5D%20Patch%20to%20make%20PGOCaml%20work%20with%20Batteries&In-Reply-To=%3C000001cbc560%24c58fd0a0%2450af71e0%24%40metastack.com%3E"
+       TITLE="[Pgocaml-dev] Patch to make PGOCaml work with Batteries">dra-news at metastack.com
+       </A><BR>
+    <I>Sat Feb  5 19:16:12 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000110.html">[Pgocaml-dev] Specifying additional parameters (such as search_path) at connection time
+</A></li>
+        <LI>Next message: <A HREF="000112.html">[Pgocaml-dev] New stuff in trunk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#111">[ date ]</a>
+              <a href="thread.html#111">[ thread ]</a>
+              <a href="subject.html#111">[ subject ]</a>
+              <a href="author.html#111">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>[apologies for the message ID being incorrect - I've only just joined the
+list so pasted the email from the archives]
+
+Michael Ekstrand wrote:
+&gt;<i> I use schemas to organize my tables and try to keep namespaces clean,
+</I>&gt;<i> but this introduces the need to have PGOCaml configure the search path
+</I>&gt;<i> in order to find the right tables.  I can successfully set the
+</I>&gt;<i> search_path parameter using the low-level interface, but this doesn't
+</I>&gt;<i> help at compile time.
+</I>
+I also use schemas in the same way. I think you can do this and have PGOCaml
+work correctly without any hacking in some circumstances: just put
+
+PGSQL(dbh) &quot;execute&quot; &quot;SET search_path TO my_schema&quot;
+
+after your PGOCaml.connect call (or &quot;SET SCHEMA TO my_schema&quot; if using
+PostgreSQL 8.4 or later)
+
+&gt;<i> I've been able to modify PGOCaml to take a search_path parameter in the
+</I>&gt;<i> connect function, defaulting to the value of the PGSEARCHPATH
+</I>&gt;<i> environment variable, and pass this as an additional setting in the
+</I>&gt;<i> connect message.  This enables me to set the search path and allow
+</I>&gt;<i> PGOCaml to find the tables.
+</I>
+The problem I got even with that trick above is that my code for connecting
+to the server is in one module (i.e. file) and the queries are in another so
+using &quot;execute&quot; doesn't work unless you redundantly add it to the top of
+each module.
+
+I have a private patch for pa_pgsql.ml4 from a couple of years ago which
+I've never submitted as I didn't think it would be widely useful which
+generalises what you're proposing slightly differently (I keep it to
+pa_pgsql and not the PGOCaml module itself) - it reads the environment
+variable PGCOMMAND and executes the SQL statement in it after connecting.
+This allows you to put *anything* required before compiling a module (so I
+export PGCOMMAND='set search_path to foo' in my Makefile).
+
+
+David
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000110.html">[Pgocaml-dev] Specifying additional parameters (such as search_path) at connection time
+</A></li>
+	<LI>Next message: <A HREF="000112.html">[Pgocaml-dev] New stuff in trunk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#111">[ date ]</a>
+              <a href="thread.html#111">[ thread ]</a>
+              <a href="subject.html#111">[ subject ]</a>
+              <a href="author.html#111">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/pgocaml-dev">More information about the Pgocaml-dev
+mailing list</a><br>
+</body></html>
